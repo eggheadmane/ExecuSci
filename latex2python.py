@@ -28,7 +28,7 @@ Typical use::
     print(eq.evaluate(k=1, theta=0.1, sigma=2, p=3, H=4))
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field

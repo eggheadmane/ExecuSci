@@ -17,7 +17,7 @@ Translate a document and write a runnable Python module of functions::
 If no arguments are given, it runs on ``markdown equation.md`` when present.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import argparse
 import os
