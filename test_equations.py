@@ -6,5 +6,9 @@ from numpy import (
 )
 
 
-# Could not translate (Eq. None): \sigma_y = \sqrt{\frac{1}{2}\left[(\sigma_1 - \sigma_2)^2 + (\sigma_2 - \sigma_3)^2 + (\sigma_3 - \sigma_1)^2\right]}
-#   reason: Expected '}' but found Token(kind='op', value='[')
+def sigma_y(sigma_1, sigma_2, sigma_3):
+    """sigma_y = sqrt((-sigma_1 + sigma_3)**2/2 + (sigma_1 - sigma_2)**2/2 + (sigma_2 - sigma_3)**2/2)
+
+    LaTeX: \\sigma_y = \\sqrt{\\frac{1}{2}\\left[(\\sigma_1 - \\sigma_2)^2 + (\\sigma_2 - \\sigma_3)^2 + (\\sigma_3 - \\sigma_1)^2\\right]}
+    """
+    return sqrt((-sigma_1 + sigma_3)**2/2 + (sigma_1 - sigma_2)**2/2 + (sigma_2 - sigma_3)**2/2)
