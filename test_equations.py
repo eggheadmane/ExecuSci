@@ -6,9 +6,9 @@ from numpy import (
 )
 
 
-def sigma_y(sigma_1, sigma_2, sigma_3):
-    """sigma_y = sqrt((-sigma_1 + sigma_3)**2/2 + (sigma_1 - sigma_2)**2/2 + (sigma_2 - sigma_3)**2/2)
+def sigma_f(C, epsilon, epsilon_0, n):
+    """sigma_f = C*(epsilon + epsilon_0)**n
 
-    LaTeX: \\sigma_y = \\sqrt{\\frac{1}{2}\\left[(\\sigma_1 - \\sigma_2)^2 + (\\sigma_2 - \\sigma_3)^2 + (\\sigma_3 - \\sigma_1)^2\\right]}
+    LaTeX: \\sigma_f = C \\left( \\varepsilon_0 + \\varepsilon \\right)^n
     """
-    return sqrt((-sigma_1 + sigma_3)**2/2 + (sigma_1 - sigma_2)**2/2 + (sigma_2 - sigma_3)**2/2)
+    return C*(epsilon + epsilon_0)**n

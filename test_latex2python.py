@@ -119,6 +119,23 @@ def test_implicit_multiply_with_brackets():
     compile(eq.python, "<eq>", "exec")
 
 
+def test_criterion_form_flips_to_assignment():
+    """``[...]^n = y`` (yield criterion style) becomes ``y = [...]^n``."""
+    eq = translate(
+        r"\left[ F(\sigma_{22} - \sigma_{33})^2 + G(\sigma_{33} - \sigma_{11})^2"
+        r" + H(\sigma_{11} - \sigma_{22})^2 + 2L\sigma_{23}^2 + 2M\sigma_{31}^2"
+        r" + 2N\sigma_{12}^2 \right]^{\frac{1}{2}} = \sigma_y"
+    )
+    assert eq.output.name == "sigma_y"
+    assert eq.python.startswith("sigma_y = ")
+    expected = {
+        "F", "G", "H", "L", "M", "N",
+        "sigma_11", "sigma_12", "sigma_22", "sigma_23", "sigma_31", "sigma_33",
+    }
+    assert {s.name for s in eq.inputs} == expected
+    compile(eq.python, "<eq>", "exec")
+
+
 def test_bad_input_raises_parse_error():
     with pytest.raises(LatexParseError):
         translate(r"\frac{1}{")  # unterminated

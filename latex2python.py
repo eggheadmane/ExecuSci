@@ -619,9 +619,15 @@ class Equation:
     lhs: object = field(default=None)
     rhs: object = field(default=None)
 
+    # If output is on RHS like ``f(...) = y``, flip LHS and RHS.  
     def __post_init__(self):
         if isinstance(self.expr, sp.Equality):
-            self.lhs, self.rhs = self.expr.lhs, self.expr.rhs
+            lhs, rhs = self.expr.lhs, self.expr.rhs
+            
+            if isinstance(rhs, sp.Symbol) and not isinstance(lhs, sp.Symbol):
+                lhs, rhs = rhs, lhs
+                self.expr = sp.Eq(lhs, rhs, evaluate=False)
+            self.lhs, self.rhs = lhs, rhs
         else:
             self.lhs, self.rhs = None, self.expr
 
