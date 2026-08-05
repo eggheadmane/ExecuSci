@@ -108,6 +108,17 @@ def test_callable_is_vectorised():
     assert out.shape == (2,)
 
 
+def test_implicit_multiply_with_brackets():
+    """\\frac{1}{2}\\left[...\\right] must parse as (1/2)*[...], not stall on '['."""
+    eq = translate(
+        r"\sigma_y = \sqrt{\frac{1}{2}\left[(\sigma_1 - \sigma_2)^2"
+        r" + (\sigma_2 - \sigma_3)^2 + (\sigma_3 - \sigma_1)^2\right]}"
+    )
+    assert eq.output.name == "sigma_y"
+    assert {s.name for s in eq.inputs} == {"sigma_1", "sigma_2", "sigma_3"}
+    compile(eq.python, "<eq>", "exec")
+
+
 def test_bad_input_raises_parse_error():
     with pytest.raises(LatexParseError):
         translate(r"\frac{1}{")  # unterminated
