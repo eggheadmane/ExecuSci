@@ -33,18 +33,12 @@ pip install -r requirements.txt
 ### Command line
 
 ```bash
-# Translate a single equation
-python main.py --latex "h=A(1-\exp (-B P))"
-
-# Translate every equation in a document and print them
-python main.py "markdown equation.md"
-
-# Translate a document and write a runnable module of functions
-python main.py "markdown equation.md" --module equations.py
+python main.py
 ```
 
-`equations.py` in this repo is an example of that generated output for the
-included paper (13/13 equations translated).
+Reads the configured document (`DEFAULT_DOC` in `main.py`) and automatically
+writes both the equations module and, when tables/prose yield values, a
+`constants.py` with names aligned to equation arguments (`lamda`, `sigma_U`, …).
 
 ### Library
 
@@ -69,8 +63,22 @@ print(eq.function_source())          # a stand-alone def K_st(k_s, k_t): ...
 | `.evaluate(**values)` | evaluate the RHS for given inputs                       |
 | `.function_source()`  | source code of a documented stand-alone function        |
 
+### Constants scraper
+
+`scrape_constants.py` runs automatically with equation translation. It pulls
+numeric model parameters from markdown tables (e.g. Table 3) and simple prose
+patterns, then writes `constants.py` with `get_constants(tool, delta)`:
+
+```python
+from constants import get_constants
+import equations
+
+c = get_constants(tool="P20")
+K_st = equations.eq_8(c["k_s"], c["k_t"])
+```
+
 ### Tests
 
 ```bash
-python -m pytest test_latex2python.py
+python -m pytest test_latex2python.py test_scrape_constants.py
 ```

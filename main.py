@@ -1,17 +1,18 @@
-"""ExecuSci -- translate LaTeX equations from a markdown document into Python.
+"""ExecuSci -- translate LaTeX equations and scrape constants from a document.
 
-Reads ``markdown equation.md``, prints each translated equation, and writes a
-runnable module to ``equations.py``.
+Reads a Mathpix / markdown paper, prints each translated equation, and writes
+runnable modules for both equations and scraped constants automatically.
 """
 
 import os
 import sys
 
 from latex2python import generate_module, translate_document
+from scrape_constants import extract_constants, generate_constants_module
 
-# DEFAULT_DOC = "markdown equation.md"
 DEFAULT_DOC = "test_eq.md"
 DEFAULT_MODULE = "test_equations.py"
+DEFAULT_CONSTANTS = "constants.py"
 
 
 def _print_equation(eq, tag=None):
@@ -24,7 +25,23 @@ def _print_equation(eq, tag=None):
     print()
 
 
-def run_document(path: str, module_path: str) -> int:
+def _print_constants(constants) -> None:
+    if not constants:
+        print("No constants scraped.")
+        return
+    print(f"Scraped {len(constants)} constant(s):")
+    for c in constants:
+        where = f"Table {c.table}" if c.table else c.source
+        variant = f" [{c.variant}]" if c.variant else ""
+        print(f"  {c.name}{variant} = {c.value}  ({where})")
+    print()
+
+
+def run_document(
+    path: str,
+    module_path: str = DEFAULT_MODULE,
+    constants_path: str = DEFAULT_CONSTANTS,
+) -> int:
     if not os.path.exists(path):
         print(f"Error: file not found: {path}", file=sys.stderr)
         return 1
@@ -34,31 +51,42 @@ def run_document(path: str, module_path: str) -> int:
     results = translate_document(text)
     if not results:
         print(f"No equations found in {path}.")
-        return 0
+    else:
+        ok = 0
+        for raw, eq, error in results:
+            if eq is None:
+                print(f"[Eq. {raw.tag}]  COULD NOT TRANSLATE")
+                print(f"  LaTeX : {raw.latex}")
+                print(f"  Reason: {error}\n")
+                continue
+            ok += 1
+            _print_equation(eq, tag=raw.tag)
+        print(f"Translated {ok}/{len(results)} equations from {path}.")
 
-    ok = 0
-    for raw, eq, error in results:
-        if eq is None:
-            print(f"[Eq. {raw.tag}]  COULD NOT TRANSLATE")
-            print(f"  LaTeX : {raw.latex}")
-            print(f"  Reason: {error}\n")
-            continue
-        ok += 1
-        _print_equation(eq, tag=raw.tag)
+        source = generate_module(
+            text,
+            module_doc=f"Executable equations extracted from {os.path.basename(path)}.",
+        )
+        with open(module_path, "w", encoding="utf-8") as fh:
+            fh.write(source)
+        print(f"Wrote runnable module to {module_path}.")
 
-    print(f"Translated {ok}/{len(results)} equations from {path}.")
+    constants = extract_constants(text)
+    _print_constants(constants)
+    if constants:
+        const_src = generate_constants_module(
+            text,
+            module_doc=f"Constants scraped from {os.path.basename(path)}.",
+        )
+        with open(constants_path, "w", encoding="utf-8") as fh:
+            fh.write(const_src)
+        print(f"Wrote constants module to {constants_path}.")
 
-    source = generate_module(
-        text, module_doc=f"Executable equations extracted from {os.path.basename(path)}."
-    )
-    with open(module_path, "w", encoding="utf-8") as fh:
-        fh.write(source)
-    print(f"Wrote runnable module to {module_path}.")
     return 0
 
 
 def main() -> int:
-    return run_document(DEFAULT_DOC, DEFAULT_MODULE)
+    return run_document(DEFAULT_DOC, DEFAULT_MODULE, DEFAULT_CONSTANTS)
 
 
 if __name__ == "__main__":
