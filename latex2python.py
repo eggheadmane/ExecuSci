@@ -423,7 +423,7 @@ class Parser:
     def _starts_factor(self, tok: Token) -> bool:
         if tok.kind in ("num", "sym"):
             return True
-        if tok.kind == "op" and tok.value in "({":
+        if tok.kind == "op" and tok.value in "({[":
             return True
         if tok.kind == "cmd":
             return True
