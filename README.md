@@ -10,34 +10,36 @@
 
 ## Pipeline
 
-Each folder is one stage and consumes the previous stage's output. Folder numbers
-follow the order the stages run in; code never hard-codes those numbers, it looks
-folders up by name through `execusci_paths.py`, so stages can be reordered.
+Runnable source lives under `build/` in the same numbered stage folders.
+Papers stay in `01 PDF2Latex` at the repo root; generated outputs for stages
+02–05 live under `generated/`. Folder numbers follow the order the stages
+run in; code never hard-codes those numbers, it looks folders up by name
+through `build/execusci_paths.py`, so stages can be reordered.
 
 | Stage | Folder | Input | Output |
 |-------|--------|-------|--------|
 | 01 | `01 PDF2Latex` | the PDF | `target_paper.md` (Mathpix markdown) |
-| 02 | `02 Extract Equations` | `target_paper.md` | `output/equations.md`, `output/symbols.json` |
-| 03 | `03 Scrape Constants` | `target_paper.md` | `constants.py`, `constants.md` |
-| 04 | `04 Latex2Python` | `equations.md` + `symbols.json` | `equations.py` |
-| 05 | `05 Plotting` | `equations.py` + `constants.py` | figures under `output/` |
+| 02 | `generated/02 Extract Equations` | `target_paper.md` | `output/equations.md`, `output/symbols.json` |
+| 03 | `generated/03 Scrape Constants` | `target_paper.md` | `constants.py`, `constants.md` |
+| 04 | `generated/04 Latex2Python` | `equations.md` + `symbols.json` | `equations.py` |
+| 05 | `generated/05 Plotting` | `equations.py` + `constants.py` | figures under `output/` |
 
 ### Install and run
 
 ```bash
 pip install -r requirements.txt
-python run_pipeline.py            # stages 02 -> 04
-python run_pipeline.py --plot     # also runs stage 05
-python run_pipeline.py --paper "01 PDF2Latex/another_paper.md"
+python build/run_pipeline.py            # stages 02 -> 04
+python build/run_pipeline.py --plot     # also runs stage 05
+python build/run_pipeline.py --paper "01 PDF2Latex/another_paper.md"
 ```
 
 Every stage is also runnable on its own:
 
 ```bash
-python "02 Extract Equations/extract_equations.py"
-python "03 Scrape Constants/scrape_constants.py"
-python "04 Latex2Python/main.py"
-python "05 Plotting/plot_compare.py" --no-show
+python "build/02 Extract Equations/extract_equations.py"
+python "build/03 Scrape Constants/scrape_constants.py"
+python "build/04 Latex2Python/translate_equations.py"
+python "build/05 Plotting/plot_compare.py" --no-show
 ```
 
 ## Stage 02 — Extract equations
@@ -102,8 +104,8 @@ purpose-built for real-world paper LaTeX and copes with the quirks that break
 - `\left( ... \right)` delimiters and accents such as `\bar{\lambda}` → `lamda_bar`;
 - Greek letters, mapping the Python keyword `\lambda` → `lamda`.
 
-`main.py` writes `equations.py`, one documented function per equation, named
-after the paper's equation number:
+`translate_equations.py` writes `equations.py`, one documented function per
+equation, named after the paper's equation number:
 
 ```python
 def eq_13(delta, gamma):
@@ -153,10 +155,16 @@ plot. With the scraped constants it currently tracks the paper to within
 
 ## Tests
 
+Feature tests live in `test/`, one file per stage. Run a single feature without
+running the rest of the pipeline:
+
 ```bash
-python -m pytest
+python -m pytest test/test_extract_equations.py
+python -m pytest test/test_scrape_constants.py
+python -m pytest test/test_latex2python.py
+python -m pytest                        # all tests, including the full pipeline
 ```
 
-`test_pipeline.py` runs stages 02–04 into a temporary directory and checks that
-the generated code reproduces the IHTC values the paper reports for P20 tools
-(6.7 kW/m²K at 3 MPa dry; 14.5 kW/m²K at 13 MPa lubricated).
+`test/test_pipeline.py` runs stages 02–04 into a temporary directory and checks
+that the generated code reproduces the IHTC values the paper reports for P20
+tools (6.7 kW/m²K at 3 MPa dry; 14.5 kW/m²K at 13 MPa lubricated).
