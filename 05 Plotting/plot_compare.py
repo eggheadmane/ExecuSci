@@ -1,13 +1,14 @@
-"""Compare translated IHTC equations against digitized paper curves.
+"""Stage 05 -- compare the translated IHTC model against digitized paper curves.
 
-Evaluates the Eq. 6 chain from ``equations.py`` (h = h_a + h_c + h_l) over
-contact pressure and overlays the result on the paper's P20 IHTC curve.
+Evaluates the Eq. 6 chain from stage 04's ``equations.py`` (h = h_a + h_c + h_l)
+with stage 03's scraped constants over contact pressure, and overlays the result
+on the paper's P20 IHTC curve.
 
 Usage
 -----
-    python "04 Plotting/plot_compare.py"
-    python "04 Plotting/plot_compare.py" --tool P20 --delta 1.5e-5
-    python "04 Plotting/plot_compare.py" --no-show
+    python "05 Plotting/plot_compare.py"
+    python "05 Plotting/plot_compare.py" --tool P20 --delta 1.5e-5
+    python "05 Plotting/plot_compare.py" --no-show
 """
 
 from __future__ import annotations
@@ -21,11 +22,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# Repo root so ``import equations`` resolves to the generated module.
+# Stage folders so generated equations / scraped constants resolve.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
+
+from execusci_paths import add_stages  # noqa: E402
+
+add_stages("Latex2Python", "Scrape Constants")
 
 import equations  # noqa: E402
 from constants import (  # noqa: E402

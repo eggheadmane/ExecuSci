@@ -38,6 +38,7 @@ import sympy as sp
 
 __all__ = [
     "Equation",
+    "RawEquation",
     "translate",
     "translate_document",
     "extract_equations",
@@ -45,6 +46,8 @@ __all__ = [
     "tokenize",
     "Parser",
     "generate_module",
+    "name_to_latex",
+    "latex_to_name",
     "MATH_NAMESPACE",
     "LatexParseError",
 ]
@@ -108,20 +111,24 @@ _FUNCTIONS: Dict[str, Callable] = {
     "abs": sp.Abs,
 }
 
-# Accent commands that decorate the following symbol (``\bar{\lambda}`` -> lamda_bar).
-
-"""
-
-Need to change this part with the accents because some are repeating
-
-"""
-
+# Commands that decorate the following symbol.  Several LaTeX spellings share a
+# suffix on purpose (``\bar`` and ``\overline`` both read as "bar"), so the
+# generated name does not depend on which spelling the OCR produced:
+# ``\bar{\lambda}`` and ``\overline{\lambda}`` are both ``lamda_bar``.
+# An empty suffix marks a purely cosmetic wrapper (``\mathrm{t}`` -> ``t``).
 _ACCENTS = {
     "bar": "bar", "overline": "bar", "hat": "hat", "widehat": "hat",
     "tilde": "tilde", "widetilde": "tilde", "vec": "vec", "dot": "dot",
     "ddot": "ddot", "overrightarrow": "vec", "mathbf": "", "boldsymbol": "",
     "mathrm": "", "text": "", "operatorname": "",
 }
+
+# Reverse tables used by :func:`name_to_latex` to render a name as math again.
+_GREEK_LATEX = {
+    "lamda": r"\lambda", "Lamda": r"\Lambda",
+    **{v: "\\" + k for k, v in reversed(list(_GREEK.items())) if v != "lamda"},
+}
+_ACCENT_LATEX = {"bar", "hat", "tilde", "vec", "dot", "ddot"}
 
 # Spacing / cosmetic commands that carry no mathematical meaning.
 _SPACING = [
@@ -135,12 +142,6 @@ _SPACING = [
 # Extraction
 # --------------------------------------------------------------------------- #
 
-"""
-
-This part extracts using regular expressions. Check if this formatting is correct
-
-"""
-
 _EQ_ENV_RE = re.compile(
     r"\\begin\{(equation\*?|align\*?|gather\*?|displaymath|math)\}"
     r"(?P<body>.*?)"
@@ -152,13 +153,14 @@ _TAG_RE = re.compile(r"\\tag\{(?P<tag>[^}]*)\}")
 _LABEL_RE = re.compile(r"\\label\{[^}]*\}")
 
 
-"""
-(Maybe) Remove source line from RawEquation. Check if it it is true
-"""
-
 @dataclass
 class RawEquation:
-    """A LaTeX equation extracted from a document, before translation.""" 
+    """A LaTeX equation extracted from a document, before translation.
+
+    ``source_line`` is the 1-based line of the document the equation was found
+    on; the extraction report written by the "Extract Equations" stage cites it
+    so a reader can trace every equation back to the paper.
+    """
 
     latex: str
     tag: Optional[str] = None
@@ -204,9 +206,25 @@ def extract_equations(text: str) -> List[RawEquation]:
             )
 
 
-    """ I want this to be sorted by Equation tag """
-    found.sort(key=lambda e: (e.source_line or 0))
+    # Order by the paper's own equation number when every equation carries a
+    # numeric \tag (note this is a numeric sort, so Eq. (10) follows Eq. (9)).
+    # Otherwise fall back to the order the equations appear in the document.
+    numbers = [_tag_number(e.tag) for e in found]
+    if found and all(n is not None for n in numbers):
+        found.sort(key=lambda e: (_tag_number(e.tag), e.source_line or 0))
+    else:
+        found.sort(key=lambda e: (e.source_line or 0))
     return found
+
+
+def _tag_number(tag: Optional[str]) -> Optional[float]:
+    """Numeric value of a ``\\tag{...}``, or ``None`` if it is not a number."""
+    if tag is None:
+        return None
+    try:
+        return float(tag)
+    except ValueError:
+        return None
 
 # Removes \tag / \label from a body and strips whitespace.
 def _clean_body(body: str) -> str:
@@ -581,6 +599,12 @@ class Parser:
         if tok.kind == "cmd":
             if tok.value in _GREEK:
                 return _GREEK[tok.value]
+            # Cosmetic wrappers inside an identifier carry no name of their own:
+            # ``K_{\text {stl }}`` must read as ``K_stl``, not ``K_textstl``.
+            if tok.value in _ACCENTS and not _ACCENTS[tok.value]:
+                return self._read_name_group()
+            if tok.value in _ACCENTS:
+                return f"{self._read_name_group()}_{_ACCENTS[tok.value]}"
             return tok.value
         if tok.kind == "op":
             if tok.value == "{":
@@ -596,6 +620,37 @@ class Parser:
 # --------------------------------------------------------------------------- #
 # High level API
 # --------------------------------------------------------------------------- #
+
+def _docsafe(text: Optional[str]) -> Optional[str]:
+    """Flatten a scraped description so it can sit inside a docstring."""
+    if not text:
+        return None
+    flat = re.sub(r"\s+", " ", text).strip()
+    flat = flat.replace("\\", "\\\\").replace('"""', "'''")
+    return flat or None
+
+
+def name_to_latex(name: str) -> str:
+    r"""Render a generated symbol name back as LaTeX math (without ``$``).
+
+    The inverse of the naming rules used by the parser, so reports can show the
+    paper's notation next to the Python identifier::
+
+        name_to_latex("sigma_U")   -> '\sigma_{U}'
+        name_to_latex("lamda_bar") -> '\bar{\lambda}'
+        name_to_latex("K_stl")     -> 'K_{stl}'
+    """
+    base, *parts = name.split("_")
+    accents = []
+    while parts and parts[-1] in _ACCENT_LATEX:
+        accents.append(parts.pop())
+    core = _GREEK_LATEX.get(base, base)
+    if parts:
+        core = f"{core}_{{{''.join(parts)}}}"
+    for accent in accents:
+        core = f"\\{accent}{{{core}}}"
+    return core
+
 
 def _to_python_source(expr) -> str:
     """Render a SymPy expression as Python source using bare function names.
@@ -619,9 +674,15 @@ class Equation:
     lhs: object = field(default=None)
     rhs: object = field(default=None)
 
+    # If output is on RHS like ``f(...) = y``, flip LHS and RHS.  
     def __post_init__(self):
         if isinstance(self.expr, sp.Equality):
-            self.lhs, self.rhs = self.expr.lhs, self.expr.rhs
+            lhs, rhs = self.expr.lhs, self.expr.rhs
+            
+            if isinstance(rhs, sp.Symbol) and not isinstance(lhs, sp.Symbol):
+                lhs, rhs = rhs, lhs
+                self.expr = sp.Eq(lhs, rhs, evaluate=False)
+            self.lhs, self.rhs = lhs, rhs
         else:
             self.lhs, self.rhs = None, self.expr
 
@@ -646,8 +707,17 @@ class Equation:
             return f"{self.output.name} = {rhs_src}"
         return rhs_src
 
-    def function_source(self, name: Optional[str] = None) -> str:
-        """Return the source of a stand-alone Python function for this equation."""
+    def function_source(
+        self,
+        name: Optional[str] = None,
+        descriptions: Optional[Dict[str, str]] = None,
+    ) -> str:
+        """Return the source of a stand-alone Python function for this equation.
+
+        ``descriptions`` maps symbol names to the wording the paper uses for
+        them (as collected by the "Extract Equations" stage); matching symbols
+        are documented as ``Args`` entries.
+        """
         fname = name or self._default_name()
         args = ", ".join(s.name for s in self.inputs)
         rhs_src = _to_python_source(self.rhs if self.rhs is not None else self.expr)
@@ -658,9 +728,24 @@ class Equation:
             f'= {rhs_src}',
             f"",
             f"    LaTeX: {doc}",
-            f'    """',
-            f"    return {rhs_src}",
         ]
+        described = [(s.name, _docsafe((descriptions or {}).get(s.name))) for s in self.inputs]
+        if any(text for _, text in described):
+            lines.append("")
+            lines.append("    Args:")
+            for sym, text in described:
+                lines.append(f"        {sym}: {text}" if text else f"        {sym}")
+        out_doc = (
+            _docsafe(descriptions.get(self.output.name))
+            if descriptions and self.output is not None
+            else None
+        )
+        if out_doc:
+            lines.append("")
+            lines.append("    Returns:")
+            lines.append(f"        {self.output.name}: {out_doc}")
+        lines.append('    """')
+        lines.append(f"    return {rhs_src}")
         return "\n".join(lines)
 
     def _default_name(self) -> str:
@@ -705,6 +790,31 @@ def translate(latex: str, tag: Optional[str] = None) -> Equation:
     return Equation(latex=latex.strip(), expr=expr, symbols=parser.symbols, tag=tag)
 
 
+def latex_to_name(latex: str) -> Optional[str]:
+    """Map a LaTeX symbol fragment to the ASCII name used for Python code.
+
+    ``k_{s}`` -> ``k_s``, ``\\lambda`` -> ``lamda``, ``K_{\\text {stl }}`` ->
+    ``K_stl``.  Returns ``None`` when the fragment is not a single symbol (a
+    number, a whole equation, a unit, ...).
+    """
+    frag = latex.strip()
+    if not frag:
+        return None
+    try:
+        eq = translate(frag)
+    except LatexParseError:
+        return None
+    expr = eq.expr
+    if getattr(expr, "is_Symbol", False):
+        return str(expr.name)
+    free = list(getattr(expr, "free_symbols", []) or [])
+    if len(free) == 1:
+        return free[0].name
+    if eq.output is not None and not eq.inputs:
+        return eq.output.name
+    return None
+
+
 def translate_document(text: str) -> List[Tuple[RawEquation, Optional[Equation], Optional[str]]]:
     """Translate every equation in a document.
 
@@ -721,12 +831,17 @@ def translate_document(text: str) -> List[Tuple[RawEquation, Optional[Equation],
     return results
 
 
-def generate_module(text: str, module_doc: str = "") -> str:
+def generate_module(
+    text: str,
+    module_doc: str = "",
+    descriptions: Optional[Dict[str, str]] = None,
+) -> str:
     """Translate all equations in ``text`` and return runnable Python source.
 
     The returned string is a complete module: NumPy imports followed by one
     function per successfully parsed equation.  Equations that fail to parse are
-    recorded as comments so nothing is silently dropped.
+    recorded as comments so nothing is silently dropped.  ``descriptions`` maps
+    symbol names to the paper's wording and is used to document the arguments.
     """
     header = ['"""' + (module_doc or "Auto-generated by ExecuSci latex2python.") + '"""',
               "", _NAMESPACE_IMPORT.rstrip(), "", ""]
@@ -746,7 +861,7 @@ def generate_module(text: str, module_doc: str = "") -> str:
             name = f"{name}_{used_names[name]}"
         else:
             used_names[name] = 1
-        body.append(eq.function_source(name=name))
+        body.append(eq.function_source(name=name, descriptions=descriptions))
         body.append("")
         body.append("")
     return "\n".join(header + body).rstrip() + "\n"

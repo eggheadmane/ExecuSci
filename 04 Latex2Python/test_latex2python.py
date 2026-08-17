@@ -1,20 +1,37 @@
 """Tests for the ExecuSci LaTeX -> Python equation translator."""
 
+from __future__ import annotations
+
 import math
+import os
+import sys
 
 import pytest
 import sympy as sp
 
-from latex2python import (
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_ROOT = os.path.dirname(_HERE)
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
+
+from execusci_paths import add_stages, paper_path  # noqa: E402
+
+add_stages("Latex2Python")
+
+from latex2python import (  # noqa: E402
     LatexParseError,
     extract_equations,
     generate_module,
+    latex_to_name,
+    name_to_latex,
     preprocess,
     translate,
     translate_document,
 )
 
-# The 13 equations from the source paper (markdown equation.md), keyed by tag.
+_PAPER = paper_path()
+
+# The 13 equations of the target paper, keyed by their \tag number.
 PAPER_EQUATIONS = {
     "1": r"h=h_{g}+h_{c}",
     "2": r"h=1.45 k \frac{\tan \theta}{\sigma}\left(\frac{p}{H}\right)^{0.985}",
@@ -119,33 +136,123 @@ def test_implicit_multiply_with_brackets():
     compile(eq.python, "<eq>", "exec")
 
 
+def test_criterion_form_flips_to_assignment():
+    """``[...]^n = y`` (yield criterion style) becomes ``y = [...]^n``."""
+    eq = translate(
+        r"\left[ F(\sigma_{22} - \sigma_{33})^2 + G(\sigma_{33} - \sigma_{11})^2"
+        r" + H(\sigma_{11} - \sigma_{22})^2 + 2L\sigma_{23}^2 + 2M\sigma_{31}^2"
+        r" + 2N\sigma_{12}^2 \right]^{\frac{1}{2}} = \sigma_y"
+    )
+    assert eq.output.name == "sigma_y"
+    assert eq.python.startswith("sigma_y = ")
+    expected = {
+        "F", "G", "H", "L", "M", "N",
+        "sigma_11", "sigma_12", "sigma_22", "sigma_23", "sigma_31", "sigma_33",
+    }
+    assert {s.name for s in eq.inputs} == expected
+    compile(eq.python, "<eq>", "exec")
+
+
 def test_bad_input_raises_parse_error():
     with pytest.raises(LatexParseError):
         translate(r"\frac{1}{")  # unterminated
 
 
+def _paper_text() -> str:
+    with open(_PAPER, "r", encoding="utf-8") as fh:
+        return fh.read()
+
+
 def test_extraction_from_markdown():
-    with open("markdown equation.md", "r", encoding="utf-8") as fh:
-        raws = extract_equations(fh.read())
+    raws = extract_equations(_paper_text())
     tags = [r.tag for r in raws]
     assert tags == [str(i) for i in range(1, 14)]
 
 
+def test_equations_are_ordered_numerically_by_tag():
+    """Eq. (10) must follow Eq. (9), not sort as the string "10" < "9"."""
+    document = "\n\n".join(
+        f"$$\n\\begin{{equation*}}\n{latex} \\tag{{{tag}}}\n\\end{{equation*}}\n$$"
+        for tag, latex in reversed(list(PAPER_EQUATIONS.items()))
+    )
+    assert [r.tag for r in extract_equations(document)] == [
+        str(i) for i in range(1, 14)
+    ]
+
+
+def test_untagged_equations_keep_document_order():
+    document = (
+        "$$\n\\begin{equation*}\nb = 2 a\n\\end{equation*}\n$$\n\n"
+        "$$\n\\begin{equation*}\nc = 3 a\n\\end{equation*}\n$$\n"
+    )
+    assert [r.latex.split("=")[0].strip() for r in extract_equations(document)] == ["b", "c"]
+
+
 def test_translate_document_all_ok():
-    with open("markdown equation.md", "r", encoding="utf-8") as fh:
-        results = translate_document(fh.read())
+    results = translate_document(_paper_text())
     assert len(results) == 13
     assert all(eq is not None and err is None for _, eq, err in results)
 
 
 def test_generate_module_is_valid_python():
-    with open("markdown equation.md", "r", encoding="utf-8") as fh:
-        source = generate_module(fh.read())
+    source = generate_module(_paper_text())
     ns = {}
     exec(compile(source, "<generated>", "exec"), ns)
     # Every equation produced a callable function.
     funcs = [v for k, v in ns.items() if k.startswith("eq_") and callable(v)]
     assert len(funcs) == 13
+
+
+def test_generated_functions_document_their_arguments():
+    source = generate_module(
+        _paper_text(),
+        descriptions={"lamda": "a model parameter", "P": "the contact pressure"},
+    )
+    ns: dict = {}
+    exec(compile(source, "<generated>", "exec"), ns)
+    doc = ns["eq_10"].__doc__
+    assert "lamda: a model parameter" in doc
+    assert "P: the contact pressure" in doc
+    # Symbols without a description are still listed, just without wording.
+    assert "sigma_U" in doc
+
+
+@pytest.mark.parametrize(
+    "latex,name",
+    [
+        (r"k_{s}", "k_s"),
+        (r"\lambda", "lamda"),
+        (r"\sigma_{U}", "sigma_U"),
+        (r"K_{s t l}", "K_stl"),
+        (r"K_{\text {stl }}", "K_stl"),  # Mathpix spells the prose version this way
+        (r"k_{\mathrm{t}}", "k_t"),
+        (r"\bar{\lambda}", "lamda_bar"),
+        ("0.85", None),  # a number is not a symbol
+    ],
+)
+def test_latex_to_name(latex, name):
+    assert latex_to_name(latex) == name
+
+
+@pytest.mark.parametrize(
+    "name,latex",
+    [
+        ("k_s", "k_{s}"),
+        ("lamda", r"\lambda"),
+        ("sigma_U", r"\sigma_{U}"),
+        ("K_stl", "K_{stl}"),
+        ("lamda_bar", r"\bar{\lambda}"),
+        ("h", "h"),
+    ],
+)
+def test_name_to_latex(name, latex):
+    assert name_to_latex(name) == latex
+
+
+def test_name_round_trip_for_every_paper_symbol():
+    for latex in PAPER_EQUATIONS.values():
+        for symbol in translate(latex).symbols.values():
+            assert latex_to_name(name_to_latex(symbol.name)) == symbol.name
 
 
 def test_preprocess_strips_left_right_and_tag():
