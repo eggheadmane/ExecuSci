@@ -1,23 +1,23 @@
 """Locate the ExecuSci pipeline stage folders.
 
-The stage folders carry a numeric prefix (``02 Extract Equations``,
-``03 Scrape Constants``, ...) that changes whenever a stage is inserted or
-reordered.  Modules therefore look folders up by their *name* --
-``stage_dir("Latex2Python")`` -- instead of hard-coding the prefix, and add
-them to ``sys.path`` with :func:`add_stages`.
+The stage folders carry a numeric prefix (``01_input``, ``02_extract_equations``,
+...) that changes whenever a stage is inserted or reordered.  Modules therefore
+look folders up by their *name* -- ``stage_dir("Latex2Python")`` -- instead of
+hard-coding the prefix, and add them to ``sys.path`` with :func:`add_stages`.
 
-Runnable source lives under ``build/`` in the same numbered folders.  Papers
-live in ``input/``; the default paper is whichever markdown/LaTeX file sits
-in ``input/target/`` (any filename).  Generated outputs live under
-``generated/``.  This module lives in ``build/``, so :data:`ROOT` is the
-parent of that folder.
+Runnable source and the artefacts later stages import live under ``src/`` in
+the numbered folders.  Papers live in ``src/01_input/``; the default paper is
+whichever markdown/LaTeX file sits in ``src/01_input/target/`` (any filename).
+Every generated artefact is also copied under ``log/`` (including duplicates
+of files that stay in ``src/`` so later stages can import them).  This module
+lives in ``src/``, so :data:`ROOT` is the parent of that folder.
 
 Stage scripts bootstrap this module with::
 
     import os, sys
-    _BUILD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if _BUILD not in sys.path:
-        sys.path.insert(0, _BUILD)
+    _SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if _SRC not in sys.path:
+        sys.path.insert(0, _SRC)
     from execusci_paths import add_stages, stage_dir
 """
 
@@ -25,54 +25,47 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import sys
 from typing import Dict, List, Optional, Sequence
 
 __all__ = [
-    "BUILD",
+    "SRC",
     "ROOT",
-    "GENERATED",
+    "LOG",
     "INPUT",
     "TARGET",
     "stage_dir",
     "stage_dirs",
+    "log_dir",
+    "mirror_to_log",
     "add_stages",
     "paper_path",
     "target_figure_paths",
 ]
 
-BUILD = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(BUILD)
+SRC = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(SRC)
 
-#: Folder holding generated stage outputs (equations.md, constants.py, ...).
-GENERATED = os.path.join(ROOT, "generated")
-
-#: Papers: extras live directly in ``input/``; the default paper is in ``target/``.
-INPUT = os.path.join(ROOT, "input")
-TARGET = os.path.join(INPUT, "target")
+#: Full copy of every generated artefact (including files also kept in ``src/``).
+LOG = os.path.join(ROOT, "log")
 
 _PAPER_EXTS = {".md", ".tex"}
 _FIGURE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp"}
 
-#: Numbered stage folders only, e.g. ``02 Extract Equations``.  Excludes
-#: ``build/``, ``test/``, ``input/``, ``generated/``, ``legacy_code/``.
+#: Numbered stage folders only, e.g. ``02_extract_equations``.
 _STAGE_DIR_RE = re.compile(r"^\d{2}[\s._-]")
 _PREFIX_RE = re.compile(r"^\s*\d+[\s._-]*")
+_SEP_RE = re.compile(r"[\s._-]+")
 
 
-def _strip_prefix(name: str) -> str:
-    return _PREFIX_RE.sub("", name).strip()
+def _normalize(name: str) -> str:
+    """Prefix-free lowercase name with spaces and hyphens folded to ``_``."""
+    stripped = _PREFIX_RE.sub("", name).strip().lower()
+    return _SEP_RE.sub("_", stripped).strip("_")
 
 
-def io_roots() -> List[str]:
-    """Directories that may hold papers and generated stage outputs."""
-    roots = [ROOT]
-    if os.path.isdir(GENERATED) and os.path.abspath(GENERATED) != os.path.abspath(ROOT):
-        roots.append(GENERATED)
-    return roots
-
-
-def stage_dirs(root: str = ROOT) -> Dict[str, str]:
+def stage_dirs(root: str = SRC) -> Dict[str, str]:
     """Map each stage's prefix-free lowercase name to its absolute path."""
     found: Dict[str, str] = {}
     if not os.path.isdir(root):
@@ -81,22 +74,19 @@ def stage_dirs(root: str = ROOT) -> Dict[str, str]:
         path = os.path.join(root, entry)
         if not os.path.isdir(path) or not _STAGE_DIR_RE.match(entry):
             continue
-        found[_strip_prefix(entry).lower()] = path
+        found[_normalize(entry)] = path
     return found
 
 
 def stage_dir(keyword: str, root: Optional[str] = None) -> str:
     """Return the absolute path of the stage folder named ``keyword``.
 
-    The numeric prefix and case are ignored, so ``stage_dir("scrape
-    constants")`` finds ``03 Scrape Constants``.  A unique partial match is
-    accepted too (``stage_dir("plotting")``).  Pass ``root=BUILD`` to find
-    the matching source folder under ``build/``.
-
-    With no ``root``, generated outputs are sought under :data:`GENERATED`
-    (and numbered leftovers at the repo root, if any).
+    The numeric prefix, case, and spaces vs underscores are ignored, so
+    ``stage_dir("scrape constants")`` finds ``03_scrape_constants``.  A unique
+    partial match is accepted too (``stage_dir("plotting")``).  Pass
+    ``root=SRC`` (the default) to look under ``src/``.
     """
-    bases: Sequence[str] = (root,) if root is not None else io_roots()
+    bases: Sequence[str] = (root,) if root is not None else (SRC,)
     last_error: Optional[LookupError] = None
     for base in bases:
         try:
@@ -109,7 +99,7 @@ def stage_dir(keyword: str, root: Optional[str] = None) -> str:
 
 def _stage_dir_in(keyword: str, root: str) -> str:
     stages = stage_dirs(root)
-    key = _strip_prefix(keyword).lower()
+    key = _normalize(keyword)
     if key in stages:
         return stages[key]
     partial = [path for name, path in stages.items() if key in name]
@@ -121,20 +111,53 @@ def _stage_dir_in(keyword: str, root: str) -> str:
     raise LookupError(f"No stage folder matching {keyword!r}. Known stages: {known}")
 
 
-def add_stages(*keywords: str, root: Optional[str] = None) -> List[str]:
-    """Put the named source (``build/``) and output folders on ``sys.path``.
+def log_dir(keyword: str) -> str:
+    """Folder under ``log/`` matching the named ``src/`` stage."""
+    return os.path.join(LOG, os.path.basename(stage_dir(keyword, root=SRC)))
 
-    Each keyword is looked up first under :data:`BUILD` (runnable source) and
-    then under the I/O roots (repo root and :data:`GENERATED`) so generated
-    artefacts such as ``equations.py`` resolve.  Missing matches are skipped.
+
+def _rel_under_src(path: str) -> Optional[str]:
+    abs_path = os.path.abspath(path)
+    src_root = os.path.abspath(SRC)
+    try:
+        common = os.path.commonpath([abs_path, src_root])
+    except ValueError:
+        return None
+    if os.path.normcase(common) != os.path.normcase(src_root):
+        return None
+    return os.path.relpath(abs_path, src_root)
+
+
+def mirror_to_log(path: str) -> Optional[str]:
+    """Copy a generated file under ``src/`` to the matching path under ``log/``.
+
+    Later stages keep importing the ``src/`` copy.  ``log/`` holds the full
+    set of generated artefacts, including those duplicates.  Paths outside
+    ``src/`` (pytest temp dirs, a custom ``--output``) are left unchanged.
+    """
+    if not os.path.isfile(path):
+        return None
+    rel = _rel_under_src(path)
+    if rel is None:
+        return None
+    dest = os.path.join(LOG, rel)
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    shutil.copy2(path, dest)
+    return dest
+
+
+def add_stages(*keywords: str, root: Optional[str] = None) -> List[str]:
+    """Put the named ``src/`` stage folders on ``sys.path``.
+
+    Each keyword is looked up under :data:`SRC` (runnable source and the
+    artefacts later stages import).  An extra ``root`` is searched as well.
+    Missing matches are skipped.
     """
     added: List[str] = []
-    bases: List[str] = [BUILD]
-    if root is not None:
+    bases: List[str] = [SRC]
+    if root is not None and os.path.abspath(root) != os.path.abspath(SRC):
         bases.append(root)
-    else:
-        bases.extend(io_roots())
-    paths = [BUILD]
+    paths = [SRC]
     for keyword in keywords:
         for base in bases:
             try:
@@ -160,6 +183,15 @@ def _list_papers(folder: str) -> List[str]:
     return sorted(found)
 
 
+try:
+    INPUT = _stage_dir_in("input", SRC)
+except LookupError:
+    INPUT = os.path.join(SRC, "01_input")
+
+#: Papers: extras live directly in ``01_input/``; the default paper is in ``target/``.
+TARGET = os.path.join(INPUT, "target")
+
+
 def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
     """Absolute path of a source document.
 
@@ -167,11 +199,11 @@ def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
     :data:`TARGET` (any filename).  Drop a different paper into that folder
     to switch the default without renaming it.
 
-    With ``name``, looks in :data:`INPUT` first (e.g. ``Sample Paper 2.md``),
+    With ``name``, looks in :data:`INPUT` first (e.g. ``sample_2.md``),
     then in :data:`TARGET`.  ``root`` is unused and kept for call-site
     compatibility.
     """
-    del root  # papers are no longer looked up as a numbered stage folder
+    del root  # papers live under 01_input, not as a separate numbered lookup
     if name is None:
         papers = _list_papers(TARGET)
         if not papers:
@@ -186,8 +218,8 @@ def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
             )
         return os.path.join(TARGET, papers[0])
 
-    if os.path.isabs(name) and os.path.exists(name):
-        return name
+    if os.path.exists(name):
+        return os.path.abspath(name)
     for folder in (INPUT, TARGET):
         candidate = os.path.join(folder, name)
         if os.path.exists(candidate):

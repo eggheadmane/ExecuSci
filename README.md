@@ -1,7 +1,7 @@
 # ExecuSci
 
 • Scientific knowledge is still locked inside PDFs, making it difficult to reuse, validate, and integrate published models into real engineering workflows. 
-	
+
 • This project will develop ExecuSci, an AI-based tool that transforms frontier knowledge embedded in metal forming-related papers into executable, reusable research plug-ins. 
 	
 • Empowered by AI, ExecuSci will interpret equations, models, workflows, assumptions, and engineering logic directly from the paper. 
@@ -10,37 +10,40 @@
 
 ## Pipeline
 
-Runnable source lives under `build/` in the same numbered stage folders.
-Put papers in `input/`. The default paper is **whichever markdown/LaTeX file**
-is in `input/target/` — any filename, no rename needed. Generated outputs for
-stages 02–05 live under `generated/`. Folder numbers follow the order the
-stages run in; code never hard-codes those numbers, it looks folders up by
-name through `build/execusci_paths.py`, so stages can be reordered.
+Runnable source lives under `src/` in numbered stage folders. Put papers in
+`src/01_input/`. The default paper is **whichever markdown/LaTeX file** is in
+`src/01_input/target/` — any filename, no rename needed. Artefacts that later
+stages import (`equations.md`, `symbols.json`, `constants.py`, `equations.py`)
+stay in the matching `src/` stage folder. `log/` keeps a full copy of every
+generated file, including those duplicates, plus reports nothing imports
+(currently `constants.md`). Folder numbers follow the order the stages run in;
+code never hard-codes those numbers, it looks folders up by name through
+`src/execusci_paths.py`, so stages can be reordered.
 
 | Stage | Folder | Input | Output |
 |-------|--------|-------|--------|
-| 01 | `input/target/` | the PDF | Mathpix markdown (any filename) |
-| 02 | `generated/02 Extract Equations` | the target paper | `output/equations.md`, `output/symbols.json` |
-| 03 | `generated/03 Scrape Constants` | the target paper | `constants.py`, `constants.md` |
-| 04 | `generated/04 Latex2Python` | `equations.md` + `symbols.json` | `equations.py` |
-| 05 | `generated/05 Plotting` | `equations.py` + `constants.py` | figures under `output/` |
+| 01 | `src/01_input/target/` | the PDF | Mathpix markdown (any filename) |
+| 02 | `src/02_extract_equations` | the target paper | `output/equations.md`, `output/symbols.json` (also `log/`) |
+| 03 | `src/03_scrape_constants` | the target paper | `constants.py` (also `log/`); `constants.md` in `log/` only |
+| 04 | `src/04_latex2python` | `equations.md` + `symbols.json` | `equations.py` (also `log/`) |
+| 05 | `src/05_plotting` | `equations.py` + `constants.py` | figures under `output/` (also `log/`) |
 
 ### Install and run
 
 ```bash
 pip install -r requirements.txt
-python build/run_pipeline.py            # stages 02 -> 04 (paper in input/target/)
-python build/run_pipeline.py --plot     # also runs stage 05
-python build/run_pipeline.py --paper "input/Sample Paper 2.md"
+python src/run_pipeline.py            # stages 02 -> 04 (paper in src/01_input/target/)
+python src/run_pipeline.py --plot     # also runs stage 05
+python src/run_pipeline.py --paper src/01_input/sample_2.md
 ```
 
 Every stage is also runnable on its own:
 
 ```bash
-python "build/02 Extract Equations/extract_equations.py"
-python "build/03 Scrape Constants/scrape_constants.py"
-python "build/04 Latex2Python/translate_equations.py"
-python "build/05 Plotting/plot_compare.py" --no-show
+python src/02_extract_equations/extract_equations.py
+python src/03_scrape_constants/scrape_constants.py
+python src/04_latex2python/translate_equations.py
+python src/05_plotting/plot_compare.py --no-show
 ```
 
 ## Stage 02 — Extract equations

@@ -18,8 +18,8 @@ equations in the paper, so the dictionary uses the authors' own wording.
 
 Run it with::
 
-    python "build/02 Extract Equations/extract_equations.py"
-    python "build/02 Extract Equations/extract_equations.py" --paper "input/Sample Paper 2.md"
+    python src/02_extract_equations/extract_equations.py
+    python src/02_extract_equations/extract_equations.py --paper src/01_input/sample_2.md
 """
 
 from __future__ import annotations
@@ -32,11 +32,11 @@ import sys
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-_BUILD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
-from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
+from execusci_paths import add_stages, mirror_to_log, paper_path, stage_dir  # noqa: E402
 
 add_stages("Latex2Python")
 
@@ -566,6 +566,8 @@ def run(
     with open(json_path, "w", encoding="utf-8") as fh:
         json.dump(extraction.to_json(), fh, indent=2, ensure_ascii=False)
         fh.write("\n")
+    mirror_to_log(md_path)
+    mirror_to_log(json_path)
 
     if verbose:
         ok = len(extraction.equations) - len(extraction.failed)
@@ -591,7 +593,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: the file in input/target/)",
+        help="Markdown/LaTeX source (default: the file in src/01_input/target/)",
     )
     parser.add_argument(
         "--output",

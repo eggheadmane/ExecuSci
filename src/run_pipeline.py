@@ -1,16 +1,16 @@
 """Run the whole ExecuSci pipeline on one paper.
 
-    01 input/target       the paper as Mathpix markdown (input)
-      -> 02 Extract Equations   equations.md + symbols.json
-      -> 03 Scrape Constants    constants.py + constants.md
-      -> 04 Latex2Python        equations.py
-      -> 05 Plotting            figures comparing the model to the paper (optional)
+    01 src/01_input/target      the paper as Mathpix markdown (input)
+      -> 02_extract_equations   equations.md + symbols.json
+      -> 03_scrape_constants    constants.py (+ constants.md under log/)
+      -> 04_latex2python        equations.py
+      -> 05_plotting            figures comparing the model to the paper (optional)
 
 Usage::
 
-    python build/run_pipeline.py
-    python build/run_pipeline.py --paper "input/Sample Paper 2.md"
-    python build/run_pipeline.py --plot
+    python src/run_pipeline.py
+    python src/run_pipeline.py --paper src/01_input/sample_2.md
+    python src/run_pipeline.py --plot
 """
 
 from __future__ import annotations
@@ -20,9 +20,9 @@ import os
 import sys
 from typing import Optional, Sequence
 
-_BUILD = os.path.dirname(os.path.abspath(__file__))
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.dirname(os.path.abspath(__file__))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
 from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
 
@@ -87,7 +87,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Paper markdown to process (default: the file in input/target/)",
+        help="Paper markdown to process (default: the file in src/01_input/target/)",
     )
     parser.add_argument(
         "--plot",

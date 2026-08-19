@@ -18,7 +18,7 @@ Sources
 
 Run it with::
 
-    python "build/03 Scrape Constants/scrape_constants.py"
+    python src/03_scrape_constants/scrape_constants.py
 """
 
 from __future__ import annotations
@@ -31,11 +31,11 @@ import sys
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-_BUILD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
-from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
+from execusci_paths import add_stages, log_dir, mirror_to_log, paper_path, stage_dir  # noqa: E402
 
 add_stages("Latex2Python")
 
@@ -55,7 +55,7 @@ __all__ = [
 
 _SCRAPE = stage_dir("Scrape Constants")
 DEFAULT_CONSTANTS_PATH = os.path.join(_SCRAPE, "constants.py")
-DEFAULT_REPORT_PATH = os.path.join(_SCRAPE, "constants.md")
+DEFAULT_REPORT_PATH = os.path.join(log_dir("Scrape Constants"), "constants.md")
 
 # Tool / material labels that appear in Table 3 headers like ``k_t (H13)``.
 _TOOL_ALIASES = {
@@ -1226,6 +1226,8 @@ def run(
         equation_symbols=equation_symbols,
         symbol_info=equation_info,
     )
+    os.makedirs(os.path.dirname(os.path.abspath(constants_path)), exist_ok=True)
+    os.makedirs(os.path.dirname(os.path.abspath(report_path)), exist_ok=True)
     with open(constants_path, "w", encoding="utf-8") as fh:
         fh.write(source)
     with open(report_path, "w", encoding="utf-8") as fh:
@@ -1238,6 +1240,8 @@ def run(
                 symbol_info=equation_info,
             )
         )
+    mirror_to_log(constants_path)
+    mirror_to_log(report_path)
 
     if verbose:
         grouped = _organise(constants)
@@ -1271,7 +1275,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: the file in input/target/)",
+        help="Markdown/LaTeX source (default: the file in src/01_input/target/)",
     )
     parser.add_argument(
         "--constants",

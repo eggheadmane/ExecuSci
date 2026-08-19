@@ -1,15 +1,15 @@
 """Stage 05 -- compare a reduced model against a paper figure.
 
-Discovers a plot image in ``input/target/``, digitizes its axes and curves,
+Discovers a plot image in ``src/01_input/target/``, digitizes its axes and curves,
 reduces the extracted equations to the last definition of the y-axis symbol,
 evaluates that DAG over the digitized x values, and writes numeric error
 plots plus a visual overlay of the prediction on the original figure.
 
 Usage
 -----
-    python "build/05 Plotting/plot_compare.py"
-    python "build/05 Plotting/plot_compare.py" --eq 6 --target h --x P
-    python "build/05 Plotting/plot_compare.py" --no-show
+    python src/05_plotting/plot_compare.py
+    python src/05_plotting/plot_compare.py --eq 6 --target h --x P
+    python src/05_plotting/plot_compare.py --no-show
 """
 
 from __future__ import annotations
@@ -25,11 +25,11 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-_BUILD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
-from execusci_paths import BUILD, add_stages, paper_path, stage_dir, target_figure_paths  # noqa: E402
+from execusci_paths import add_stages, mirror_to_log, paper_path, stage_dir, target_figure_paths  # noqa: E402
 
 add_stages("Latex2Python", "Scrape Constants", "Plotting")
 
@@ -98,7 +98,7 @@ def choose_figure(path: Optional[str] = None) -> str:
     figures = target_figure_paths()
     if not figures:
         raise FileNotFoundError(
-            "No plot image in input/target/. Put a .jpg/.png of the paper figure there."
+            "No plot image in src/01_input/target/. Put a .jpg/.png of the paper figure there."
         )
     return figures[0]
 
@@ -360,6 +360,8 @@ def run(
         json.dump(summary, fh, indent=2)
         fh.write("\n")
     summary["outputs"] = outputs + [summary_path]
+    for path in summary["outputs"]:
+        mirror_to_log(path)
     return summary
 
 
@@ -367,7 +369,7 @@ def _parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Reduce equations to a target and compare against a paper figure."
     )
-    parser.add_argument("--figure", default=None, help="Plot image (default: image in input/target/)")
+    parser.add_argument("--figure", default=None, help="Plot image (default: image in src/01_input/target/)")
     parser.add_argument("--symbols", default=DEFAULT_SYMBOLS, help="Stage 02 symbols.json")
     parser.add_argument("--paper", default=None, help="Markdown used for figure captions")
     parser.add_argument("--eq", dest="eq_tag", default=None, help="Paper equation tag to reduce from")

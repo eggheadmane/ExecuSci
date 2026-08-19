@@ -17,11 +17,11 @@ import types
 import pytest
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_BUILD = os.path.join(_ROOT, "build")
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.join(_ROOT, "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
-from execusci_paths import add_stages, paper_path  # noqa: E402
+from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
 
 add_stages("Extract Equations", "Scrape Constants", "Latex2Python", "Plotting")
 
@@ -101,7 +101,7 @@ def test_lubricated_p20_curve_tracks_digitized_oracle(pipeline):
     """DAG evaluation over the WebPlotDigitizer P20 curve stays in the same ballpark."""
     import numpy as np
 
-    csv = os.path.join(_BUILD, "05 Plotting", "data", "p20.csv")
+    csv = os.path.join(stage_dir("Plotting", root=_SRC), "data", "p20.csv")
     data = np.loadtxt(csv, delimiter=",")
     pressure, h_paper = data[:, 0], data[:, 1]
     graph = EquationGraph.from_path(str(pipeline.out / "symbols.json"))

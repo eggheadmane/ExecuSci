@@ -1,6 +1,6 @@
 """Stage 04 -- turn the extracted equations into an executable Python module.
 
-Reads ``02 Extract Equations/output/equations.md`` (falling back to the paper
+Reads ``02_extract_equations/output/equations.md`` (falling back to the paper
 itself if that stage has not been run), translates every equation with
 ``latex2python`` and writes ``equations.py`` into the Latex2Python stage folder.
 The symbol dictionary from stage 02 is used to document each generated
@@ -8,8 +8,8 @@ function's arguments in the paper's own words.
 
 Run it with::
 
-    python "build/04 Latex2Python/translate_equations.py"
-    python "build/04 Latex2Python/translate_equations.py" --source "input/Sample Paper 2.md"
+    python src/04_latex2python/translate_equations.py
+    python src/04_latex2python/translate_equations.py --source src/01_input/sample_2.md
 """
 
 from __future__ import annotations
@@ -20,11 +20,11 @@ import os
 import sys
 from typing import Dict, Optional, Sequence
 
-_BUILD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
-from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
+from execusci_paths import add_stages, mirror_to_log, paper_path, stage_dir  # noqa: E402
 
 add_stages("Latex2Python")
 
@@ -108,6 +108,7 @@ def run_document(
     )
     with open(module_path, "w", encoding="utf-8") as fh:
         fh.write(source)
+    mirror_to_log(module_path)
 
     print(f"Translated {ok}/{len(results)} equations from {os.path.basename(path)}.")
     if descriptions:
