@@ -1,0 +1,493 @@
+{
+  "source": "Sample Paper 2.md",
+  "equation_count": 10,
+  "symbol_count": 23,
+  "equations": [
+    {
+      "tag": "1",
+      "latex": "\\mu(t)=(1-\\beta) \\mu_{l}(t)+\\beta \\mu_{d}(t)",
+      "source_line": 157,
+      "output": "mu",
+      "inputs": [
+        "beta",
+        "mu_d",
+        "mu_l"
+      ],
+      "python": "mu = beta*mu_d + mu_l*(1 - beta)",
+      "context": "$\\mu_{l}(t)$ and $\\mu_{d}(t)$ represent the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively. Arrhenius equations were used to represent the temperature effects on the values of $\\mu_{l}(t)$ and $\\mu_{d}(t)$, as described by Eqs. (2) and (3):",
+      "error": null
+    },
+    {
+      "tag": "2",
+      "latex": "\\mu_{l}(t)=\\mu_{l 0} \\exp \\left(-\\frac{Q_{l}}{R T(t)}\\right)",
+      "source_line": 165,
+      "output": "mu_l",
+      "inputs": [
+        "Q_l",
+        "R",
+        "T",
+        "mu_l0"
+      ],
+      "python": "mu_l = mu_l0*exp(-Q_l/(R*T))",
+      "context": "",
+      "error": null
+    },
+    {
+      "tag": "3",
+      "latex": "\\mu_{d}(t)=\\mu_{d 0} \\exp \\left(-\\frac{Q_{d}}{R T(t)}\\right)",
+      "source_line": 171,
+      "output": "mu_d",
+      "inputs": [
+        "Q_d",
+        "R",
+        "T",
+        "mu_d0"
+      ],
+      "python": "mu_d = mu_d0*exp(-Q_d/(R*T))",
+      "context": "where $\\mu_{l 0}$ and $\\mu_{d 0}$ are model constants, $Q_{l}$ and $Q_{d}$ are activation energy for lubricated and dry conditions, respectively. The contribution of $\\mu_{l}(t)$ and $\\mu_{d}(t)$ to the overall COF is characterised by the ratio between the unlubricated area and the lubricated area, $\\beta$, which varies from 0 (boundary lubrication condition) to 1 (dry condition). The lubrication condition is determined by the lubricant film thickness entrapped at the interface. As the lubricant is smeared on the wear track and the film thickness decreases, more asperities at the interface come into contact, indicating the transformation from the boundary lubrication to the dry condition and leading to an overall increase of the COF. Thus, the relationship of the area ratio, $\\beta$, and the instantaneous lubricant film thickness, $h(t)$, is modelled as Eq. (4), where $t$ is the sliding time and $\\lambda_{1}$, $\\lambda_{2}$ are model parameters.",
+      "error": null
+    },
+    {
+      "tag": "4",
+      "latex": "\\beta(t)=\\exp \\left[-\\left(\\lambda_{1} h(t)\\right)^{\\lambda_{2}}\\right]",
+      "source_line": 179,
+      "output": "beta",
+      "inputs": [
+        "h",
+        "lamda_1",
+        "lamda_2"
+      ],
+      "python": "beta = exp(-(h*lamda_1)**lamda_2)",
+      "context": "When the thickness of lubricant film is smaller than the average height of the asperity peaks of the aluminium material, the lubricant breakdown would occur and the contact condition would begin to transfer from the boundary lubrication condition to the dry condition [17,24].\n\nTo calculate the instantaneous thickness entrapped at the contact interface, it is critical to consider the relation between the total amount of lubricant and that smeared on the wear track and the influencing contact parameters. The total amount of lubricant volume is assumed as constant during the sliding process. Therefore, the initial entrapped lubricant equals the sum of the instantaneous lubricant volume and the volume transferred on the wear track, which is presented as Eq. (5):",
+      "error": null
+    },
+    {
+      "tag": "5",
+      "latex": "V(0)=V(t)+\\Delta V(t)=V(t)+\\int_{0}^{t} d V",
+      "source_line": 189,
+      "output": null,
+      "inputs": [],
+      "python": null,
+      "context": "where $V(0)$ and $V(t)$ are the initial and instantaneous entrapped lubricant volume, respectively, and $\\Delta V(t)$ represents the lubricant volume smeared on the wear track, which is integrated by the transferred amount of the lubricant onto the wear track during a short sliding time, $d V$, which can be expressed by Eq. (6):",
+      "error": "an integral (\\int) is not supported"
+    },
+    {
+      "tag": "6",
+      "latex": "d V=a h(t) \\cdot w \\cdot v^{k_{1}} d t",
+      "source_line": 197,
+      "output": null,
+      "inputs": [],
+      "python": null,
+      "context": "where $h(t)$ is the instantaneous film thickness, $w$ is the width of the wear track, $v$ is the speed and $d t$ is the increment of sliding time. $a$ is a model parameter accounting for the influence of deformed contact area $(A)$ on the transferred volume of lubricant. The width of the wear track $(w)$ is affected by the normal contact pressure and the lubricant viscosity [30, 31], indicating $w=f(P, \\eta)$, which can be written as $w=m P^{k_{3}} / \\eta^{k_{2}}$, where $m$ is a constant, $P$ is the mean contact pressure and $\\eta$ is the lubricant viscosity. Thus by incorporating these parameters ( $A$ is extracted from the model parameter $a$ and $m$ is integrated into $b$ ), Eq. (7) can be obtained from Eq. (6):",
+      "error": "a differential (d V) is not supported"
+    },
+    {
+      "tag": "7",
+      "latex": "\\Delta V=\\int_{0}^{t} A \\cdot b \\frac{P^{k_{3}} v^{k_{1}}}{\\eta^{k_{2}}} \\cdot h(t) d t",
+      "source_line": 205,
+      "output": null,
+      "inputs": [],
+      "python": null,
+      "context": "By taking the derivative on both sides, Eq. (7) can be written as Eq. (8):",
+      "error": "an integral (\\int) is not supported"
+    },
+    {
+      "tag": "8",
+      "latex": "\\dot{h}(t)=\\frac{\\dot{V}(t)}{A}=-h(t)\\left(c P^{k_{p}} v^{k_{v}} / \\eta^{k_{\\eta}}\\right)",
+      "source_line": 213,
+      "output": "h_dot",
+      "inputs": [
+        "P",
+        "c",
+        "eta",
+        "h",
+        "k_eta",
+        "k_p",
+        "k_v",
+        "v"
+      ],
+      "python": "h_dot = -P**k_p*c*h*v**k_v/eta**k_eta",
+      "context": "where $\\dot{h}(t)$ represents the diminution rate of the film thickness, $P, v$ and $\\eta$ represent the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively. $c$ is a model constant, $k_{p}, k_{v}$ and $k_{\\eta}$ are the pressure-dependent, speed-dependent and viscositydependent parameters, respectively.\n\nConsidering the effect of temperature on the lubricant viscosity, the Arrhenius equation is applied to describe the relationship between the viscosity and temperature [32], as shown in Eq. (10), where $T$ represents the instantaneous temperature of the aluminium, $\\eta_{0}$ is the model constant, $Q_{\\eta}$ is the activation energy and $R$ is the universal gas constant. The deviation between the dynamic viscosity and kinematic viscosity is negligible as the change of the lubricant density could be ignored at elevated temperatures. The lubricant viscosity at the test conditions can\nbe obtained by Eq. (9).",
+      "error": null
+    },
+    {
+      "tag": "9",
+      "latex": "\\eta=\\eta_{0} \\exp \\left(\\frac{Q_{\\eta}}{R T}\\right)",
+      "source_line": 224,
+      "output": "eta",
+      "inputs": [
+        "Q_eta",
+        "R",
+        "T",
+        "eta_0"
+      ],
+      "python": "eta = eta_0*exp(Q_eta/(R*T))",
+      "context": "",
+      "error": null
+    },
+    {
+      "tag": "10",
+      "latex": "f(x)=\\sum_{i=1}^{m} w_{i}\\left(\\mu_{i}^{p}-\\mu_{i}^{e}\\right)^{2}",
+      "source_line": 234,
+      "output": null,
+      "inputs": [],
+      "python": null,
+      "context": "where $f(x)$ is the sum of residuals for the COF, $x\\left(x=\\left[x_{1}, x_{2}, \\ldots \\ldots, x_{s}\\right]\\right)$ represents the model parameters and $s$ is the number of the model parameters to be calibrated. $\\mu_{i}^{p}$ and $\\mu_{i}^{e}$ are the predicted and experimental results for the COF at the same sliding distances. $w$ is a weighting function and $m$ is the total number of data points considered.\n\nThe optimised parameters that were determined are displayed in Table 2. The comparisons between the predicted results by the model and the experimental results at varying contact conditions are shown in Fig. 10. Good agreements with errors less than 6.8\\% have been achieved under varying contact conditions. Evolutions of lubricant film thickness and thickness diminution rate predicted by the interactive friction model are demonstrated to reveal the corresponding model responses in the temperature decrease, load increase and speed increase tests, respectively. As shown in Fig. 11a, temperature decrease results in a lubricant breakdown distance of 18 mm. The large difference in lubricant breakdown behaviours between this temperature decrease test and the constant temperature tests is successfully predicted by the interactive friction model through the deviations in the evolution of film thickness and thickness diminution rate. When the contact load suddenly increases from 5 N to 8 N at the sliding distance of 8.5 mm, the diminution rate of the lubricant thickness increases from $-38 \\mu m / s$ to $-67 \\mu m / \\mathrm{s}$. As a consequence, the lubricant film thickness decreases at a faster rate and approaches the breakdown within a shorter distance, as shown in Fig. 11b. When there is a step change of the speed from 50 mm/s to 80 mm/s at the distance of 18 mm, the diminution rate of the lubricant thickness increases suddenly from $-19 \\mu m / s$ to $-75 \\mu m / s$, representing the corresponding responses of the developed model to the speed increase, as shown",
+      "error": "a summation (\\sum) is not supported"
+    }
+  ],
+  "symbols": {
+    "P": {
+      "latex": "P",
+      "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    },
+    "Q_d": {
+      "latex": "Q_{d}",
+      "description": "activation energy for lubricated and dry conditions, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "activation energy for lubricated and dry conditions, respectively",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "Q_eta": {
+      "latex": "Q_{eta}",
+      "description": "the activation energy",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the activation energy",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "9"
+      ]
+    },
+    "Q_l": {
+      "latex": "Q_{l}",
+      "description": "activation energy for lubricated and dry conditions, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "activation energy for lubricated and dry conditions, respectively",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2"
+      ]
+    },
+    "R": {
+      "latex": "R",
+      "description": "the universal gas constant",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the universal gas constant",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2",
+        "3",
+        "9"
+      ]
+    },
+    "T": {
+      "latex": "T",
+      "description": "the instantaneous temperature of the aluminium",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the instantaneous temperature of the aluminium",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2",
+        "3",
+        "9"
+      ]
+    },
+    "beta": {
+      "latex": "\\beta",
+      "description": null,
+      "kind": "derived",
+      "definitions": [],
+      "defined_by": [
+        "4"
+      ],
+      "used_in": [
+        "1"
+      ]
+    },
+    "c": {
+      "latex": "c",
+      "description": "a model constant",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "a model constant",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    },
+    "eta": {
+      "latex": "\\eta",
+      "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [
+        "9"
+      ],
+      "used_in": [
+        "8"
+      ]
+    },
+    "eta_0": {
+      "latex": "\\eta_{0}",
+      "description": "the model constant",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "the model constant",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "9"
+      ]
+    },
+    "h": {
+      "latex": "h",
+      "description": "the instantaneous film thickness",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the instantaneous film thickness",
+          "equation": "6"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4",
+        "8"
+      ]
+    },
+    "h_dot": {
+      "latex": "\\dot{h}",
+      "description": "the diminution rate of the film thickness",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the diminution rate of the film thickness",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [
+        "8"
+      ],
+      "used_in": []
+    },
+    "k_eta": {
+      "latex": "k_{eta}",
+      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    },
+    "k_p": {
+      "latex": "k_{p}",
+      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    },
+    "k_v": {
+      "latex": "k_{v}",
+      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    },
+    "lamda_1": {
+      "latex": "\\lambda_{1}",
+      "description": "model parameters",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model parameters",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4"
+      ]
+    },
+    "lamda_2": {
+      "latex": "\\lambda_{2}",
+      "description": "model parameters",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model parameters",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4"
+      ]
+    },
+    "mu": {
+      "latex": "\\mu",
+      "description": null,
+      "kind": "derived",
+      "definitions": [],
+      "defined_by": [
+        "1"
+      ],
+      "used_in": []
+    },
+    "mu_d": {
+      "latex": "\\mu_{d}",
+      "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
+          "equation": "1"
+        }
+      ],
+      "defined_by": [
+        "3"
+      ],
+      "used_in": [
+        "1"
+      ]
+    },
+    "mu_d0": {
+      "latex": "\\mu_{d0}",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "mu_l": {
+      "latex": "\\mu_{l}",
+      "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
+          "equation": "1"
+        }
+      ],
+      "defined_by": [
+        "2"
+      ],
+      "used_in": [
+        "1"
+      ]
+    },
+    "mu_l0": {
+      "latex": "\\mu_{l0}",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2"
+      ]
+    },
+    "v": {
+      "latex": "v",
+      "description": "the speed",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the speed",
+          "equation": "6"
+        },
+        {
+          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
+          "equation": "8"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8"
+      ]
+    }
+  }
+}

@@ -10,9 +10,9 @@ import pytest
 import sympy as sp
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_BUILD = os.path.join(_ROOT, "build")
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.join(_ROOT, "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
@@ -261,11 +261,11 @@ def test_preprocess_strips_left_right_and_tag():
 
 
 # --------------------------------------------------------------------------- #
-# Notation of the friction paper (``Sample Paper 2.md``): quantities written as
+# Notation of the friction paper (``sample_2.md``): quantities written as
 # functions of time, chained equalities, integrals and summations.
 # --------------------------------------------------------------------------- #
 
-_FRICTION_PAPER = paper_path("Sample Paper 2.md")
+_FRICTION_PAPER = paper_path("sample_2.md")
 
 FRICTION_EQUATIONS = {
     "1": r"\mu(t)=(1-\beta) \mu_{l}(t)+\beta \mu_{d}(t)",
