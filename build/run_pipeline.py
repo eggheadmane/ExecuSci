@@ -1,6 +1,6 @@
 """Run the whole ExecuSci pipeline on one paper.
 
-    01 PDF2Latex          the paper as Mathpix markdown (input)
+    01 input/target       the paper as Mathpix markdown (input)
       -> 02 Extract Equations   equations.md + symbols.json
       -> 03 Scrape Constants    constants.py + constants.md
       -> 04 Latex2Python        equations.py
@@ -9,7 +9,7 @@
 Usage::
 
     python build/run_pipeline.py
-    python build/run_pipeline.py --paper "01 PDF2Latex/target_paper.md"
+    python build/run_pipeline.py --paper "input/Sample Paper 2.md"
     python build/run_pipeline.py --plot
 """
 
@@ -62,10 +62,16 @@ def run(paper: Optional[str] = None, plot: bool = False, quiet: bool = True) -> 
         add_stages("Plotting")
         import plot_compare  # noqa: E402  (optional: needs matplotlib/pandas)
 
-        summary = plot_compare.run(show=False)
+        summary = plot_compare.run(show=False, paper=path)
+        ssim_txt = (
+            f"{summary['ssim']:.3f}" if summary.get("ssim") is not None else "n/a"
+        )
         print(
-            f"[{summary['tool']}] mean |err|={summary['mean_abs_pct_error']:.2f}%  "
-            f"max |err|={summary['max_abs_pct_error']:.2f}%"
+            f"[{summary['tool']}] Eq. {summary.get('target_eq')}  "
+            f"{summary.get('y_symbol')} vs {summary.get('x_symbol')}  "
+            f"mean |err|={summary['mean_abs_pct_error']:.2f}%  "
+            f"max |err|={summary['max_abs_pct_error']:.2f}%  "
+            f"SSIM={ssim_txt}"
         )
 
     print()
@@ -81,7 +87,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Paper markdown to process (default: 01 PDF2Latex/target_paper.md)",
+        help="Paper markdown to process (default: the file in input/target/)",
     )
     parser.add_argument(
         "--plot",

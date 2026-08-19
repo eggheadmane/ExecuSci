@@ -1,0 +1,48 @@
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\transformers\generation\utils.py:1220: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+3900
+tensor([[  46,   67,   46,   47,   46,   28,   52,   67,   50,   48,   39,   92,
+           46,   47,   46,   28,   52,   92,   50,   48,   39,  130,   49,  148,
+          139,  102,   46,   47,   46,   28,   52,  130,   49,  148,  139,  102,
+           50,   48,   39,   55,   46,   47,   46,   29,   51,   67,   53,   46,
+           37,  175,   35,   51,   92,   48,   46,   54,   46,   31,   51,  130,
+           49,  148,  139,  102,   48,   53,   46,  130,   49,  148,  139,  102,
+           58,    2, -100, -100, -100],
+        [  46,   94,   46,   47,   46,   28,   52,   94,   50,   48,   39,   75,
+           46,   47,   46,   28,   52,   75,   50,   48,   39,  153,  186,   57,
+           66,   46,   47,   46,   28,   52,  153,  186,   57,   66,   50,   48,
+           39,   55,   46,   47,   46,   29,   51,   94,   53,   46,   37,   51,
+           35,   51,   75,  172,  153,  186,   57,   66,   53,   46,  153,  186,
+           57,   66,   58,    2, -100, -100, -100, -100, -100, -100, -100, -100,
+         -100, -100, -100, -100, -100],
+        [  46,  150,   49,   66,  134,   46,   47,   46,   28,   52,  150,   49,
+           66,  134,   50,   48,   39,  102,   46,   47,   46,   28,   52,  102,
+           50,   48,   39,   98,   46,   47,   46,   28,   52,   98,   50,   48,
+           39,  115,   46,   47,   46,   28,   52,  115,   50,   48,   39,   55,
+           46,   47,   46,   29,   51,  150,   49,   66,  134,   53,   46,   36,
+          239,   31,   51,  115,   48,   53,   46,   51,  102,   53,   46,  158,
+           53,   46,   98,  165,    2]])
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\peft\mapping_func.py:73: UserWarning: You are trying to modify a model with PEFT for a second time. If you want to reload the model with a different config, make sure to call `.unload()` before.
+  warnings.warn(
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\peft\tuners\tuners_utils.py:167: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+True
+[34m[1mwandb[0m: [33mWARNING[0m Calling wandb.login() after wandb.init() has no effect.
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\transformers\training_args.py:1545: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+  warnings.warn(
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\transformers\generation\utils.py:1220: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+{'eval_loss': 5.950107574462891, 'eval_bleu': 0.012829976727528353, 'eval_runtime': 4.462, 'eval_samples_per_second': 44.823, 'eval_steps_per_second': 0.896, 'epoch': 1.0}
+[34m[1mwandb[0m: Adding directory to artifact (.\Model_Files\t5-small-mathml-python-v1\checkpoint-32)... Done. 0.1s
+{'loss': 6.3647, 'grad_norm': 1.8951799869537354, 'learning_rate': 5.104166666666666e-05, 'epoch': 1.56}
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\transformers\generation\utils.py:1220: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+{'eval_loss': 5.343984603881836, 'eval_bleu': 0.012245385856163868, 'eval_runtime': 4.5216, 'eval_samples_per_second': 44.232, 'eval_steps_per_second': 0.885, 'epoch': 2.0}
+[34m[1mwandb[0m: Adding directory to artifact (.\Model_Files\t5-small-mathml-python-v1\checkpoint-64)... Done. 0.0s
+[34m[1mwandb[0m: Adding directory to artifact (.\Model_Files\t5-small-mathml-python-v1\checkpoint-96)... Done. 0.1s
+c:\Users\kyanj\anaconda3\envs\fyp_env\Lib\site-packages\transformers\generation\utils.py:1220: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+{'eval_loss': 5.14058780670166, 'eval_bleu': 0.010801210770310843, 'eval_runtime': 4.5368, 'eval_samples_per_second': 44.084, 'eval_steps_per_second': 0.882, 'epoch': 3.0}
+[34m[1mwandb[0m: Adding directory to artifact (.\Model_Files\t5-small-mathml-python-v1\checkpoint-96)... Done. 0.0s
+{'train_runtime': 44.1963, 'train_samples_per_second': 67.879, 'train_steps_per_second': 2.172, 'train_loss': 6.0212100346883135, 'epoch': 3.0}
+No files have been modified since last commit. Skipping to prevent empty commit.

@@ -19,7 +19,7 @@ equations in the paper, so the dictionary uses the authors' own wording.
 Run it with::
 
     python "build/02 Extract Equations/extract_equations.py"
-    python "build/02 Extract Equations/extract_equations.py" --paper "01 PDF2Latex/target_paper.md"
+    python "build/02 Extract Equations/extract_equations.py" --paper "input/Sample Paper 2.md"
 """
 
 from __future__ import annotations
@@ -591,7 +591,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: 01 PDF2Latex/target_paper.md)",
+        help="Markdown/LaTeX source (default: the file in input/target/)",
     )
     parser.add_argument(
         "--output",

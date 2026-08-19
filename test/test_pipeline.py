@@ -23,11 +23,12 @@ if _BUILD not in sys.path:
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
-add_stages("Extract Equations", "Scrape Constants", "Latex2Python")
+add_stages("Extract Equations", "Scrape Constants", "Latex2Python", "Plotting")
 
 import extract_equations  # noqa: E402
 import scrape_constants  # noqa: E402
 import translate_equations  # noqa: E402
+from equation_graph import EquationGraph  # noqa: E402
 
 PAPER = paper_path()
 
@@ -66,20 +67,16 @@ def pipeline(tmp_path_factory):
 
 
 def ihtc(pipeline, pressure: float, tool: str, delta: float) -> float:
-    """The paper's Eq. (6) chain, evaluated with the generated code."""
-    eq = pipeline.equations
-    c = pipeline.constants.get_constants(tool=tool, delta=delta)
-
-    K_st = eq.eq_8(c["k_s"], c["k_t"])
-    R = eq.eq_9(c["R_s"], c["R_t"])
-    N_P = eq.eq_10(pressure, c["lamda"], c["sigma_U"])
-    h_c = eq.eq_7(K_st, N_P, R, c["alpha"])
-
-    K_stl = eq.eq_12(c["k_l"], c["k_s"], c["k_t"])
-    N_L = eq.eq_13(c["delta"], c["gamma"])
-    h_l = eq.eq_11(K_stl, N_L, R, c["beta"])
-
-    return float(eq.eq_6(c["h_a"], h_c, h_l))
+    """The paper's last definition of ``h``, evaluated through the DAG."""
+    graph = EquationGraph.from_path(str(pipeline.out / "symbols.json"))
+    consts = pipeline.constants.get_constants(tool=tool, delta=delta)
+    return graph.evaluate(
+        pipeline.equations,
+        consts,
+        x_symbol="P",
+        x_value=pressure,
+        y_symbol="h",
+    )
 
 
 def test_every_stage_produced_its_artefacts(pipeline):
@@ -98,6 +95,22 @@ def test_p20_lubricated_matches_the_paper(pipeline):
     assert ihtc(pipeline, pressure=13.0, tool="P20", delta=1.5e-5) == pytest.approx(
         14.5, abs=0.1
     )
+
+
+def test_lubricated_p20_curve_tracks_digitized_oracle(pipeline):
+    """DAG evaluation over the WebPlotDigitizer P20 curve stays in the same ballpark."""
+    import numpy as np
+
+    csv = os.path.join(_BUILD, "05 Plotting", "data", "p20.csv")
+    data = np.loadtxt(csv, delimiter=",")
+    pressure, h_paper = data[:, 0], data[:, 1]
+    graph = EquationGraph.from_path(str(pipeline.out / "symbols.json"))
+    consts = pipeline.constants.get_constants(tool="P20", delta=1.5e-5)
+    predicted = graph.evaluate_curve(
+        pipeline.equations, consts, "P", pressure, y_symbol="h"
+    )
+    error = np.abs((predicted - h_paper) / np.maximum(np.abs(h_paper), 1e-12)) * 100.0
+    assert float(np.mean(error)) < 5.0
 
 
 def test_h13_plateau_matches_the_paper(pipeline):

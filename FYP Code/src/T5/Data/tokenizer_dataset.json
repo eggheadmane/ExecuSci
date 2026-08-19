@@ -1,0 +1,42 @@
+[
+    {
+        "mathml": "<mml:mi>h</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:msup>\n<mml:mtext>exp</mml:mtext>\n<mml:mrow>\n<mml:mrow>\n<mml:mo>-</mml:mo>\n<mml:mi>Ε</mml:mi>\n</mml:mrow>\n<mml:mo>+</mml:mo>\n<mml:mi>ν</mml:mi>\n</mml:mrow>\n</mml:msup>\n<mml:mo>-</mml:mo>\n<mml:mrow>\n<mml:mi>sin</mml:mi>\n<mml:mfenced>\n<mml:msub>\n<mml:mi>f</mml:mi>\n<mml:mrow>\n<mml:mi>t</mml:mi>\n<mml:mi>S</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:mfenced>\n</mml:mrow>\n<mml:mo>+</mml:mo>\n<mml:mrow>\n<mml:mi>tan</mml:mi>\n<mml:mfenced>\n<mml:msub>\n<mml:mi>ο</mml:mi>\n<mml:mrow>\n<mml:mi>T</mml:mi>\n<mml:mi>λ</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>",
+        "python": "h = Symbol('h')\nΕ = Symbol('Ε')\nν = Symbol('ν')\nf_tS = Symbol('f_tS')\nο_Tλ = Symbol('ο_Tλ')\ne = Eq(h, exp(-Ε + ν) - sin(f_tS) + tan(ο_Tλ))"
+    },
+    {
+        "mathml": "<mml:mi>ν</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:munderover>\n<mml:mo>∑</mml:mo>\n<mml:mrow>\n<mml:mi>κ</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mn>9</mml:mn>\n</mml:mrow>\n<mml:msub>\n<mml:mi>y</mml:mi>\n<mml:mi>Δ</mml:mi>\n</mml:msub>\n</mml:munderover>\n<mml:mfenced>\n<mml:mrow>\n<mml:msqrt>\n<mml:mrow>\n<mml:mi>Λ</mml:mi>\n<mml:mo>-</mml:mo>\n<mml:mn>7</mml:mn>\n</mml:mrow>\n</mml:msqrt>\n<mml:mo>+</mml:mo>\n<mml:msup>\n<mml:mtext>exp</mml:mtext>\n<mml:mi>k</mml:mi>\n</mml:msup>\n</mml:mrow>\n</mml:mfenced>\n</mml:mrow>",
+        "python": "ν = Symbol('ν')\nκ = Symbol('κ')\ny_Δ = Symbol('y_Δ')\nΛ = Symbol('Λ')\nk = Symbol('k')\ne = Eq(ν, Sum(sqrt(Λ - 7) + exp(k), (κ, 9, y_Δ)))"
+    },
+    {
+        "mathml": "<mml:msub>\n<mml:mi>G</mml:mi>\n<mml:mi>θ</mml:mi>\n</mml:msub>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:mfrac>\n<mml:mrow>\n<mml:mi>sin</mml:mi>\n<mml:mfenced>\n<mml:mi>y</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n<mml:mrow>\n<mml:mi>cos</mml:mi>\n<mml:mfenced>\n<mml:mrow>\n<mml:mi>q</mml:mi>\n<mml:mo>-</mml:mo>\n<mml:mn>8</mml:mn>\n</mml:mrow>\n</mml:mfenced>\n</mml:mrow>\n</mml:mfrac>\n</mml:mrow>",
+        "python": "G_θ = Symbol('G_θ')\ny = Symbol('y')\nq = Symbol('q')\ne = Eq(G_θ, sin(y)/cos(q - 8))"
+    },
+    {
+        "mathml": "<mml:mi>O</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:munderover>\n<mml:mo>∑</mml:mo>\n<mml:mrow>\n<mml:msub>\n<mml:mi>h</mml:mi>\n<mml:mi>w</mml:mi>\n</mml:msub>\n<mml:mo>=</mml:mo>\n<mml:mn>8</mml:mn>\n</mml:mrow>\n<mml:msub>\n<mml:mi>Ι</mml:mi>\n<mml:mrow>\n<mml:mi>6</mml:mi>\n<mml:mi>Π</mml:mi>\n<mml:mi>θ</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:munderover>\n<mml:mfenced>\n<mml:mrow>\n<mml:mi>Π</mml:mi>\n<mml:mo>+</mml:mo>\n<mml:mrow>\n<mml:mi>log</mml:mi>\n<mml:mfenced>\n<mml:msub>\n<mml:mi>θ</mml:mi>\n<mml:mrow>\n<mml:mi>ι</mml:mi>\n<mml:mi>β</mml:mi>\n<mml:mi>Τ</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:mfenced>\n</mml:mrow>\n<mml:mo>+</mml:mo>\n<mml:mrow>\n<mml:mi>sin</mml:mi>\n<mml:mfenced>\n<mml:mi>ν</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>\n</mml:mfenced>\n</mml:mrow>",
+        "python": "O = Symbol('O')\nh_w = Symbol('h_w')\nΙ_6Πθ = Symbol('Ι_6Πθ')\nΠ = Symbol('Π')\nθ_ιβΤ = Symbol('θ_ιβΤ')\nν = Symbol('ν')\ne = Eq(O, Sum(Π + log(θ_ιβΤ) + sin(ν), (h_w, 8, Ι_6Πθ)))"
+    },
+    {
+        "mathml": "<mml:mi>κ</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:munderover>\n<mml:mo>∑</mml:mo>\n<mml:mrow>\n<mml:msub>\n<mml:mi>φ</mml:mi>\n<mml:mrow>\n<mml:mi>ρ</mml:mi>\n<mml:mi>α</mml:mi>\n</mml:mrow>\n</mml:msub>\n<mml:mo>=</mml:mo>\n<mml:mn>7</mml:mn>\n</mml:mrow>\n<mml:mi>c</mml:mi>\n</mml:munderover>\n<mml:mfenced>\n<mml:mrow>\n<mml:mrow>\n<mml:mo>-</mml:mo>\n<mml:msqrt>\n<mml:mi>Ξ</mml:mi>\n</mml:msqrt>\n<mml:mrow>\n<mml:mi>cos</mml:mi>\n<mml:mfenced>\n<mml:mi>Φ</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>\n<mml:mo>+</mml:mo>\n<mml:msup>\n<mml:mtext>exp</mml:mtext>\n<mml:msub>\n<mml:mi>x</mml:mi>\n<mml:mrow>\n<mml:mi>D</mml:mi>\n<mml:mi>Μ</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:msup>\n</mml:mrow>\n</mml:mfenced>\n</mml:mrow>",
+        "python": "κ = Symbol('κ')\nφ_ρα = Symbol('φ_ρα')\nc = Symbol('c')\nΞ = Symbol('Ξ')\nΦ = Symbol('Φ')\nx_DΜ = Symbol('x_DΜ')\ne = Eq(κ, Sum(-sqrt(Ξ)*cos(Φ) + exp(x_DΜ), (φ_ρα, 7, c)))"
+    },
+    {
+        "mathml": "<mml:mi>J</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:mfrac>\n<mml:mrow>\n<mml:mo>∂</mml:mo>\n</mml:mrow>\n<mml:mrow>\n<mml:mo>∂</mml:mo>\n<mml:msub>\n<mml:mi>U</mml:mi>\n<mml:mrow>\n<mml:mi>i</mml:mi>\n<mml:mi>V</mml:mi>\n<mml:mi>v</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:mrow>\n</mml:mfrac>\n<mml:mrow>\n<mml:mfrac>\n<mml:mrow>\n<mml:mi>log</mml:mi>\n<mml:mfenced>\n<mml:msub>\n<mml:mi>U</mml:mi>\n<mml:mrow>\n<mml:mi>i</mml:mi>\n<mml:mi>V</mml:mi>\n<mml:mi>v</mml:mi>\n</mml:mrow>\n</mml:msub>\n</mml:mfenced>\n</mml:mrow>\n<mml:mi>τ</mml:mi>\n</mml:mfrac>\n</mml:mrow>\n</mml:mrow>",
+        "python": "J = Symbol('J')\nU_iVv = Symbol('U_iVv')\nτ = Symbol('τ')\ne = Eq(J, Derivative(log(U_iVv)/τ, U_iVv))"
+    },
+    {
+        "mathml": "<mml:mi>a</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:msup>\n<mml:mtext>exp</mml:mtext>\n<mml:mi>Γ</mml:mi>\n</mml:msup>\n<mml:mo>-</mml:mo>\n<mml:mrow>\n<mml:mi>cos</mml:mi>\n<mml:mfenced>\n<mml:mi>K</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>",
+        "python": "a = Symbol('a')\nΓ = Symbol('Γ')\nK = Symbol('K')\ne = Eq(a, exp(Γ) - cos(K))"
+    },
+    {
+        "mathml": "<mml:msub>\n<mml:mi>G</mml:mi>\n<mml:mrow>\n<mml:mi>9</mml:mi>\n<mml:mi>O</mml:mi>\n<mml:mi>W</mml:mi>\n</mml:mrow>\n</mml:msub>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:mrow>\n<mml:mn>6</mml:mn>\n<mml:mi>ι</mml:mi>\n</mml:mrow>\n<mml:mo>+</mml:mo>\n<mml:mrow>\n<mml:mi>tan</mml:mi>\n<mml:mfenced>\n<mml:msub>\n<mml:mi>n</mml:mi>\n<mml:mi>ξ</mml:mi>\n</mml:msub>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>",
+        "python": "G_9OW = Symbol('G_9OW')\nι = Symbol('ι')\nn_ξ = Symbol('n_ξ')\ne = Eq(G_9OW, 6*ι + tan(n_ξ))"
+    },
+    {
+        "mathml": "<mml:msub>\n<mml:mi>b</mml:mi>\n<mml:mrow>\n<mml:mi>K</mml:mi>\n<mml:mi>ε</mml:mi>\n</mml:mrow>\n</mml:msub>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:mfrac>\n<mml:mrow>\n<mml:mo>∂</mml:mo>\n</mml:mrow>\n<mml:mrow>\n<mml:mo>∂</mml:mo>\n<mml:mi>Ν</mml:mi>\n</mml:mrow>\n</mml:mfrac>\n<mml:mrow>\n<mml:mrow>\n<mml:mi>log</mml:mi>\n<mml:mfenced>\n<mml:mi>μ</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n<mml:mo>-</mml:mo>\n<mml:mrow>\n<mml:mi>log</mml:mi>\n<mml:mfenced>\n<mml:mrow>\n<mml:mfrac>\n<mml:mi>Ν</mml:mi>\n<mml:mi>l</mml:mi>\n</mml:mfrac>\n</mml:mrow>\n</mml:mfenced>\n</mml:mrow>\n</mml:mrow>\n</mml:mrow>",
+        "python": "b_Kε = Symbol('b_Kε')\nμ = Symbol('μ')\nΝ = Symbol('Ν')\nl = Symbol('l')\ne = Eq(b_Kε, Derivative(log(μ) - log(Ν/l), Ν))"
+    },
+    {
+        "mathml": "<mml:mi>Θ</mml:mi>\n<mml:mo>=</mml:mo>\n<mml:mrow>\n<mml:mo>∫</mml:mo>\n<mml:mfenced>\n<mml:mrow>\n<mml:msup>\n<mml:mi>Φ</mml:mi>\n<mml:mrow>\n<mml:mfrac>\n<mml:mrow>\n<mml:mi>sin</mml:mi>\n<mml:mfenced>\n<mml:mi>j</mml:mi>\n</mml:mfenced>\n</mml:mrow>\n<mml:mn>2</mml:mn>\n</mml:mfrac>\n</mml:mrow>\n</mml:msup>\n<mml:mo>+</mml:mo>\n<mml:msup>\n<mml:mtext>exp</mml:mtext>\n<mml:mi>Χ</mml:mi>\n</mml:msup>\n</mml:mrow>\n</mml:mfenced>\n<mml:mi>d</mml:mi>\n<mml:mi>Χ</mml:mi>\n</mml:mrow>",
+        "python": "Θ = Symbol('Θ')\nΧ = Symbol('Χ')\nj = Symbol('j')\nΦ = Symbol('Φ')\ne = Eq(Θ, Integral(Φ**(sin(j)/2) + exp(Χ), Χ))"
+    }
+]

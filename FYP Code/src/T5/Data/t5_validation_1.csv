@@ -1,0 +1,4698 @@
+MathML,Python
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>v</mml:mi>
+<mml:mi>Q</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>n</mml:mi>
+</mml:msup>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Θ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>H</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","n = Symbol('n')
+v_Q = Symbol('v_Q')
+Θ = Symbol('Θ')
+H = Symbol('H')
+e = Eq(cos(v_Q)**exp(n), sin(Θ) + cos(H - 5))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>r</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>u</mml:mi>
+<mml:mi>Υ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>χ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msup>
+<mml:mi>W</mml:mi>
+<mml:msub>
+<mml:mi>υ</mml:mi>
+<mml:mi>Ν</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","r = Symbol('r')
+u = Symbol('u')
+Υ = Symbol('Υ')
+υ_Ν = Symbol('υ_Ν')
+W = Symbol('W')
+χ = Symbol('χ')
+e = Eq(log(r) - cos(u/Υ), exp(-W**υ_Ν)*cos(χ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Η</mml:mi>
+<mml:mi>χ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>M</mml:mi>
+<mml:msub>
+<mml:mi>Τ</mml:mi>
+<mml:mi>Θ</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>g</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>O</mml:mi>
+<mml:mi>ζ</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ρ</mml:mi>
+<mml:mi>Ε</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>7</mml:mn>
+</mml:msup>
+</mml:mrow>
+","M = Symbol('M')
+Τ_Θ = Symbol('Τ_Θ')
+Η_χ = Symbol('Η_χ')
+g = Symbol('g')
+O_ζ = Symbol('O_ζ')
+Ρ_Ε = Symbol('Ρ_Ε')
+e = Eq(exp(-M*Τ_Θ)*cos(Η_χ)/sin(g), exp(O_ζ) - sin(Ρ_Ε)**7)"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>σ</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>w</mml:mi>
+<mml:mi>K</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:msub>
+<mml:mi>υ</mml:mi>
+<mml:mi>ι</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>x</mml:mi>
+<mml:mi>Y</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","σ = Symbol('σ')
+w_K = Symbol('w_K')
+υ_ι = Symbol('υ_ι')
+x_Y = Symbol('x_Y')
+e = Eq(sqrt(σ)*cos(w_K), exp(υ_ι + 5) + log(x_Y))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>M</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>f</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mn>2</mml:mn>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>b</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","M = Symbol('M')
+f = Symbol('f')
+b = Symbol('b')
+e = Eq(cos(M)/f, 2*tan(b))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Η</mml:mi>
+<mml:mi>k</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>α</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>g</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mn>3</mml:mn>
+</mml:mrow>
+","Η_k = Symbol('Η_k')
+α = Symbol('α')
+g = Symbol('g')
+e = Eq(tan(Η_k)/α, log(g) + 3)"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>m</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>8</mml:mn>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>i</mml:mi>
+<mml:mi>ο</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>l</mml:mi>
+<mml:mi>υ</mml:mi>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>R</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","m = Symbol('m')
+i = Symbol('i')
+ο = Symbol('ο')
+l = Symbol('l')
+υ = Symbol('υ')
+R = Symbol('R')
+e = Eq(cos(m)**8 - cos(i*ο), exp(l*υ)*log(R))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>δ</mml:mi>
+<mml:msub>
+<mml:mi>Ν</mml:mi>
+<mml:mi>ξ</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:msqrt>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Ξ</mml:mi>
+</mml:msup>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>β</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>f</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>W</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","δ = Symbol('δ')
+Ν_ξ = Symbol('Ν_ξ')
+Ξ = Symbol('Ξ')
+β = Symbol('β')
+f = Symbol('f')
+W = Symbol('W')
+e = Eq(sqrt(δ/Ν_ξ)*exp(Ξ)/log(β), exp(f)*tan(W))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mi>Τ</mml:mi>
+</mml:msqrt>
+<mml:msup>
+<mml:msub>
+<mml:mi>δ</mml:mi>
+<mml:mi>ψ</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>ο</mml:mi>
+</mml:msup>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>P</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>6</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>v</mml:mi>
+<mml:mi>ζ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>α</mml:mi>
+</mml:msup>
+</mml:mrow>
+","Τ = Symbol('Τ')
+ο = Symbol('ο')
+δ_ψ = Symbol('δ_ψ')
+P = Symbol('P')
+α = Symbol('α')
+v_ζ = Symbol('v_ζ')
+e = Eq(sqrt(Τ)/δ_ψ**(exp(ο)/2), exp(P - 6) + cos(v_ζ)**α)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>Α</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msqrt>
+<mml:msup>
+<mml:msub>
+<mml:mi>ν</mml:mi>
+<mml:mi>8</mml:mi>
+</mml:msub>
+<mml:mn>4</mml:mn>
+</mml:msup>
+</mml:msqrt>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Υ</mml:mi>
+<mml:mi>m</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>n</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>7</mml:mn>
+<mml:mi>y</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+","T_Α = Symbol('T_Α')
+ν_8 = Symbol('ν_8')
+Υ_m = Symbol('Υ_m')
+y = Symbol('y')
+n = Symbol('n')
+e = Eq(exp(T_Α)/sqrt(ν_8**4), -sin(Υ_m) + cos(n)**cos(7*y))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>p</mml:mi>
+<mml:mi>N</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>C</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mi>g</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mi>i</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>Ρ</mml:mi>
+<mml:mi>Ω</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>n</mml:mi>
+<mml:mi>η</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:msup>
+</mml:mrow>
+","p_N = Symbol('p_N')
+C = Symbol('C')
+g = Symbol('g')
+i = Symbol('i')
+n_η = Symbol('n_η')
+Ρ_Ω = Symbol('Ρ_Ω')
+e = Eq(sin(p_N)*cos(C), sqrt(g + i)*exp(Ρ_Ω)**exp(n_η))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ψ</mml:mi>
+<mml:mi>ε</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>B</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mn>8</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>D</mml:mi>
+<mml:mi>d</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>Ο</mml:mi>
+<mml:mi>a</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","B = Symbol('B')
+Ψ_ε = Symbol('Ψ_ε')
+Ο_a = Symbol('Ο_a')
+D_d = Symbol('D_d')
+e = Eq(cos(Ψ_ε)**log(B) - 8, exp(-Ο_a)*log(D_d))"
+"
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>U</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>8</mml:mn>
+<mml:msub>
+<mml:mi>H</mml:mi>
+<mml:mi>Z</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>b</mml:mi>
+<mml:mi>Z</mml:mi>
+</mml:msub>
+<mml:mi>Ρ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Ζ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","H_Z = Symbol('H_Z')
+U = Symbol('U')
+b_Z = Symbol('b_Z')
+Ρ = Symbol('Ρ')
+Ζ = Symbol('Ζ')
+e = Eq(exp(U)**cos(8*H_Z), b_Z/Ρ + log(Ζ))"
+"
+<mml:mrow>
+<mml:mi>ρ</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Δ</mml:mi>
+<mml:mi>Ι</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mn>3</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mi>ζ</mml:mi>
+<mml:msqrt>
+<mml:mi>ω</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+","ρ = Symbol('ρ')
+Δ_Ι = Symbol('Δ_Ι')
+ζ = Symbol('ζ')
+ω = Symbol('ω')
+e = Eq(ρ + tan(Δ_Ι) + 3, ζ*sqrt(ω))"
+"
+<mml:mrow>
+<mml:mn>4</mml:mn>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Υ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>Φ</mml:mi>
+<mml:mi>Μ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Η</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msub>
+<mml:mi>o</mml:mi>
+<mml:mi>υ</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+","Φ = Symbol('Φ')
+Μ = Symbol('Μ')
+Υ = Symbol('Υ')
+Η = Symbol('Η')
+o_υ = Symbol('o_υ')
+e = Eq(4*sin(Υ)**tan(Φ/Μ), sin(Η)/o_υ)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>e</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>e</mml:mi>
+<mml:mi>Ο</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>ο</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mn>4</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>π</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+","e = Symbol('e')
+e_Ο = Symbol('e_Ο')
+ο = Symbol('ο')
+Y = Symbol('Y')
+π = Symbol('π')
+e = Eq(cos(e - e_Ο)*tan(ο)/4, sin(Y)/π)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ε</mml:mi>
+<mml:mi>η</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>θ</mml:mi>
+<mml:mi>z</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>ω</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","ε_η = Symbol('ε_η')
+θ_z = Symbol('θ_z')
+y = Symbol('y')
+ω = Symbol('ω')
+e = Eq(sin(ε_η)/sin(θ_z), cos(y)*tan(ω))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Α</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>λ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>ξ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>5</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+","λ = Symbol('λ')
+Α = Symbol('Α')
+ξ = Symbol('ξ')
+e = Eq(sin(Α)**sin(λ), cos(ξ)/5)"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>S</mml:mi>
+<mml:mi>B</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>θ</mml:mi>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>K</mml:mi>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Π</mml:mi>
+<mml:mi>V</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","θ = Symbol('θ')
+S_B = Symbol('S_B')
+K = Symbol('K')
+Π_V = Symbol('Π_V')
+e = Eq(tan(S_B)**θ, -K + sin(Π_V))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>Y</mml:mi>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>G</mml:mi>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>C</mml:mi>
+</mml:msup>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>r</mml:mi>
+<mml:mi>a</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>9</mml:mn>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","Y = Symbol('Y')
+G = Symbol('G')
+C = Symbol('C')
+r = Symbol('r')
+a = Symbol('a')
+e = Eq(-Y + exp(G), exp(C)/cos(r/a)**9)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>υ</mml:mi>
+<mml:mi>Ω</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:mi>G</mml:mi>
+<mml:msub>
+<mml:mi>N</mml:mi>
+<mml:mi>δ</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mn>8</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>A</mml:mi>
+<mml:mi>Α</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","N_δ = Symbol('N_δ')
+G = Symbol('G')
+υ_Ω = Symbol('υ_Ω')
+A_Α = Symbol('A_Α')
+Γ = Symbol('Γ')
+e = Eq(log(υ_Ω)**cos(G**N_δ)/8, exp(-A_Α)*log(Γ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>C</mml:mi>
+</mml:msqrt>
+<mml:msqrt>
+<mml:mi>Ρ</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>τ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>W</mml:mi>
+<mml:mi>f</mml:mi>
+</mml:msub>
+<mml:msqrt>
+<mml:mi>Ζ</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>l</mml:mi>
+<mml:mi>p</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mrow>
+","C = Symbol('C')
+Ρ = Symbol('Ρ')
+τ = Symbol('τ')
+W_f = Symbol('W_f')
+Ζ = Symbol('Ζ')
+l_p = Symbol('l_p')
+e = Eq(sqrt(C)*sqrt(Ρ)/sin(τ), -W_f*sqrt(Ζ) + exp(l_p))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>Ο</mml:mi>
+<mml:mn>4</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Μ</mml:mi>
+<mml:mi>Ξ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Η</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mi>y</mml:mi>
+<mml:mi>Σ</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>Y</mml:mi>
+<mml:mi>2</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mrow>
+","Ο = Symbol('Ο')
+Η = Symbol('Η')
+Μ_Ξ = Symbol('Μ_Ξ')
+y = Symbol('y')
+Σ = Symbol('Σ')
+Y_2 = Symbol('Y_2')
+e = Eq(-exp(Ο/4) + log(Μ_Ξ)**cos(Η), sqrt(y*Σ)*exp(Y_2))"
+"
+<mml:msup>
+<mml:mi>η</mml:mi>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>ε</mml:mi>
+<mml:mi>Γ</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mi>ζ</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>z</mml:mi>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>R</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>r</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","ε_Γ = Symbol('ε_Γ')
+ζ = Symbol('ζ')
+η = Symbol('η')
+z = Symbol('z')
+R = Symbol('R')
+r = Symbol('r')
+e = Eq(η**(cos(ε_Γ + ζ)/2), sqrt(z) + cos(R) - cos(r))"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>ρ</mml:mi>
+<mml:mi>Σ</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>D</mml:mi>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:msub>
+<mml:mi>U</mml:mi>
+<mml:mi>9</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>Β</mml:mi>
+<mml:mi>G</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>M</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>c</mml:mi>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>9</mml:mn>
+<mml:mi>ν</mml:mi>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","ρ_Σ = Symbol('ρ_Σ')
+D = Symbol('D')
+Β_G = Symbol('Β_G')
+U_9 = Symbol('U_9')
+ν = Symbol('ν')
+M = Symbol('M')
+c = Symbol('c')
+e = Eq(sqrt(ρ_Σ) + exp(D) - cos(U_9**Β_G), exp(-9*ν)*log(M)/c)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>H</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>8</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>h</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>B</mml:mi>
+<mml:mi>x</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mi>l</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>6</mml:mn>
+<mml:msub>
+<mml:mi>Υ</mml:mi>
+<mml:mi>c</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","H = Symbol('H')
+B_x = Symbol('B_x')
+l = Symbol('l')
+h = Symbol('h')
+Υ_c = Symbol('Υ_c')
+e = Eq(tan(H) - 8, exp(h)**sin(B_x - l)*exp(-6*Υ_c))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>φ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>L</mml:mi>
+<mml:mi>Γ</mml:mi>
+</mml:msub>
+<mml:mi>μ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:mi>g</mml:mi>
+<mml:mi>Σ</mml:mi>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>K</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","L_Γ = Symbol('L_Γ')
+μ = Symbol('μ')
+φ = Symbol('φ')
+Σ = Symbol('Σ')
+g = Symbol('g')
+Y = Symbol('Y')
+K = Symbol('K')
+e = Eq(sin(φ)**exp(L_Γ/μ)*cos(g**Σ), log(Y) + sin(K))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msup>
+<mml:msub>
+<mml:mi>π</mml:mi>
+<mml:mi>φ</mml:mi>
+</mml:msub>
+<mml:mi>ζ</mml:mi>
+</mml:msup>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ξ</mml:mi>
+<mml:mi>M</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>h</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ξ</mml:mi>
+<mml:mi>j</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mfrac>
+<mml:mn>1</mml:mn>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:msup>
+</mml:mrow>
+","ζ = Symbol('ζ')
+π_φ = Symbol('π_φ')
+Ξ_M = Symbol('Ξ_M')
+h = Symbol('h')
+ξ_j = Symbol('ξ_j')
+e = Eq(exp(π_φ**ζ) + tan(Ξ_M), exp(h)/cos(ξ_j) + exp(Rational(1, 2)))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>ψ</mml:mi>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>Σ</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mn>4</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>C</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>Ζ</mml:mi>
+<mml:mi>L</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mn>9</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+","ψ = Symbol('ψ')
+Σ = Symbol('Σ')
+C = Symbol('C')
+Ζ_L = Symbol('Ζ_L')
+e = Eq(exp(ψ) + exp(Σ + 4) - tan(C), sqrt(Ζ_L)/9)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mi>Ξ</mml:mi>
+</mml:msqrt>
+<mml:mi>Δ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>i</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>3</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>t</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>G</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mi>μ</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Ξ = Symbol('Ξ')
+Δ = Symbol('Δ')
+i = Symbol('i')
+t = Symbol('t')
+G = Symbol('G')
+μ = Symbol('μ')
+e = Eq(sqrt(Ξ)/Δ, exp(i - 3) + tan(t) + tan(G - μ))"
+"
+<mml:mrow>
+<mml:msub>
+<mml:mi>δ</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>a</mml:mi>
+<mml:mi>O</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>K</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","δ_l = Symbol('δ_l')
+a_O = Symbol('a_O')
+γ = Symbol('γ')
+K = Symbol('K')
+e = Eq(δ_l*exp(a_O), cos(γ)/tan(K))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>K</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Ζ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>r</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>ι</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","K = Symbol('K')
+Ζ = Symbol('Ζ')
+r = Symbol('r')
+ι = Symbol('ι')
+e = Eq(sin(K)/tan(Ζ) + 5, cos(r) + cos(ι))"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>e</mml:mi>
+<mml:mi>Κ</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mi>p</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>λ</mml:mi>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mi>H</mml:mi>
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>β</mml:mi>
+<mml:mi>f</mml:mi>
+</mml:msub>
+<mml:mi>b</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msqrt>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+","e_Κ = Symbol('e_Κ')
+p = Symbol('p')
+λ = Symbol('λ')
+β_f = Symbol('β_f')
+b = Symbol('b')
+H = Symbol('H')
+e = Eq(sqrt(-e_Κ + p) + exp(λ), H**(sqrt(β_f/b)/2))"
+"
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>ρ</mml:mi>
+<mml:mi>R</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mn>8</mml:mn>
+<mml:msqrt>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>θ</mml:mi>
+<mml:msub>
+<mml:mi>Γ</mml:mi>
+<mml:mi>Σ</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:msqrt>
+</mml:msup>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>p</mml:mi>
+</mml:msqrt>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Τ</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Α</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","θ = Symbol('θ')
+Γ_Σ = Symbol('Γ_Σ')
+ρ_R = Symbol('ρ_R')
+p = Symbol('p')
+Τ = Symbol('Τ')
+Α = Symbol('Α')
+e = Eq(exp(ρ_R)**(8**(sqrt(θ/Γ_Σ))), sqrt(p)*exp(Τ)*tan(Α))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>o</mml:mi>
+<mml:mi>Φ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>9</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mi>Β</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>σ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","o_Φ = Symbol('o_Φ')
+Β = Symbol('Β')
+σ = Symbol('σ')
+e = Eq(tan(o_Φ) - 9, sqrt(Β)/tan(σ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>η</mml:mi>
+<mml:mi>D</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:msub>
+<mml:mi>b</mml:mi>
+<mml:mi>χ</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>d</mml:mi>
+<mml:mi>υ</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>ξ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>υ</mml:mi>
+</mml:msup>
+","b_χ = Symbol('b_χ')
+d_υ = Symbol('d_υ')
+η_D = Symbol('η_D')
+υ = Symbol('υ')
+ξ = Symbol('ξ')
+e = Eq(exp(-b_χ*d_υ)*tan(η_D), sin(ξ)**υ)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Δ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>7</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>M</mml:mi>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>N</mml:mi>
+<mml:mi>Z</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","Δ = Symbol('Δ')
+M = Symbol('M')
+N_Z = Symbol('N_Z')
+e = Eq(sin(Δ) - 7, exp(M) + cos(N_Z)/2)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>A</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Υ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msqrt>
+<mml:mrow>
+<mml:msub>
+<mml:mi>b</mml:mi>
+<mml:mi>λ</mml:mi>
+</mml:msub>
+<mml:mi>o</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>x</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","A = Symbol('A')
+Υ = Symbol('Υ')
+b_λ = Symbol('b_λ')
+o = Symbol('o')
+x = Symbol('x')
+e = Eq(-log(A) + tan(Υ), -sqrt(b_λ*o) + tan(x))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>j</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>4</mml:mn>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>4</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>M</mml:mi>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>μ</mml:mi>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>ι</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","j = Symbol('j')
+k_4 = Symbol('k_4')
+M = Symbol('M')
+μ = Symbol('μ')
+ι = Symbol('ι')
+e = Eq(tan(j)/cos(4*k_4), -M*exp(μ) + cos(ι))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>Κ</mml:mi>
+<mml:mi>M</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>f</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>C</mml:mi>
+<mml:mi>Δ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>J</mml:mi>
+</mml:msup>
+","Κ = Symbol('Κ')
+M = Symbol('M')
+f = Symbol('f')
+J = Symbol('J')
+C_Δ = Symbol('C_Δ')
+e = Eq(exp(Κ/M)*log(f), cos(C_Δ)**J)"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>1</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>G</mml:mi>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>ν</mml:mi>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mn>2</mml:mn>
+</mml:mrow>
+","G = Symbol('G')
+T_1 = Symbol('T_1')
+ν = Symbol('ν')
+e = Eq(log(T_1)**G, exp(ν) + 2)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Α</mml:mi>
+<mml:mi>o</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mn>7</mml:mn>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Μ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msqrt>
+<mml:mi>H</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>M</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>u</mml:mi>
+<mml:mi>H</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mn>9</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","Α_o = Symbol('Α_o')
+Μ = Symbol('Μ')
+H = Symbol('H')
+M = Symbol('M')
+u_H = Symbol('u_H')
+e = Eq(tan(Α_o) - 7/log(Μ), -sqrt(H) + tan(M)/sin(u_H - 9))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ξ</mml:mi>
+<mml:mi>Χ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>g</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>3</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ν</mml:mi>
+<mml:mi>φ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:mi>Α</mml:mi>
+<mml:mi>Ε</mml:mi>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","g = Symbol('g')
+Ξ_Χ = Symbol('Ξ_Χ')
+Ν_φ = Symbol('Ν_φ')
+y = Symbol('y')
+Ε = Symbol('Ε')
+Α = Symbol('Α')
+e = Eq(tan(Ξ_Χ)**sin(g - 3), sin(Ν_φ)*tan(y)*tan(Α**Ε))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>7</mml:mn>
+<mml:msub>
+<mml:mi>e</mml:mi>
+<mml:mi>Ν</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>B</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:mi>δ</mml:mi>
+<mml:mn>4</mml:mn>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msqrt>
+<mml:mi>z</mml:mi>
+</mml:msqrt>
+","e_Ν = Symbol('e_Ν')
+δ = Symbol('δ')
+B = Symbol('B')
+z = Symbol('z')
+e = Eq(log(7*e_Ν) + cos(B)**cos(δ**4), sqrt(z))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>W</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>6</mml:mn>
+<mml:msub>
+<mml:mi>Μ</mml:mi>
+<mml:mi>s</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:msup>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:msub>
+<mml:mi>z</mml:mi>
+<mml:mi>Θ</mml:mi>
+</mml:msub>
+<mml:mn>5</mml:mn>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>φ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Μ_s = Symbol('Μ_s')
+W = Symbol('W')
+z_Θ = Symbol('z_Θ')
+φ = Symbol('φ')
+e = Eq(log(W)**exp(6*Μ_s), -sin(z_Θ**5) + cos(φ))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msqrt>
+<mml:mi>f</mml:mi>
+</mml:msqrt>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Ζ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>Ε</mml:mi>
+<mml:mi>ψ</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Γ</mml:mi>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","f = Symbol('f')
+y = Symbol('y')
+Ζ = Symbol('Ζ')
+Γ = Symbol('Γ')
+Ε_ψ = Symbol('Ε_ψ')
+e = Eq(log(y)**(sqrt(f)), cos(Ζ) + exp(-Γ)*exp(Ε_ψ))"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>π</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>k</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>I</mml:mi>
+<mml:mi>ρ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>n</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","π = Symbol('π')
+k = Symbol('k')
+I_ρ = Symbol('I_ρ')
+n = Symbol('n')
+e = Eq(sqrt(π)*sin(k), log(I_ρ)*log(n))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>M</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Τ</mml:mi>
+<mml:mi>b</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>ω</mml:mi>
+</mml:msqrt>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>η</mml:mi>
+<mml:mi>M</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>ξ</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>7</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","M = Symbol('M')
+Τ_b = Symbol('Τ_b')
+ω = Symbol('ω')
+η_M = Symbol('η_M')
+ξ = Symbol('ξ')
+e = Eq(log(M)*sin(Τ_b), sqrt(ω) - exp(η_M) + log(ξ - 7))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Z</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>υ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msub>
+<mml:mi>Ε</mml:mi>
+<mml:mi>I</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+","Z = Symbol('Z')
+υ = Symbol('υ')
+Ε_I = Symbol('Ε_I')
+Y = Symbol('Y')
+e = Eq(sin(Z)*tan(υ), Ε_I + log(Y) - 5)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:msub>
+<mml:mi>i</mml:mi>
+<mml:mi>Ψ</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mn>6</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Α</mml:mi>
+<mml:mi>Q</mml:mi>
+</mml:msub>
+<mml:mi>ο</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>i</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>ι</mml:mi>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Δ</mml:mi>
+<mml:mi>R</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msub>
+<mml:mi>S</mml:mi>
+<mml:mi>Ο</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","Α_Q = Symbol('Α_Q')
+ο = Symbol('ο')
+i_Ψ = Symbol('i_Ψ')
+i = Symbol('i')
+ι = Symbol('ι')
+Δ_R = Symbol('Δ_R')
+S_Ο = Symbol('S_Ο')
+e = Eq(-exp(i_Ψ - 6)**log(Α_Q/ο) + sin(i), sqrt(ι) + log(Δ_R)/S_Ο)"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mn>5</mml:mn>
+</mml:msqrt>
+<mml:msqrt>
+<mml:mi>G</mml:mi>
+</mml:msqrt>
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>h</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Σ</mml:mi>
+<mml:mi>B</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>e</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>G</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>8</mml:mn>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>a</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>9</mml:mn>
+<mml:mi>s</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","G = Symbol('G')
+Σ_B = Symbol('Σ_B')
+Q_e = Symbol('Q_e')
+h = Symbol('h')
+a = Symbol('a')
+s = Symbol('s')
+e = Eq(sqrt(5)*sqrt(G)*tan(h)**sin(Σ_B/Q_e), -exp(G - 8) + log(a) + log(9*s))"
+"
+<mml:mrow>
+<mml:msub>
+<mml:mi>E</mml:mi>
+<mml:mi>T</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>P</mml:mi>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Ρ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msup>
+<mml:mi>ν</mml:mi>
+<mml:mi>Ε</mml:mi>
+</mml:msup>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>M</mml:mi>
+<mml:mi>Γ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","E_T = Symbol('E_T')
+P = Symbol('P')
+Ρ = Symbol('Ρ')
+Ε = Symbol('Ε')
+ν = Symbol('ν')
+M_Γ = Symbol('M_Γ')
+e = Eq(E_T + P*sin(Ρ), -exp(ν**Ε) + sin(M_Γ))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Χ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>8</mml:mn>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Β</mml:mi>
+<mml:mi>v</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>48</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+","Χ = Symbol('Χ')
+Β_v = Symbol('Β_v')
+e = Eq(cos(Χ)**8, cos(Β_v)/48)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Ο</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mn>7</mml:mn>
+<mml:msup>
+<mml:msub>
+<mml:mi>p</mml:mi>
+<mml:mi>Y</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>B</mml:mi>
+<mml:mi>ψ</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+","Ο = Symbol('Ο')
+B_ψ = Symbol('B_ψ')
+p_Y = Symbol('p_Y')
+e = Eq(cos(Ο) - 1, 7*p_Y**(sqrt(B_ψ)/2))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>B</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>J</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>α</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>o</mml:mi>
+<mml:mi>Γ</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","B = Symbol('B')
+J = Symbol('J')
+α = Symbol('α')
+o_Γ = Symbol('o_Γ')
+Γ = Symbol('Γ')
+e = Eq(-log(B) + log(J) + tan(α), -o_Γ + sin(Γ))"
+"
+<mml:mrow>
+<mml:msub>
+<mml:mi>j</mml:mi>
+<mml:mi>θ</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Υ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>e</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>ο</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Υ</mml:mi>
+<mml:mi>ε</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","j_θ = Symbol('j_θ')
+Υ = Symbol('Υ')
+e_l = Symbol('e_l')
+ο = Symbol('ο')
+Υ_ε = Symbol('Υ_ε')
+e = Eq(j_θ + log(Υ), sin(e_l)*sin(ο) + tan(Υ_ε))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mn>4</mml:mn>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ξ</mml:mi>
+<mml:mi>e</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>w</mml:mi>
+<mml:mi>n</mml:mi>
+</mml:msub>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mi>β</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mi>μ</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>ω</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","ξ_e = Symbol('ξ_e')
+w_n = Symbol('w_n')
+β = Symbol('β')
+μ = Symbol('μ')
+ω = Symbol('ω')
+γ = Symbol('γ')
+e = Eq(4**log(ξ_e) + sqrt(w_n), sqrt(β - μ) + sin(ω) + tan(γ))"
+"
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>β</mml:mi>
+<mml:mi>Ω</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mn>6</mml:mn>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>μ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>l</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>U</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mi>Ο</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","μ = Symbol('μ')
+β_Ω = Symbol('β_Ω')
+l = Symbol('l')
+U = Symbol('U')
+Ο = Symbol('Ο')
+e = Eq(exp(β_Ω)**(6**cos(μ)), cos(l)/tan(U + Ο))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>ι</mml:mi>
+</mml:msup>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:msub>
+<mml:mi>S</mml:mi>
+<mml:mi>1</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mn>2</mml:mn>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>D</mml:mi>
+<mml:mi>Κ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>f</mml:mi>
+</mml:msup>
+</mml:mrow>
+","ι = Symbol('ι')
+S_1 = Symbol('S_1')
+f = Symbol('f')
+D_Κ = Symbol('D_Κ')
+e = Eq(exp(ι)/2, exp(S_1 + 2) + tan(D_Κ)**f)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>A</mml:mi>
+<mml:mi>v</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>g</mml:mi>
+<mml:mi>κ</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>K</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>V</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Ζ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>ξ</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mn>6</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>8</mml:mn>
+</mml:mrow>
+","A_v = Symbol('A_v')
+g_κ = Symbol('g_κ')
+K = Symbol('K')
+V = Symbol('V')
+Ζ = Symbol('Ζ')
+ξ = Symbol('ξ')
+e = Eq(cos(A_v/g_κ) + sin(K)/V, cos(Ζ) + cos(ξ + 6) - 8)"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>b</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>Γ</mml:mi>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Ε</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>7</mml:mn>
+</mml:msup>
+","Γ = Symbol('Γ')
+b = Symbol('b')
+Ε = Symbol('Ε')
+e = Eq(log(b)**Γ, log(Ε)**7)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mn>6</mml:mn>
+<mml:msub>
+<mml:mi>R</mml:mi>
+<mml:mi>A</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>b</mml:mi>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>Z</mml:mi>
+<mml:mi>γ</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mi>γ</mml:mi>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>p</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","R_A = Symbol('R_A')
+b = Symbol('b')
+Z_γ = Symbol('Z_γ')
+γ = Symbol('γ')
+p = Symbol('p')
+e = Eq(6*R_A + exp(b), exp(-Z_γ + γ)*log(p))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>Θ</mml:mi>
+<mml:mi>9</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>x</mml:mi>
+<mml:mi>w</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>B</mml:mi>
+<mml:mi>n</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>Θ</mml:mi>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>6</mml:mn>
+<mml:mi>K</mml:mi>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>x</mml:mi>
+<mml:mi>w</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Θ_9 = Symbol('Θ_9')
+x_w = Symbol('x_w')
+B_n = Symbol('B_n')
+Θ = Symbol('Θ')
+K = Symbol('K')
+e = Eq(-Θ_9 - log(x_w) + cos(B_n), sqrt(Θ) + exp(6*K) + log(x_w))"
+"
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>R</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msub>
+<mml:mi>Ψ</mml:mi>
+<mml:mi>S</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Π</mml:mi>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Y</mml:mi>
+<mml:mi>L</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+","Ψ_S = Symbol('Ψ_S')
+R = Symbol('R')
+Π = Symbol('Π')
+Y_L = Symbol('Y_L')
+e = Eq(cos(R)**Ψ_S, exp(Π) - cos(Y_L) + 1)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:msub>
+<mml:mi>Κ</mml:mi>
+<mml:mi>k</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mn>4</mml:mn>
+</mml:mrow>
+</mml:msqrt>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>c</mml:mi>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>τ</mml:mi>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>x</mml:mi>
+<mml:mi>x</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Δ</mml:mi>
+</mml:msup>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mfrac>
+<mml:mi>f</mml:mi>
+<mml:mi>κ</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:msub>
+<mml:mi>Ζ</mml:mi>
+<mml:mi>R</mml:mi>
+</mml:msub>
+<mml:mn>8</mml:mn>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","Κ_k = Symbol('Κ_k')
+c = Symbol('c')
+τ = Symbol('τ')
+x_x = Symbol('x_x')
+Δ = Symbol('Δ')
+Ζ_R = Symbol('Ζ_R')
+f = Symbol('f')
+κ = Symbol('κ')
+e = Eq(sqrt(Κ_k - 4)*exp(-c - τ) + tan(x_x), exp(Δ)/exp(f/κ)**tan(Ζ_R**8))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>q</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>θ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>W</mml:mi>
+<mml:mi>τ</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:msub>
+<mml:mi>ο</mml:mi>
+<mml:mi>Λ</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mi>y</mml:mi>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>d</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","q = Symbol('q')
+W_τ = Symbol('W_τ')
+ο_Λ = Symbol('ο_Λ')
+θ = Symbol('θ')
+y = Symbol('y')
+d = Symbol('d')
+e = Eq(sin(q) - sin(θ)**sin(W_τ + ο_Λ), -y + tan(d))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:msub>
+<mml:mi>ε</mml:mi>
+<mml:mi>V</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>β</mml:mi>
+<mml:mi>T</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>7</mml:mn>
+<mml:msub>
+<mml:mi>C</mml:mi>
+<mml:mi>Z</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:msqrt>
+<mml:msup>
+<mml:msub>
+<mml:mi>Ρ</mml:mi>
+<mml:mi>Α</mml:mi>
+</mml:msub>
+<mml:mn>6</mml:mn>
+</mml:msup>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>ν</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Θ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","ε_V = Symbol('ε_V')
+β_T = Symbol('β_T')
+C_Z = Symbol('C_Z')
+Ρ_Α = Symbol('Ρ_Α')
+ν = Symbol('ν')
+Θ = Symbol('Θ')
+e = Eq(ε_V*log(β_T)/cos(7*C_Z), sqrt(Ρ_Α**6)*log(ν)/tan(Θ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>β</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>u</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>P</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Z</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","β = Symbol('β')
+u = Symbol('u')
+P = Symbol('P')
+Z = Symbol('Z')
+e = Eq(tan(β)/tan(u), sqrt(P)*sin(Z))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msup>
+<mml:msub>
+<mml:mi>G</mml:mi>
+<mml:mi>ω</mml:mi>
+</mml:msub>
+<mml:mn>7</mml:mn>
+</mml:msup>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>E</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>z</mml:mi>
+</mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>X</mml:mi>
+</mml:msub>
+<mml:mi>α</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","G_ω = Symbol('G_ω')
+k_E = Symbol('k_E')
+z = Symbol('z')
+k_X = Symbol('k_X')
+α = Symbol('α')
+e = Eq(exp(G_ω**7) + cos(k_E), exp(z)*exp(-k_X/α))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>χ</mml:mi>
+<mml:mi>g</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Σ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>W</mml:mi>
+<mml:mi>N</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>g</mml:mi>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:mn>6561</mml:mn>
+</mml:mrow>
+","χ_g = Symbol('χ_g')
+W_N = Symbol('W_N')
+Σ = Symbol('Σ')
+g = Symbol('g')
+e = Eq(log(χ_g) + tan(Σ)**cos(W_N), sqrt(g) + 6561)"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>δ</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>F</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mtext>exp</mml:mtext>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>6</mml:mn>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+","δ = Symbol('δ')
+F = Symbol('F')
+γ = Symbol('γ')
+e = Eq(sqrt(δ)*tan(F), cos(E)/tan(γ)**6)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msqrt>
+<mml:mi>A</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>b</mml:mi>
+<mml:mi>z</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>Δ</mml:mi>
+<mml:mi>p</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Υ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","A = Symbol('A')
+b_z = Symbol('b_z')
+Δ_p = Symbol('Δ_p')
+Υ = Symbol('Υ')
+e = Eq(-sqrt(A) + tan(b_z), sqrt(Δ_p) - sin(Υ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>l</mml:mi>
+<mml:mi>Θ</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>t</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>a</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msub>
+<mml:mi>B</mml:mi>
+<mml:mi>8</mml:mi>
+</mml:msub>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>τ</mml:mi>
+<mml:mi>Λ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msub>
+<mml:mi>Ψ</mml:mi>
+<mml:mi>χ</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","l_Θ = Symbol('l_Θ')
+t = Symbol('t')
+a = Symbol('a')
+B_8 = Symbol('B_8')
+τ_Λ = Symbol('τ_Λ')
+Ψ_χ = Symbol('Ψ_χ')
+e = Eq(exp(l_Θ)*cos(t)/cos(a), -B_8 + log(τ_Λ)/Ψ_χ)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>g</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mn>6</mml:mn>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Ω</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>M</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>n</mml:mi>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Φ</mml:mi>
+<mml:mi>H</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","g = Symbol('g')
+Ω = Symbol('Ω')
+M = Symbol('M')
+n = Symbol('n')
+Φ_H = Symbol('Φ_H')
+e = Eq(-exp(g + 6) + log(Ω), log(M)/(n*tan(Φ_H)))"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>q</mml:mi>
+</mml:msqrt>
+<mml:mo>-</mml:mo>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>Υ</mml:mi>
+<mml:mi>5</mml:mi>
+</mml:msub>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>W</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","q = Symbol('q')
+Υ_5 = Symbol('Υ_5')
+W = Symbol('W')
+γ = Symbol('γ')
+e = Eq(sqrt(q) - sqrt(Υ_5), log(W) - log(γ))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Η</mml:mi>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>u</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>Υ</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mi>β</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>ψ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>X</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>X</mml:mi>
+</mml:msup>
+</mml:msup>
+","Η = Symbol('Η')
+u = Symbol('u')
+Υ = Symbol('Υ')
+β = Symbol('β')
+X = Symbol('X')
+ψ = Symbol('ψ')
+e = Eq(exp(Η) + sin(u)/tan(Υ - β), cos(ψ)**(cos(X)**X))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>b</mml:mi>
+<mml:mi>s</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mi>Μ</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>v</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>κ</mml:mi>
+<mml:mi>I</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>l</mml:mi>
+<mml:mi>g</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","Μ = Symbol('Μ')
+b_s = Symbol('b_s')
+v = Symbol('v')
+κ_I = Symbol('κ_I')
+l_g = Symbol('l_g')
+e = Eq(exp(b_s)**Μ*cos(v), sin(κ_I)/log(l_g))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ω</mml:mi>
+<mml:mi>ζ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Ε</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>κ</mml:mi>
+<mml:mi>Δ</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Τ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>5</mml:mn>
+</mml:msup>
+</mml:mrow>
+","ω_ζ = Symbol('ω_ζ')
+Ε = Symbol('Ε')
+κ_Δ = Symbol('κ_Δ')
+Τ = Symbol('Τ')
+e = Eq(log(ω_ζ)*cos(Ε), sqrt(κ_Δ) - tan(Τ)**5)"
+"
+<mml:mrow>
+<mml:mn>1</mml:mn>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>M</mml:mi>
+</mml:msup>
+<mml:mi>β</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>f</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>η</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+","M = Symbol('M')
+β = Symbol('β')
+f = Symbol('f')
+η = Symbol('η')
+e = Eq(1 + exp(M)/β, sqrt(f)*cos(η) - 1)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>Y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>τ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mn>9</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Φ</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mn>5</mml:mn>
+<mml:mi>r</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mn>9</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+","Y = Symbol('Y')
+τ = Symbol('τ')
+r = Symbol('r')
+Φ = Symbol('Φ')
+e = Eq(log(Y)*tan(τ)/9, exp(Φ)**tan(5*r)/9)"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>ι</mml:mi>
+<mml:mi>d</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>Υ</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mi>ξ</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Ε</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>X</mml:mi>
+<mml:mi>I</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>v</mml:mi>
+<mml:mi>Β</mml:mi>
+</mml:msub>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+","ι_d = Symbol('ι_d')
+Υ = Symbol('Υ')
+ξ = Symbol('ξ')
+X_I = Symbol('X_I')
+v_Β = Symbol('v_Β')
+Ε = Symbol('Ε')
+e = Eq(exp(ι_d) - sin(Υ - ξ), exp(Ε)**log(X_I/v_Β))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Z</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mn>3</mml:mn>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>B</mml:mi>
+<mml:mi>σ</mml:mi>
+</mml:msub>
+</mml:msqrt>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>γ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msub>
+<mml:mi>s</mml:mi>
+<mml:mi>Q</mml:mi>
+</mml:msub>
+</mml:msup>
+","Z = Symbol('Z')
+B_σ = Symbol('B_σ')
+s_Q = Symbol('s_Q')
+γ = Symbol('γ')
+e = Eq(cos(Z)/(3*sqrt(B_σ)), log(γ)**s_Q)"
+"
+<mml:mrow>
+<mml:msqrt>
+<mml:mi>β</mml:mi>
+</mml:msqrt>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ν</mml:mi>
+<mml:mi>y</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msqrt>
+<mml:msup>
+<mml:mi>u</mml:mi>
+<mml:mn>3</mml:mn>
+</mml:msup>
+</mml:msqrt>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Ρ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mn>8</mml:mn>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>4</mml:mn>
+<mml:mi>x</mml:mi>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","β = Symbol('β')
+ν_y = Symbol('ν_y')
+u = Symbol('u')
+x = Symbol('x')
+Ρ = Symbol('Ρ')
+e = Eq(sqrt(β) + cos(ν_y)/sqrt(u**3), exp(-4*x)*sin(Ρ)/8)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>e</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>ο</mml:mi>
+<mml:mi>k</mml:mi>
+</mml:msub>
+</mml:msqrt>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>g</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msup>
+<mml:msub>
+<mml:mi>V</mml:mi>
+<mml:mi>A</mml:mi>
+</mml:msub>
+<mml:mn>2</mml:mn>
+</mml:msup>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","e = Symbol('e')
+ο_k = Symbol('ο_k')
+g = Symbol('g')
+V_A = Symbol('V_A')
+e = Eq(tan(e)/sqrt(ο_k), log(g)/sin(V_A**2))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>V</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>A</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mi>α</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>p</mml:mi>
+<mml:mi>P</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>g</mml:mi>
+<mml:msqrt>
+<mml:msup>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+<mml:mn>9</mml:mn>
+</mml:msup>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>R</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","V = Symbol('V')
+A = Symbol('A')
+α = Symbol('α')
+p_P = Symbol('p_P')
+g = Symbol('g')
+T_l = Symbol('T_l')
+R = Symbol('R')
+e = Eq(cos(V)*tan(A - α) + tan(p_P), g*sqrt(T_l**9) + tan(R))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Τ</mml:mi>
+</mml:msup>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>z</mml:mi>
+<mml:mi>δ</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>μ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Ι</mml:mi>
+<mml:mi>ψ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>A</mml:mi>
+<mml:mi>g</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+</mml:mrow>
+","Τ = Symbol('Τ')
+z = Symbol('z')
+δ = Symbol('δ')
+T_μ = Symbol('T_μ')
+A_g = Symbol('A_g')
+Ι_ψ = Symbol('Ι_ψ')
+e = Eq(exp(Τ) - sin(z*δ), cos(T_μ) + cos(Ι_ψ)**cos(A_g))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mi>Μ</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>ξ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>c</mml:mi>
+</mml:msup>
+<mml:msup>
+<mml:msub>
+<mml:mi>Δ</mml:mi>
+<mml:mi>u</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>ν</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>h</mml:mi>
+<mml:mi>γ</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>2</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+</mml:msup>
+</mml:msup>
+","Μ = Symbol('Μ')
+ξ = Symbol('ξ')
+T_ν = Symbol('T_ν')
+h_γ = Symbol('h_γ')
+Δ_u = Symbol('Δ_u')
+c = Symbol('c')
+e = Eq(sqrt(Μ)/tan(ξ) - 1, exp(c)**(Δ_u**(log(T_ν*h_γ)/2)))"
+"
+<mml:mrow>
+<mml:mn>7</mml:mn>
+<mml:msqrt>
+<mml:mi>Χ</mml:mi>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>κ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>K</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Η</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Χ = Symbol('Χ')
+κ = Symbol('κ')
+Q_K = Symbol('Q_K')
+Η = Symbol('Η')
+e = Eq(7*sqrt(Χ)*tan(κ), Q_K + tan(Η))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Π</mml:mi>
+<mml:mi>I</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mn>8</mml:mn>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mi>h</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>c</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>r</mml:mi>
+</mml:msub>
+<mml:mi>Ω</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+</mml:mrow>
+","Π_I = Symbol('Π_I')
+h = Symbol('h')
+c = Symbol('c')
+Q_r = Symbol('Q_r')
+Ω = Symbol('Ω')
+e = Eq(log(Π_I)/8, h + tan(c)/sin(Q_r/Ω))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>V</mml:mi>
+<mml:mi>t</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>y</mml:mi>
+<mml:mi>q</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>e</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>R</mml:mi>
+<mml:mi>Ο</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","V_t = Symbol('V_t')
+y_q = Symbol('y_q')
+e = Symbol('e')
+R_Ο = Symbol('R_Ο')
+e = Eq(sin(V_t) - cos(y_q), cos(e)/log(R_Ο - 1))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>Ν</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mn>9</mml:mn>
+<mml:mi>F</mml:mi>
+</mml:mrow>
+</mml:msup>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>F</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mn>9</mml:mn>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ξ</mml:mi>
+<mml:mi>Α</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+","F = Symbol('F')
+Ν = Symbol('Ν')
+ξ_Α = Symbol('ξ_Α')
+e = Eq(exp(-9*F)*cos(Ν), tan(F)/(9*sin(ξ_Α)))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>Α</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>9</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Y</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>A</mml:mi>
+<mml:mi>Κ</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>t</mml:mi>
+<mml:mi>a</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>ρ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Α = Symbol('Α')
+Y = Symbol('Y')
+A_Κ = Symbol('A_Κ')
+t_a = Symbol('t_a')
+ρ = Symbol('ρ')
+e = Eq(cos(Α - 9)*tan(Y) - 1, -exp(A_Κ)*cos(t_a) + log(ρ))"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>ο</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:msub>
+<mml:mi>g</mml:mi>
+<mml:mi>s</mml:mi>
+</mml:msub>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>λ</mml:mi>
+</mml:msup>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>Ο</mml:mi>
+</mml:msup>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mi>o</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>L</mml:mi>
+<mml:mi>Ν</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mi>Ε</mml:mi>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","λ = Symbol('λ')
+ο = Symbol('ο')
+g_s = Symbol('g_s')
+o = Symbol('o')
+Ο = Symbol('Ο')
+L_Ν = Symbol('L_Ν')
+Ε = Symbol('Ε')
+e = Eq(exp(-λ)*cos(ο)/g_s, exp(Ο)**log(o) + tan(L_Ν + Ε))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>ξ</mml:mi>
+<mml:mi>C</mml:mi>
+</mml:msub>
+<mml:mo>+</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>z</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>T</mml:mi>
+<mml:mi>β</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ν</mml:mi>
+<mml:mi>μ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mi>Y</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+","ξ_C = Symbol('ξ_C')
+Q_z = Symbol('Q_z')
+T_β = Symbol('T_β')
+ν_μ = Symbol('ν_μ')
+Y = Symbol('Y')
+e = Eq(log(ξ_C + 5)*cos(Q_z) + cos(T_β), cos(ν_μ)/Y)"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msup>
+<mml:msub>
+<mml:mi>S</mml:mi>
+<mml:mi>u</mml:mi>
+</mml:msub>
+<mml:mn>9</mml:mn>
+</mml:msup>
+</mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>s</mml:mi>
+<mml:mi>9</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Β</mml:mi>
+<mml:mi>α</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>r</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>e</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+","S_u = Symbol('S_u')
+s_9 = Symbol('s_9')
+Β_α = Symbol('Β_α')
+e = Symbol('e')
+r = Symbol('r')
+e = Eq(exp(S_u**9)*sin(s_9) + tan(Β_α), cos(r)**log(e + 1) + 5)"
+"
+<mml:mrow>
+<mml:mfrac>
+<mml:msqrt>
+<mml:mi>ε</mml:mi>
+</mml:msqrt>
+<mml:msqrt>
+<mml:mrow>
+<mml:mi>δ</mml:mi>
+<mml:mi>υ</mml:mi>
+</mml:mrow>
+</mml:msqrt>
+</mml:mfrac>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>ν</mml:mi>
+<mml:mi>Ε</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:mi>Ω</mml:mi>
+<mml:mo>-</mml:mo>
+<mml:mn>5</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>Λ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mrow>
+","ε = Symbol('ε')
+δ = Symbol('δ')
+υ = Symbol('υ')
+ν_Ε = Symbol('ν_Ε')
+Ω = Symbol('Ω')
+Λ = Symbol('Λ')
+e = Eq(sqrt(ε)/sqrt(δ*υ), log(ν_Ε) + log(Ω - 5)*sin(Λ))"
+"
+<mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mi>π</mml:mi>
+</mml:msup>
+<mml:mo>+</mml:mo>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:msub>
+<mml:mi>σ</mml:mi>
+<mml:mi>υ</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:mrow>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Ζ</mml:mi>
+<mml:mi>7</mml:mi>
+</mml:msub>
+<mml:mi>ι</mml:mi>
+</mml:mfrac>
+</mml:mrow>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>cos</mml:mi>
+<mml:mfenced>
+<mml:mi>D</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","π = Symbol('π')
+σ_υ = Symbol('σ_υ')
+Ζ_7 = Symbol('Ζ_7')
+ι = Symbol('ι')
+D = Symbol('D')
+e = Eq(exp(π) + exp(σ_υ), sqrt(Ζ_7/ι)*cos(D))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:msqrt>
+<mml:msup>
+<mml:msub>
+<mml:mi>Σ</mml:mi>
+<mml:mi>Τ</mml:mi>
+</mml:msub>
+<mml:msub>
+<mml:mi>Ω</mml:mi>
+<mml:mi>r</mml:mi>
+</mml:msub>
+</mml:msup>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>+</mml:mo>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>υ</mml:mi>
+<mml:mi>2</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:msqrt>
+<mml:msub>
+<mml:mi>Ρ</mml:mi>
+<mml:mi>G</mml:mi>
+</mml:msub>
+</mml:msqrt>
+<mml:mrow>
+<mml:mi>log</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>Δ</mml:mi>
+<mml:mi>Υ</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","Ω_r = Symbol('Ω_r')
+Σ_Τ = Symbol('Σ_Τ')
+υ_2 = Symbol('υ_2')
+Ρ_G = Symbol('Ρ_G')
+Δ_Υ = Symbol('Δ_Υ')
+e = Eq(-sqrt(Σ_Τ**Ω_r) + log(υ_2), sqrt(Ρ_G)*log(Δ_Υ))"
+"
+<mml:mrow>
+<mml:mn>6</mml:mn>
+<mml:msqrt>
+<mml:mi>λ</mml:mi>
+</mml:msqrt>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mn>5</mml:mn>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>η</mml:mi>
+<mml:mi>β</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+","λ = Symbol('λ')
+η_β = Symbol('η_β')
+e = Eq(6*sqrt(λ), 5*sin(η_β))"
+"
+<mml:mrow>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:msub>
+<mml:mi>D</mml:mi>
+<mml:mi>B</mml:mi>
+</mml:msub>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>sin</mml:mi>
+<mml:mfenced>
+<mml:mi>θ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:msup>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mi>T</mml:mi>
+<mml:mo>+</mml:mo>
+<mml:mi>φ</mml:mi>
+</mml:mrow>
+</mml:msup>
+</mml:msup>
+</mml:mrow>
+<mml:mo>=</mml:mo>
+<mml:mrow>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mi>Δ</mml:mi>
+</mml:mfenced>
+</mml:mrow>
+<mml:mo>-</mml:mo>
+<mml:mrow>
+<mml:mn>3</mml:mn>
+<mml:mrow>
+<mml:mi>tan</mml:mi>
+<mml:mfenced>
+<mml:mrow>
+<mml:msub>
+<mml:mi>Α</mml:mi>
+<mml:mi>Α</mml:mi>
+</mml:msub>
+<mml:mo>-</mml:mo>
+<mml:mn>4</mml:mn>
+</mml:mrow>
+</mml:mfenced>
+</mml:mrow>
+</mml:mrow>
+</mml:mrow>
+","D_B = Symbol('D_B')
+T = Symbol('T')
+φ = Symbol('φ')
+θ = Symbol('θ')
+Δ = Symbol('Δ')
+Α_Α = Symbol('Α_Α')
+e = Eq(sin(D_B)*sin(θ)**exp(T + φ), tan(Δ) - 3*tan(Α_Α - 4))"

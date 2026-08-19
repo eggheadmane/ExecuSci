@@ -1,0 +1,63 @@
+Title: Determination of the interfacial heat transfer coefficient for a hot aluminium stamping process
+Authors: Xiaochuan Liu, Kang Ji, Omer El Fakir, Haomiao Fang, Mohammad M. Gharbi, LiLiang Wang
+URL: https://www.sciencedirect.com/science/article/pii/S0924013617301334
+
+Math Expressions in MathML: 
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><msub is="true"><mi is="true">h</mi><mi is="true">g</mi></msub><mo is="true">+</mo><msub is="true"><mi is="true">h</mi><mi is="true">c</mi></msub></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><mn is="true">1.45</mn><mi is="true">k</mi><mfrac is="true"><mrow is="true"><mi is="true">tan</mi><mi is="true">θ</mi></mrow><mi is="true">σ</mi></mfrac><msup is="true"><mrow is="true"><mo stretchy="false" is="true">(</mo><mfrac is="true"><mi is="true">p</mi><mi is="true">H</mi></mfrac><mo stretchy="false" is="true">)</mo></mrow><mrow is="true"><mn is="true">0.985</mn></mrow></msup></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><mn is="true">8000</mn><mstyle displaystyle="true" is="true"><mover accent="true" is="true"><mi is="true">λ</mi><mo stretchy="true" is="true">¯</mo></mover></mstyle><msup is="true"><mrow is="true"><mo stretchy="false" is="true">(</mo><mfrac is="true"><mi is="true">p</mi><mrow is="true"><mi is="true">C</mi><msub is="true"><mi is="true">σ</mi><mi is="true">U</mi></msub></mrow></mfrac><mi is="true">K</mi><mo stretchy="false" is="true">)</mo></mrow><mrow is="true"><mn is="true">0.86</mn></mrow></msup></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><mi is="true">A</mi><mo stretchy="false" is="true">(</mo><mn is="true">1</mn><mo is="true">−</mo><mi is="true">exp</mi><mo stretchy="false" is="true">(</mo><mo is="true">−</mo><mi is="true">B</mi><mi is="true">P</mi><mo stretchy="false" is="true">)</mo><mo stretchy="false" is="true">)</mo></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><mfrac is="true"><mrow is="true"><mn is="true">1</mn><mo is="true">−</mo><mi is="true">A</mi></mrow><mrow is="true"><msub is="true"><mi is="true">h</mi><mi is="true">f</mi></msub></mrow></mfrac><mfrac is="true"><mrow is="true"><mn is="true">2</mn><msub is="true"><mi is="true">k</mi><mi is="true">f</mi></msub><msub is="true"><mi is="true">k</mi><mi is="true">t</mi></msub><msub is="true"><mi is="true">k</mi><mi is="true">w</mi></msub></mrow><mrow is="true"><mn is="true">2</mn><msub is="true"><mi is="true">k</mi><mi is="true">t</mi></msub><msub is="true"><mi is="true">k</mi><mi is="true">w</mi></msub><mo is="true">−</mo><msub is="true"><mi is="true">k</mi><mi is="true">w</mi></msub><msub is="true"><mi is="true">k</mi><mi is="true">f</mi></msub><mo is="true">−</mo><msub is="true"><mi is="true">k</mi><mi is="true">f</mi></msub><msub is="true"><mi is="true">k</mi><mi is="true">t</mi></msub></mrow></mfrac></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">h</mi><mo is="true">=</mo><msub is="true"><mi is="true">h</mi><mi is="true">a</mi></msub><mo is="true">+</mo><msub is="true"><mi is="true">h</mi><mi is="true">c</mi></msub><mo is="true">+</mo><msub is="true"><mi is="true">h</mi><mi is="true">l</mi></msub></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">h</mi><mi is="true">c</mi></msub><mo is="true">=</mo><mi is="true">α</mi><mfrac is="true"><mrow is="true"><msub is="true"><mi is="true">K</mi><mrow is="true"><mi is="true">s</mi><mi is="true">t</mi></mrow></msub><msub is="true"><mi is="true">N</mi><mi is="true">P</mi></msub></mrow><mi is="true">R</mi></mfrac></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">K</mi><mrow is="true"><mi is="true">s</mi><mi is="true">t</mi></mrow></msub><mo is="true">=</mo><mfrac is="true"><mn is="true">2</mn><mrow is="true"><msup is="true"><mrow is="true"><msub is="true"><mi is="true">k</mi><mi is="true">s</mi></msub></mrow><mrow is="true"><mo is="true">−</mo><mn is="true">1</mn></mrow></msup><mo is="true">+</mo><msup is="true"><mrow is="true"><msub is="true"><mi is="true">k</mi><mi is="true">t</mi></msub></mrow><mrow is="true"><mo is="true">−</mo><mn is="true">1</mn></mrow></msup></mrow></mfrac></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><mi is="true">R</mi><mo is="true">=</mo><msqrt is="true"><mrow is="true"><msup is="true"><mrow is="true"><msub is="true"><mi is="true">R</mi><mi is="true">s</mi></msub></mrow><mn is="true">2</mn></msup><mo is="true">+</mo><msup is="true"><mrow is="true"><msub is="true"><mi is="true">R</mi><mi is="true">t</mi></msub></mrow><mn is="true">2</mn></msup></mrow></msqrt></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">N</mi><mi is="true">P</mi></msub><mo is="true">=</mo><mn is="true">1</mn><mo is="true">−</mo><mi is="true">exp</mi><mo stretchy="false" is="true">(</mo><mo is="true">−</mo><mi is="true">λ</mi><mfrac is="true"><mi is="true">P</mi><mrow is="true"><msub is="true"><mi is="true">σ</mi><mi is="true">U</mi></msub></mrow></mfrac><mo stretchy="false" is="true">)</mo></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">h</mi><mi is="true">l</mi></msub><mo is="true">=</mo><mi is="true">β</mi><mfrac is="true"><mrow is="true"><msub is="true"><mi is="true">K</mi><mrow is="true"><mi is="true">s</mi><mi is="true">t</mi><mi is="true">l</mi></mrow></msub><msub is="true"><mi is="true">N</mi><mi is="true">L</mi></msub></mrow><mi is="true">R</mi></mfrac></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">K</mi><mrow is="true"><mi is="true">s</mi><mi is="true">t</mi><mi is="true">l</mi></mrow></msub><mo is="true">=</mo><mfrac is="true"><mn is="true">3</mn><mrow is="true"><msup is="true"><mrow is="true"><msub is="true"><mi is="true">k</mi><mi is="true">s</mi></msub></mrow><mrow is="true"><mo is="true">−</mo><mn is="true">1</mn></mrow></msup><mo is="true">+</mo><msup is="true"><mrow is="true"><msub is="true"><mi is="true">k</mi><mi is="true">t</mi></msub></mrow><mrow is="true"><mo is="true">−</mo><mn is="true">1</mn></mrow></msup><mo is="true">+</mo><msup is="true"><mrow is="true"><msub is="true"><mi is="true">k</mi><mi is="true">l</mi></msub></mrow><mrow is="true"><mo is="true">−</mo><mn is="true">1</mn></mrow></msup></mrow></mfrac></mrow></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow is="true"><msub is="true"><mi is="true">N</mi><mi is="true">L</mi></msub><mo is="true">=</mo><mn is="true">1</mn><mo is="true">−</mo><mi is="true">exp</mi><mo stretchy="false" is="true">(</mo><mo is="true">−</mo><mi is="true">γ</mi><mi is="true">δ</mi><mo stretchy="false" is="true">)</mo></mrow></math>
+
+Math Expressions in TeX: 
+$ h={h}_{g}+{h}_{c}$
+$ h=1.45k\frac{\mathrm{tan}\theta }{\sigma }{(\frac{p}{H})}^{0.985}$
+$ h=8000{ \overline{\lambda }}{(\frac{p}{C{\sigma }_{U}}K)}^{0.86}$
+$ h=A(1-\mathrm{exp}(-BP))$
+$ h=\frac{1-A}{{h}_{f}}\frac{2{k}_{f}{k}_{t}{k}_{w}}{2{k}_{t}{k}_{w}-{k}_{w}{k}_{f}-{k}_{f}{k}_{t}}$
+$ h={h}_{a}+{h}_{c}+{h}_{l}$
+$ {h}_{c}=\alpha \frac{{K}_{st}{N}_{P}}{R}$
+$ {K}_{st}=\frac{2}{{{k}_{s}}^{-1}+{{k}_{t}}^{-1}}$
+$ R=\sqrt{{{R}_{s}}^{2}+{{R}_{t}}^{2}}$
+$ {N}_{P}=1-\mathrm{exp}(-\lambda \frac{P}{{\sigma }_{U}})$
+$ {h}_{l}=\beta \frac{{K}_{stl}{N}_{L}}{R}$
+$ {K}_{stl}=\frac{3}{{{k}_{s}}^{-1}+{{k}_{t}}^{-1}+{{k}_{l}}^{-1}}$
+$ {N}_{L}=1-\mathrm{exp}(-\gamma \delta )$
+
+Math Expressions in ASCII: 
+h = (h)_(g) + (h)_(c)
+h = 1.45 k (text(t a n) theta) / (sigma) ((p) / (H))^(0.985)
+h = 8000 bar(lambda) ((p) / (C (sigma)_(U)) K)^(0.86)
+h = A (1 - text(e x p) (- B P))
+h = (1 - A) / ((h)_(f)) (2 (k)_(f) (k)_(t) (k)_(w)) / (2 (k)_(t) (k)_(w) - (k)_(w) (k)_(f) - (k)_(f) (k)_(t))
+h = (h)_(a) + (h)_(c) + (h)_(l)
+(h)_(c) = alpha ((K)_(s t) (N)_(P)) / (R)
+(K)_(s t) = (2) / ((k)_(s)^(- 1) + (k)_(t)^(- 1))
+R = sqrt((R)_(s)^(2) + (R)_(t)^(2))
+(N)_(P) = 1 - text(e x p) (- lambda (P) / ((sigma)_(U)))
+(h)_(l) = beta ((K)_(s t l) (N)_(L)) / (R)
+(K)_(s t l) = (3) / ((k)_(s)^(- 1) + (k)_(t)^(- 1) + (k)_(l)^(- 1))
+(N)_(L) = 1 - text(e x p) (- gamma delta)
+
+Math Expressions in Python: 
+h = h_g + h_c
+h = 1.45 * k * (np.tan(theta)) / sigma * (p / H) ** (0.985)
+h = 8000 * barlambda_ * (p / (C * sigma_U) * K) ** (0.86)
+h = A * (1 - np.exp(- B * P))
+h = (1 - A) / h_f * (2 * k_f * k_t * k_w) / (2 * k_t * k_w - k_w * k_f - k_f * k_t)
+h = h_a + h_c + h_l
+h_c = alpha * (K_st * N_P) / R
+K_st = 2 / (k_s ** (-1) + k_t ** (-1))
+R = np.sqrt(R_s ** 2 + R_t ** 2)
+N_P = 1 - np.exp(- lambda_ * P / sigma_U)
+h_l = beta * (K_stl * N_L) / R
+K_stl = 3 / (k_s ** (-1) + k_t ** (-1) + k_l ** (-1))
+N_L = 1 - np.exp(- gamma * delta)
