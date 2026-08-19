@@ -10,9 +10,9 @@ import pytest
 import sympy as sp
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_BUILD = os.path.join(_ROOT, "build")
-if _BUILD not in sys.path:
-    sys.path.insert(0, _BUILD)
+_SRC = os.path.join(_ROOT, "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
@@ -315,7 +315,7 @@ def test_target_paper_table3():
 
 
 # --------------------------------------------------------------------------- #
-# The friction paper (``Sample Paper 2.md``): one stacked parameter table, no
+# The friction paper (``sample_2.md``): one stacked parameter table, no
 # tool-specific values, and two symbols Mathpix misread.
 # --------------------------------------------------------------------------- #
 
@@ -423,7 +423,7 @@ def test_report_records_the_ocr_correction():
 
 def test_friction_paper_parameters():
     """Integration: scrape the second sample paper as Mathpix produced it."""
-    with open(paper_path("Sample Paper 2.md"), "r", encoding="utf-8") as fh:
+    with open(paper_path("sample_2.md"), "r", encoding="utf-8") as fh:
         text = fh.read()
 
     consts = extract_constants(text, include_prose=True)
