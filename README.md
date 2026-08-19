@@ -11,16 +11,17 @@
 ## Pipeline
 
 Runnable source lives under `build/` in the same numbered stage folders.
-Papers stay in `01 PDF2Latex` at the repo root; generated outputs for stages
-02–05 live under `generated/`. Folder numbers follow the order the stages
-run in; code never hard-codes those numbers, it looks folders up by name
-through `build/execusci_paths.py`, so stages can be reordered.
+Put papers in `input/`. The default paper is **whichever markdown/LaTeX file**
+is in `input/target/` — any filename, no rename needed. Generated outputs for
+stages 02–05 live under `generated/`. Folder numbers follow the order the
+stages run in; code never hard-codes those numbers, it looks folders up by
+name through `build/execusci_paths.py`, so stages can be reordered.
 
 | Stage | Folder | Input | Output |
 |-------|--------|-------|--------|
-| 01 | `01 PDF2Latex` | the PDF | `target_paper.md` (Mathpix markdown) |
-| 02 | `generated/02 Extract Equations` | `target_paper.md` | `output/equations.md`, `output/symbols.json` |
-| 03 | `generated/03 Scrape Constants` | `target_paper.md` | `constants.py`, `constants.md` |
+| 01 | `input/target/` | the PDF | Mathpix markdown (any filename) |
+| 02 | `generated/02 Extract Equations` | the target paper | `output/equations.md`, `output/symbols.json` |
+| 03 | `generated/03 Scrape Constants` | the target paper | `constants.py`, `constants.md` |
 | 04 | `generated/04 Latex2Python` | `equations.md` + `symbols.json` | `equations.py` |
 | 05 | `generated/05 Plotting` | `equations.py` + `constants.py` | figures under `output/` |
 
@@ -28,9 +29,9 @@ through `build/execusci_paths.py`, so stages can be reordered.
 
 ```bash
 pip install -r requirements.txt
-python build/run_pipeline.py            # stages 02 -> 04
+python build/run_pipeline.py            # stages 02 -> 04 (paper in input/target/)
 python build/run_pipeline.py --plot     # also runs stage 05
-python build/run_pipeline.py --paper "01 PDF2Latex/another_paper.md"
+python build/run_pipeline.py --paper "input/Sample Paper 2.md"
 ```
 
 Every stage is also runnable on its own:
@@ -79,14 +80,18 @@ the same symbol name the equations use, plus a `sympy.Symbol`:
 
 Values the paper gives as functions of temperature (`-39.082 T + 82532`) are kept
 as expressions in `TEMPERATURE_DEPENDENT` rather than being mistaken for numbers.
-`constants.md` records where every value came from and which equation symbols
-still have no value.
+`constants.md` records where every value came from and, against the equation
+symbol dictionary, splits remaining names into **model parameters**, **material
+properties**, and **operating inputs** (pressure, time, film thickness, …).
+Generated `constants.py` lists untabulated operating names in `OPERATING_INPUTS`
+so you know what to pass when calling the `eq_*` functions.
 
 ```python
-from constants import get_constants, material_properties, subs_map, symbol
+from constants import get_constants, material_properties, subs_map, symbol, OPERATING_INPUTS
 
 c = get_constants(tool="P20", delta=1.5e-5)   # flat dict for the generated functions
 material_properties("H13")["rho"]             # 7800.0
+OPERATING_INPUTS                              # e.g. ('P',) — pass these yourself
 symbol("k_s")                                 # sympy Symbol('k_s')
 expr.subs(subs_map(tool="H13"))               # substitute into a SymPy expression
 ```

@@ -1,0 +1,141 @@
+Request successful 
+
+<ce:table colsep="0" frame="topbot" id="tbl0015" rowsep="0" xmlns="http://www.elsevier.com/xml/common/cals/dtd">
+<ce:label>Table 3</ce:label>
+<ce:caption id="cap0090">
+<ce:simple-para id="spar0090" view="all">Material constants and model parameters of IHTC model.</ce:simple-para>
+</ce:caption>
+<ce:alt-text id="at0165" role="short">Table 3</ce:alt-text>
+<tgroup cols="5">
+<colspec colname="col1"></colspec>
+<colspec colname="col2"></colspec>
+<colspec colname="col3"></colspec>
+<colspec colname="col4"></colspec>
+<colspec colname="col5"></colspec>
+<thead valign="top">
+<row rowsep="1">
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>k<inf loc="post">s</inf>
+</italic> (kW/mK)</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<mml:math altimg="si1.gif" overflow="scroll">
+<mml:mrow>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>t</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:math> (H13)</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>k</italic>
+<inf loc="post">t</inf> (Cast iron)</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<mml:math altimg="si1.gif" overflow="scroll">
+<mml:mrow>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>t</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:math> (P20)</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<mml:math altimg="si2.gif" overflow="scroll">
+<mml:mrow>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:math> (Lubricant)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">0.14</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">0.0244</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">0.044</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">0.0315</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">0.024</entry>
+</row>
+</tbody>
+</tgroup>
+<tgroup cols="5">
+<colspec colname="col1"></colspec>
+<colspec colname="col2"></colspec>
+<colspec colname="col3"></colspec>
+<colspec colname="col4"></colspec>
+<colspec colname="col5"></colspec>
+<thead valign="top">
+<row rowsep="1">
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>R<inf loc="post">s</inf>
+</italic> (m)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>R<inf loc="post">t</inf>
+</italic> (H13)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>R<inf loc="post">t</inf>
+</italic> (Cast iron)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>R<inf loc="post">t</inf>
+</italic> (P20)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>h</italic>
+<inf loc="post">
+<italic>a</italic>
+</inf> (kW/m<sup loc="post">2</sup>K)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">3.4e-7</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">9.8e-7</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">8.1e-7</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">9.6e-7</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">0.8</entry>
+</row>
+</tbody>
+</tgroup>
+<tgroup cols="5">
+<colspec colname="col1"></colspec>
+<colspec colname="col2"></colspec>
+<colspec colname="col3"></colspec>
+<colspec colname="col4"></colspec>
+<colspec colname="col5"></colspec>
+<thead valign="top">
+<row rowsep="1">
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">
+<display>
+<formula id="eq0005">
+<label>(MPa)</label>
+<mml:math altimg="si3.gif" overflow="scroll">
+<mml:mrow>
+<mml:msub>
+<mml:mi>σ</mml:mi>
+<mml:mi>U</mml:mi>
+</mml:msub>
+</mml:mrow>
+</mml:math>
+</formula>
+</display>
+</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">α (−)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>λ</italic> (−)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>β</italic> (−)</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">
+<italic>γ</italic> (m<sup loc="post">−1</sup>)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">21</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">2.01e-4</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">6.05</entry>
+<entry align="center" xmlns="http://www.elsevier.com/xml/common/dtd">1.1e-4</entry>
+<entry align="left" xmlns="http://www.elsevier.com/xml/common/dtd">2e5</entry>
+</row>
+</tbody>
+</tgroup>
+</ce:table>

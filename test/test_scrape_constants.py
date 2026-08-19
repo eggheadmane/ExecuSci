@@ -234,6 +234,50 @@ def test_report_lists_sources_and_missing_values():
     assert "Temperature-dependent properties" in report
 
 
+_COVERAGE_INFO = {
+    "lamda": {
+        "kind": "parameter",
+        "description": "a model parameter",
+        "used_in": ["10"],
+    },
+    "rho": {"kind": "input", "description": "density", "used_in": []},
+    "P": {
+        "kind": "input",
+        "description": "the contact pressure",
+        "used_in": ["10"],
+    },
+    "mystery": {"kind": "input", "description": "", "used_in": ["1"]},
+}
+
+
+def test_report_splits_equation_symbol_coverage():
+    report = generate_report(
+        TABLE3_SNIPPET + TABLE2_SNIPPET,
+        source="paper.md",
+        symbol_info=_COVERAGE_INFO,
+    )
+    param = report.index("### Model parameters")
+    material = report.index("### Material properties")
+    operating = report.index("### Operating inputs")
+    other = report.index("### Other inputs")
+    assert param < material < operating < other
+    assert "`lamda`" in report[param:material]
+    assert "`rho`" in report[material:operating]
+    assert "`P`" in report[operating:other]
+    assert "`mystery`" in report[other:]
+
+
+def test_generated_module_lists_operating_inputs():
+    source = generate_constants_module(
+        TABLE3_SNIPPET + TABLE2_SNIPPET, symbol_info=_COVERAGE_INFO
+    )
+    ns: dict = {}
+    exec(compile(source, "<constants>", "exec"), ns)
+    assert "P" in ns["OPERATING_INPUTS"]
+    assert "lamda" not in ns["OPERATING_INPUTS"]
+    assert "rho" not in ns["OPERATING_INPUTS"]
+
+
 def test_run_writes_module_and_report(tmp_path):
     constants_path = tmp_path / "constants.py"
     report_path = tmp_path / "constants.md"

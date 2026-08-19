@@ -1,0 +1,454 @@
+MathML: <mml:math altimg="si2.svg" alttext="Equation 1.">
+<mml:mrow>
+<mml:mi>μ</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mn>1</mml:mn>
+<mml:mo linebreak="badbreak">−</mml:mo>
+<mml:mi>β</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="goodbreak">+</mml:mo>
+<mml:mi>β</mml:mi>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mi>d</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:math>
+Python: μ(t) = (1 - β) * μl(t) + β * μd(t)
+
+MathML: <mml:math altimg="si5.svg" alttext="Equation 2.">
+<mml:mrow>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mrow>
+<mml:mi>l</mml:mi>
+<mml:mn>0</mml:mn>
+</mml:mrow>
+</mml:msub>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mo linebreak="badbreak">−</mml:mo>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>l</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mi>R</mml:mi>
+<mml:mi>T</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:mfrac>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:math>
+Python: import sympy
+
+t, R, T, mu_l0, Q_l = sympy.symbols('t R T \mu_{l0} Q_l')
+
+mu_l = mu_l0 * sympy.exp(-Q_l/(R*T*(t)))
+
+MathML: <mml:math altimg="si6.svg" alttext="Equation 3.">
+<mml:mrow>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mi>d</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:msub>
+<mml:mi>μ</mml:mi>
+<mml:mrow>
+<mml:mi>d</mml:mi>
+<mml:mn>0</mml:mn>
+</mml:mrow>
+</mml:msub>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mo linebreak="badbreak">−</mml:mo>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>d</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mi>R</mml:mi>
+<mml:mi>T</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:mfrac>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:math>
+Python: import sympy
+
+mu_d = sympy.symbols('mu_d')
+t, mu_d0, Q_d, R, T = sympy.symbols('t mu_d0 Q_d R T')
+
+equation = mu_d(t) - mu_d0*sympy.exp(-Q_d/(R*T(t)))
+
+MathML: <mml:math altimg="si16.svg" alttext="Equation 4.">
+<mml:mrow>
+<mml:msup>
+<mml:mrow>
+<mml:mi>β</mml:mi>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mtext>exp</mml:mtext>
+<mml:mo stretchy="false">[</mml:mo>
+<mml:mo linebreak="badbreak">−</mml:mo>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:msub>
+<mml:mi>λ</mml:mi>
+<mml:mn>1</mml:mn>
+</mml:msub>
+<mml:mi>h</mml:mi>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:msub>
+<mml:mi>λ</mml:mi>
+<mml:mn>2</mml:mn>
+</mml:msub>
+</mml:msup>
+<mml:mo stretchy="false">]</mml:mo>
+</mml:mrow>
+</mml:math>
+Python: import sympy
+
+t, λ1, λ2, h = sympy.symbols('t λ1 λ2 h')
+
+β = sympy.exp(-(λ1 * h(t))**λ2)
+
+MathML: <mml:math altimg="si17.svg" alttext="Equation 5.">
+<mml:mrow>
+<mml:mi>V</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mn>0</mml:mn>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mi>V</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="goodbreak">+</mml:mo>
+<mml:mi>Δ</mml:mi>
+<mml:mi>V</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="goodbreak">=</mml:mo>
+<mml:mi>V</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="goodbreak">+</mml:mo>
+<mml:munderover>
+<mml:mrow>
+<mml:mo>∫</mml:mo>
+</mml:mrow>
+<mml:mn>0</mml:mn>
+<mml:mi>t</mml:mi>
+</mml:munderover>
+<mml:mi>d</mml:mi>
+<mml:mi>V</mml:mi>
+</mml:mrow>
+</mml:math>
+Python: V(0) = V(t) + ΔV(t) = V(t) + Integrate(dV, (t, 0, t))
+
+MathML: <mml:math altimg="si22.svg" alttext="Equation 6.">
+<mml:mrow>
+<mml:mi>d</mml:mi>
+<mml:mi>V</mml:mi>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mi>a</mml:mi>
+<mml:mi>h</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="goodbreak">⋅</mml:mo>
+<mml:mi>w</mml:mi>
+<mml:mo linebreak="goodbreak">⋅</mml:mo>
+<mml:msup>
+<mml:mi>v</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mn>1</mml:mn>
+</mml:msub>
+</mml:msup>
+<mml:mi>d</mml:mi>
+<mml:mi>t</mml:mi>
+</mml:mrow>
+</mml:math>
+Python: dV = a * h(t) * w * v**k1 * dt
+
+MathML: <mml:math altimg="si34.svg" alttext="Equation 7.">
+<mml:mrow>
+<mml:mi>Δ</mml:mi>
+<mml:mi>V</mml:mi>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:munderover>
+<mml:mrow>
+<mml:mo>∫</mml:mo>
+</mml:mrow>
+<mml:mn>0</mml:mn>
+<mml:mi>t</mml:mi>
+</mml:munderover>
+<mml:mi>A</mml:mi>
+<mml:mo linebreak="goodbreak">⋅</mml:mo>
+<mml:mi>b</mml:mi>
+<mml:mfrac>
+<mml:mrow>
+<mml:msup>
+<mml:mi>P</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mn>3</mml:mn>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mi>v</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mn>1</mml:mn>
+</mml:msub>
+</mml:msup>
+</mml:mrow>
+<mml:msup>
+<mml:mi>η</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mn>2</mml:mn>
+</mml:msub>
+</mml:msup>
+</mml:mfrac>
+<mml:mo linebreak="goodbreak">⋅</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mi>d</mml:mi>
+<mml:mi>t</mml:mi>
+</mml:mrow>
+</mml:math>
+Python: from sympy import integrate
+from sympy.abc import t, A, b, P, v, η, h, k1, k2, k3
+
+ΔV = integrate(A * b * (P**k3 * v**k1) / (η**k2) * h(t), (t, 0, t))
+
+MathML: <mml:math altimg="si35.svg" alttext="Equation 8.">
+<mml:mrow>
+<mml:mover accent="true">
+<mml:mi>h</mml:mi>
+<mml:mo>˙</mml:mo>
+</mml:mover>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mfrac>
+<mml:mrow>
+<mml:mover accent="true">
+<mml:mi>V</mml:mi>
+<mml:mo>˙</mml:mo>
+</mml:mover>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+<mml:mi>A</mml:mi>
+</mml:mfrac>
+<mml:mo linebreak="goodbreak">=</mml:mo>
+<mml:mo linebreak="goodbreak">−</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>t</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>c</mml:mi>
+<mml:msup>
+<mml:mi>P</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>p</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:msup>
+<mml:mi>v</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>v</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo linebreak="badbreak">/</mml:mo>
+<mml:msup>
+<mml:mi>η</mml:mi>
+<mml:msub>
+<mml:mi>k</mml:mi>
+<mml:mi>η</mml:mi>
+</mml:msub>
+</mml:msup>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:math>
+Python: h_dot = V_dot(t) / A = -h(t) * (c * P**k_p * v**k_v / η**k_η)
+
+MathML: <mml:math altimg="si45.svg" alttext="Equation 9.">
+<mml:mrow>
+<mml:mi>η</mml:mi>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:msub>
+<mml:mi>η</mml:mi>
+<mml:mn>0</mml:mn>
+</mml:msub>
+<mml:mtext>exp</mml:mtext>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mfrac>
+<mml:msub>
+<mml:mi>Q</mml:mi>
+<mml:mi>η</mml:mi>
+</mml:msub>
+<mml:mrow>
+<mml:mi>R</mml:mi>
+<mml:mi>T</mml:mi>
+</mml:mrow>
+</mml:mfrac>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mrow>
+</mml:math>
+Python: import sympy
+
+η = sympy.symbols('η')
+η_0 = sympy.symbols('η_0')
+Q_η = sympy.symbols('Q_η')
+R = sympy.symbols('R')
+T = sympy.symbols('T')
+
+η = η_0 * sympy.exp(Q_η / (R * T))
+
+MathML: <mml:math altimg="si46.svg" alttext="Equation 10.">
+<mml:mrow>
+<mml:mi>f</mml:mi>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>x</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:munderover>
+<mml:mrow>
+<mml:mo>∑</mml:mo>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>i</mml:mi>
+<mml:mo linebreak="badbreak">=</mml:mo>
+<mml:mn>1</mml:mn>
+</mml:mrow>
+<mml:mi>m</mml:mi>
+</mml:munderover>
+<mml:msub>
+<mml:mi>w</mml:mi>
+<mml:mi>i</mml:mi>
+</mml:msub>
+<mml:msup>
+<mml:mrow>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:msubsup>
+<mml:mi>μ</mml:mi>
+<mml:mi>i</mml:mi>
+<mml:mi>p</mml:mi>
+</mml:msubsup>
+<mml:mo linebreak="badbreak">−</mml:mo>
+<mml:msubsup>
+<mml:mi>μ</mml:mi>
+<mml:mi>i</mml:mi>
+<mml:mi>e</mml:mi>
+</mml:msubsup>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mn>2</mml:mn>
+</mml:msup>
+</mml:mrow>
+</mml:math>
+Python: import sympy
+
+def f(x, m, w, μ_p, μ_e):
+    result = 0
+    for i in range(1, m + 1):
+        result += w[i-1] * ((μ_p[i-1]**p - μ_e[i-1]**e)**2)
+    return result
+

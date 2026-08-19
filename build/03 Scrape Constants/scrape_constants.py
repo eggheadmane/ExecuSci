@@ -95,6 +95,19 @@ _PROPERTY_SYMBOLS: Dict[str, str] = {
     "hardness": "H",
 }
 
+# Equation-symbol names treated as thermophysical / contact-body properties.
+_MATERIAL_NAMES = set(_PROPERTY_SYMBOLS.values()) | {
+    "k_s", "k_t", "k_l", "k_f", "k_w", "R_s", "R_t",
+}
+
+# Operating conditions the caller typically supplies (not tabulated properties).
+_OPERATING_NAMES = {"P", "p", "t", "T", "delta", "v", "w"}
+_OPERATING_DESC_RE = re.compile(
+    r"\b(pressure|time|temperature|speed|velocity|load|film thickness|"
+    r"sliding|strain rate)\b",
+    re.IGNORECASE,
+)
+
 # First cell of a property table's header row.
 _PROPERTY_HEADERS = {"property", "properties", "parameter", "parameters", "material"}
 
@@ -757,6 +770,7 @@ def generate_constants_module(
     default_tool: Optional[str] = None,
     default_delta: float = 1.5e-5,
     equation_symbols: Optional[Iterable[str]] = None,
+    symbol_info: Optional[Dict[str, dict]] = None,
 ) -> str:
     """Build a runnable ``constants.py`` source string from document ``text``.
 
@@ -846,10 +860,27 @@ def generate_constants_module(
         # A paper that quotes no per-tool values has no default tool at all.
         default_tool = "P20" if "P20" in tools else next(iter(sorted(tools)), None)
 
+    info = symbol_info if symbol_info is not None else _load_equation_symbols()
+    operating = _operating_input_names(constants, info)
+    if len(operating) == 1:
+        operating_src = f'OPERATING_INPUTS = ("{operating[0]}",)'
+    elif operating:
+        operating_src = (
+            "OPERATING_INPUTS = ("
+            + ", ".join(f'"{n}"' for n in operating)
+            + ")"
+        )
+    else:
+        operating_src = "OPERATING_INPUTS = ()"
+
     lines.extend(
         [
             f'DEFAULT_TOOL = "{default_tool}"' if default_tool else "DEFAULT_TOOL = None",
             f"DEFAULT_DELTA = {_fmt_float(default_delta)}  # m — lubricant film thickness (user-supplied)",
+            "",
+            "# Equation inputs the paper does not tabulate (pressure, time, …).",
+            "# Pass these when calling the generated eq_* functions.",
+            operating_src,
             "",
             "# One SymPy symbol per scraped constant; the names are the ones the",
             "# generated equations use, so ``expr.subs(subs_map())`` just works.",
@@ -936,6 +967,40 @@ def _load_equation_symbols() -> Dict[str, dict]:
         return {}
 
 
+def _classify_symbol(
+    name: str, info: dict, hits: Sequence[Constant]
+) -> str:
+    """``parameter``, ``material``, ``operating``, ``other``, or ``derived``."""
+    if info.get("kind") == "derived":
+        return "derived"
+    if info.get("kind") == "parameter":
+        return "parameter"
+    if any(c.category == "material" for c in hits) or name in _MATERIAL_NAMES:
+        return "material"
+    description = info.get("description") or ""
+    if name in _OPERATING_NAMES or _OPERATING_DESC_RE.search(description):
+        return "operating"
+    return "other"
+
+
+def _operating_input_names(
+    constants: Sequence[Constant], symbol_info: Dict[str, dict]
+) -> List[str]:
+    """Operating equation inputs the paper does not tabulate as numbers."""
+    by_name: Dict[str, List[Constant]] = {}
+    for constant in constants:
+        by_name.setdefault(constant.name, []).append(constant)
+    names: List[str] = []
+    for name, info in sorted(symbol_info.items()):
+        hits = by_name.get(name, [])
+        if _classify_symbol(name, info, hits) != "operating":
+            continue
+        if any(c.is_numeric for c in hits):
+            continue
+        names.append(name)
+    return names
+
+
 def _fmt_value(value: Optional[float]) -> str:
     return "—" if value is None else f"{value:g}"
 
@@ -945,6 +1010,7 @@ def generate_report(
     source: str = "",
     include_prose: bool = True,
     equation_symbols: Optional[Iterable[str]] = None,
+    symbol_info: Optional[Dict[str, dict]] = None,
 ) -> str:
     """Render ``constants.md``: what was scraped, from where, and what is missing."""
     constants = extract_constants(
@@ -1032,40 +1098,98 @@ def generate_report(
                 f"| {c.unit or '—'} | Table {c.table} |"
             )
 
-    equation_symbols = _load_equation_symbols()
-    if equation_symbols:
+    info = symbol_info if symbol_info is not None else _load_equation_symbols()
+    if info:
+        by_name: Dict[str, List[Constant]] = {}
+        for constant in constants:
+            by_name.setdefault(constant.name, []).append(constant)
+        buckets: Dict[str, List[Tuple[str, dict, List[Constant]]]] = {
+            "parameter": [],
+            "material": [],
+            "operating": [],
+            "other": [],
+        }
+        for symbol_name, symbol in sorted(info.items()):
+            bucket = _classify_symbol(
+                symbol_name, symbol, by_name.get(symbol_name, [])
+            )
+            if bucket == "derived" or bucket not in buckets:
+                continue
+            buckets[bucket].append(
+                (symbol_name, symbol, by_name.get(symbol_name, []))
+            )
+
         lines.extend(
             [
                 "",
                 "## Coverage of the equation symbols",
                 "",
                 "Every symbol stage 02 found in the equations that is not itself "
-                "computed by an equation. Symbols without a value must be supplied "
-                "by the caller (a measurement, an operating condition, or a "
-                "parameter the paper only quotes for other models).",
-                "",
-                "| Name | Needed by | Scraped value | Where |",
-                "| --- | --- | --- | --- |",
+                "computed by an equation, split into model parameters, material "
+                "properties, and operating inputs (pressure, time, film thickness, …).",
             ]
         )
-        by_name: Dict[str, List[Constant]] = {}
-        for c in constants:
-            by_name.setdefault(c.name, []).append(c)
-        for symbol_name, info in sorted(equation_symbols.items()):
-            if info.get("kind") == "derived":
+        sections = (
+            (
+                "parameter",
+                "### Model parameters",
+                "Fitted model parameters named in the paper's where-clauses.",
+            ),
+            (
+                "material",
+                "### Material properties",
+                "Thermophysical or contact-body properties (tables or conventional names).",
+            ),
+            (
+                "operating",
+                "### Operating inputs",
+                "Caller typically supplies these: contact pressure, time, temperature, "
+                "speed, lubricant thickness.",
+            ),
+            (
+                "other",
+                "### Other inputs",
+                "Remaining equation inputs that are not parameters, properties, or "
+                "operating conditions.",
+            ),
+        )
+        for key, heading, blurb in sections:
+            rows = buckets[key]
+            if key == "other" and not rows:
                 continue
-            hits = by_name.get(symbol_name, [])
-            used_in = ", ".join(info.get("used_in") or []) or "—"
-            if not hits:
-                lines.append(f"| `{symbol_name}` | {used_in} | — | supplied by caller |")
+            lines.extend(["", heading, "", blurb, ""])
+            if not rows:
+                lines.append("None found.")
                 continue
-            values = ", ".join(
-                f"{_fmt_value(c.value) if c.is_numeric else 'f(T)'}"
-                f"{f' ({c.variant})' if c.variant else ''}"
-                for c in hits
+            lines.extend(
+                [
+                    "| Name | Needed by | Scraped value | Where |",
+                    "| --- | --- | --- | --- |",
+                ]
             )
-            where = ", ".join(sorted({f"Table {c.table}" if c.table else c.source for c in hits}))
-            lines.append(f"| `{symbol_name}` | {used_in} | {values} | {where} |")
+            for symbol_name, symbol, hits in rows:
+                used_in = ", ".join(symbol.get("used_in") or []) or "—"
+                if not hits:
+                    lines.append(
+                        f"| `{symbol_name}` | {used_in} | — | supplied by caller |"
+                    )
+                    continue
+                values = ", ".join(
+                    f"{_fmt_value(c.value) if c.is_numeric else 'f(T)'}"
+                    f"{f' ({c.variant})' if c.variant else ''}"
+                    for c in hits
+                )
+                where = ", ".join(
+                    sorted(
+                        {
+                            f"Table {c.table}" if c.table else c.source
+                            for c in hits
+                        }
+                    )
+                )
+                lines.append(
+                    f"| `{symbol_name}` | {used_in} | {values} | {where} |"
+                )
 
     lines.append("")
     return "\n".join(lines)
@@ -1089,7 +1213,8 @@ def run(
 
     # Stage 02 knows how the equations spell each symbol, which is what lets an
     # OCR-damaged table header be matched back to the symbol it was meant to be.
-    equation_symbols = set(_load_equation_symbols())
+    equation_info = _load_equation_symbols()
+    equation_symbols = set(equation_info)
 
     constants = extract_constants(
         text, include_prose=include_prose, equation_symbols=equation_symbols
@@ -1099,6 +1224,7 @@ def run(
         module_doc=f"Constants scraped from {os.path.basename(path)}.",
         include_prose=include_prose,
         equation_symbols=equation_symbols,
+        symbol_info=equation_info,
     )
     with open(constants_path, "w", encoding="utf-8") as fh:
         fh.write(source)
@@ -1109,6 +1235,7 @@ def run(
                 source=path,
                 include_prose=include_prose,
                 equation_symbols=equation_symbols,
+                symbol_info=equation_info,
             )
         )
 
@@ -1144,7 +1271,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: 01 PDF2Latex/target_paper.md)",
+        help="Markdown/LaTeX source (default: the file in input/target/)",
     )
     parser.add_argument(
         "--constants",

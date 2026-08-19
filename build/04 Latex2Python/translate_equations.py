@@ -9,7 +9,7 @@ function's arguments in the paper's own words.
 Run it with::
 
     python "build/04 Latex2Python/translate_equations.py"
-    python "build/04 Latex2Python/translate_equations.py" --source "01 PDF2Latex/target_paper.md"
+    python "build/04 Latex2Python/translate_equations.py" --source "input/Sample Paper 2.md"
 """
 
 from __future__ import annotations
