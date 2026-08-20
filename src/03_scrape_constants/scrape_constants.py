@@ -35,7 +35,7 @@ _SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _SRC not in sys.path:
     sys.path.insert(0, _SRC)
 
-from execusci_paths import add_stages, log_dir, mirror_to_log, paper_path, stage_dir  # noqa: E402
+from execusci_paths import LOG, add_stages, mirror_to_log, paper_path, stage_dir  # noqa: E402
 
 add_stages("Latex2Python")
 
@@ -55,7 +55,7 @@ __all__ = [
 
 _SCRAPE = stage_dir("Scrape Constants")
 DEFAULT_CONSTANTS_PATH = os.path.join(_SCRAPE, "constants.py")
-DEFAULT_REPORT_PATH = os.path.join(log_dir("Scrape Constants"), "constants.md")
+DEFAULT_REPORT_PATH = os.path.join(LOG, os.path.basename(_SCRAPE), "constants.md")
 
 # Tool / material labels that appear in Table 3 headers like ``k_t (H13)``.
 _TOOL_ALIASES = {
@@ -1241,7 +1241,6 @@ def run(
             )
         )
     mirror_to_log(constants_path)
-    mirror_to_log(report_path)
 
     if verbose:
         grouped = _organise(constants)
