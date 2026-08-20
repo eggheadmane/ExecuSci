@@ -126,7 +126,7 @@ def mirror_to_log(path: str) -> Optional[str]:
     shutil.copy2(path, dest)
     return dest
 
-''''''
+'''Add stage files to sys.path so that modules can be imported around'''
 
 def add_stages(*keywords: str, root: Optional[str] = None) -> List[str]:
     """Put the named ``src/`` stage folders on ``sys.path``.
@@ -137,6 +137,8 @@ def add_stages(*keywords: str, root: Optional[str] = None) -> List[str]:
     """
     added: List[str] = []
     bases: List[str] = [SRC]
+    
+    # root is additional directory to look at. If it is not the same as \src then add to bases
     if root is not None and os.path.abspath(root) != os.path.abspath(SRC):
         bases.append(root)
     paths = [SRC]
@@ -153,6 +155,8 @@ def add_stages(*keywords: str, root: Optional[str] = None) -> List[str]:
     return added
 
 
+'''Find papers (md files) in folder'''
+
 def _list_papers(folder: str) -> List[str]:
     """Basenames of markdown/LaTeX files directly inside ``folder``."""
     if not os.path.isdir(folder):
@@ -164,18 +168,13 @@ def _list_papers(folder: str) -> List[str]:
             found.append(entry)
     return sorted(found)
 
-
-try:
-    INPUT = stage_dir("input")
-except LookupError:
-    INPUT = os.path.join(SRC, "01_input")
-
+'''Hard code input folder, and under that the target folder'''
+INPUT = os.path.join(SRC, "01_input")
 #: Papers: extras live directly in ``01_input/``; the default paper is in ``target/``.
 TARGET = os.path.join(INPUT, "target")
 
-''' '''
 
-def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
+def paper_path(name: Optional[str] = None) -> str:
     """Absolute path of a source document.
 
     With no ``name``, returns the single markdown/LaTeX file in
@@ -183,10 +182,10 @@ def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
     to switch the default without renaming it.
 
     With ``name``, looks in :data:`INPUT` first (e.g. ``sample_2.md``),
-    then in :data:`TARGET`.  ``root`` is unused and kept for call-site
-    compatibility.
+    then in :data:`TARGET`.
     """
-    del root  # papers live under 01_input, not as a separate numbered lookup
+    # If no specific paper is given --> Look into target folder
+    # Error when there is 0 papers or more than 1 paper
     if name is None:
         papers = _list_papers(TARGET)
         if not papers:
@@ -201,15 +200,21 @@ def paper_path(name: Optional[str] = None, root: Optional[str] = None) -> str:
             )
         return os.path.join(TARGET, papers[0])
 
+    # If given the file path in CLI
     if os.path.exists(name):
         return os.path.abspath(name)
+    
+    # If given just a file name --> Look in input and target folders
     for folder in (INPUT, TARGET):
         candidate = os.path.join(folder, name)
         if os.path.exists(candidate):
             return candidate
+    
+    # If you still can't find the file, just say that it's in the input folder and let the error happen later on
     return os.path.join(INPUT, name)
 
 
+''' For figures '''
 def target_figure_paths() -> List[str]:
     """Absolute paths of raster figures sitting in :data:`TARGET`.
 
