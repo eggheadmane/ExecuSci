@@ -50,7 +50,7 @@ ROOT = os.path.dirname(SRC)     # ROOT is parent of /src folder
 #: Full copy of every generated artefact (including files also kept in ``src/``).
 LOG = os.path.join(ROOT, "log")
 
-_PAPER_EXTS = {".md", ".tex"}
+_PAPER_EXTS = {".md", ".mmd"}
 _FIGURE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp"}
 
 #: Numbered stage folders only, e.g. ``02_extract_equations``.
