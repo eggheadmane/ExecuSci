@@ -2,7 +2,7 @@
 
 The stage folders carry a numeric prefix (``01_input``, ``02_extract_equations``,
 ...) that changes whenever a stage is inserted or reordered.  Modules therefore
-look folders up by their *name* -- ``stage_dir("latex2python")`` -- instead of
+look folders up by their *name* -- ``stage_dir("translate2python")`` -- instead of
 hard-coding the prefix, and add them to ``sys.path`` with :func:`add_stages`.
 
 Runnable source and the artefacts later stages import live under ``src/`` in
@@ -50,7 +50,7 @@ ROOT = os.path.dirname(SRC)     # ROOT is parent of /src folder
 #: Full copy of every generated artefact (including files also kept in ``src/``).
 LOG = os.path.join(ROOT, "log")
 
-_PAPER_EXTS = {".md", ".mmd"}
+_PAPER_EXTS = {".md", ".mmd"}   # Markdown or Mathpix markdown
 _FIGURE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp"}
 
 #: Numbered stage folders only, e.g. ``02_extract_equations``.

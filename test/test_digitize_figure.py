@@ -16,7 +16,7 @@ if _SRC not in sys.path:
 
 from execusci_paths import TARGET, add_stages, paper_path, target_figure_paths  # noqa: E402
 
-add_stages("Extract Equations", "Latex2Python", "Plotting")
+add_stages("Extract Equations", "Translate2Python", "Plotting")
 
 from digitize_figure import (  # noqa: E402
     digitize_figure,

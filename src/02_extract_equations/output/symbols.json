@@ -1,492 +1,747 @@
 {
-  "source": "Sample Paper 2.md",
-  "equation_count": 10,
-  "symbol_count": 23,
+  "source": "sample_1_mathpix.mmd",
+  "equation_count": 13,
+  "symbol_count": 35,
   "equations": [
     {
       "tag": "1",
-      "latex": "\\mu(t)=(1-\\beta) \\mu_{l}(t)+\\beta \\mu_{d}(t)",
-      "source_line": 157,
-      "output": "mu",
+      "latex": "h=h_{g}+h_{c}",
+      "source_line": 42,
+      "output": "h",
       "inputs": [
-        "beta",
-        "mu_d",
-        "mu_l"
+        "h_c",
+        "h_g"
       ],
-      "python": "mu = beta*mu_d + mu_l*(1 - beta)",
-      "context": "$\\mu_{l}(t)$ and $\\mu_{d}(t)$ represent the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively. Arrhenius equations were used to represent the temperature effects on the values of $\\mu_{l}(t)$ and $\\mu_{d}(t)$, as described by Eqs. (2) and (3):",
+      "python": "h = h_c + h_g",
+      "context": "where $h_{g}$ and $h_{c}$ are the heat transfer coefficients across the air gap and for the solid contact respectively.\n\nCooper and Yovanovich, (1969) identified a theoretical model for the IHTC between two contact solid bodies, as a power function of contact pressure, as shown in Eq. (2):",
       "error": null
     },
     {
       "tag": "2",
-      "latex": "\\mu_{l}(t)=\\mu_{l 0} \\exp \\left(-\\frac{Q_{l}}{R T(t)}\\right)",
-      "source_line": 165,
-      "output": "mu_l",
+      "latex": "h=1.45 k \\frac{\\tan \\theta}{\\sigma}\\left(\\frac{p}{H}\\right)^{0.985}",
+      "source_line": 50,
+      "output": "h",
       "inputs": [
-        "Q_l",
-        "R",
-        "T",
-        "mu_l0"
+        "H",
+        "k",
+        "p",
+        "sigma",
+        "theta"
       ],
-      "python": "mu_l = mu_l0*exp(-Q_l/(R*T))",
-      "context": "",
+      "python": "h = 1.45*k*(p/H)**0.985*tan(theta)/sigma",
+      "context": "where $k$ is the mean thermal conductivity of two contact bodies, $\\theta$ is the mean of the absolute slope of the surface profile and $\\sigma$ is the standard deviation of the profile heights.\n\nAs shown in Eq. (3), a power relationship between the IHTC and contact pressure was also developed as an empirical model by Shlykov et al. (1977):",
       "error": null
     },
     {
       "tag": "3",
-      "latex": "\\mu_{d}(t)=\\mu_{d 0} \\exp \\left(-\\frac{Q_{d}}{R T(t)}\\right)",
-      "source_line": 171,
-      "output": "mu_d",
+      "latex": "h=8000 \\bar{\\lambda}\\left(\\frac{p}{C \\sigma_{U}} K\\right)^{0.86}",
+      "source_line": 58,
+      "output": "h",
       "inputs": [
-        "Q_d",
-        "R",
-        "T",
-        "mu_d0"
+        "C",
+        "K",
+        "lamda_bar",
+        "p",
+        "sigma_U"
       ],
-      "python": "mu_d = mu_d0*exp(-Q_d/(R*T))",
-      "context": "where $\\mu_{l 0}$ and $\\mu_{d 0}$ are model constants, $Q_{l}$ and $Q_{d}$ are activation energy for lubricated and dry conditions, respectively. The contribution of $\\mu_{l}(t)$ and $\\mu_{d}(t)$ to the overall COF is characterised by the ratio between the unlubricated area and the lubricated area, $\\beta$, which varies from 0 (boundary lubrication condition) to 1 (dry condition). The lubrication condition is determined by the lubricant film thickness entrapped at the interface. As the lubricant is smeared on the wear track and the film thickness decreases, more asperities at the interface come into contact, indicating the transformation from the boundary lubrication to the dry condition and leading to an overall increase of the COF. Thus, the relationship of the area ratio, $\\beta$, and the instantaneous lubricant film thickness, $h(t)$, is modelled as Eq. (4), where $t$ is the sliding time and $\\lambda_{1}$, $\\lambda_{2}$ are model parameters.",
+      "python": "h = 8000*lamda_bar*(K*p/(C*sigma_U))**0.86",
+      "context": "where $\\bar{\\lambda}$ is the mean thermal conductivity of the two contact bodies, $\\sigma_{U}$ is the ultimate strength of the test specimens, and $K$ and $C$ are model coefficients.\n\nDiffering from the models above, an exponential equation for IHTC as a function of contact pressure was developed by Yukawa et al. (2014), as shown in Eq. (4):",
       "error": null
     },
     {
       "tag": "4",
-      "latex": "\\beta(t)=\\exp \\left[-\\left(\\lambda_{1} h(t)\\right)^{\\lambda_{2}}\\right]",
-      "source_line": 179,
-      "output": "beta",
+      "latex": "h=A(1-\\exp (-B P))",
+      "source_line": 66,
+      "output": "h",
       "inputs": [
-        "h",
-        "lamda_1",
-        "lamda_2"
+        "A",
+        "B",
+        "P"
       ],
-      "python": "beta = exp(-(h*lamda_1)**lamda_2)",
-      "context": "When the thickness of lubricant film is smaller than the average height of the asperity peaks of the aluminium material, the lubricant breakdown would occur and the contact condition would begin to transfer from the boundary lubrication condition to the dry condition [17,24].\n\nTo calculate the instantaneous thickness entrapped at the contact interface, it is critical to consider the relation between the total amount of lubricant and that smeared on the wear track and the influencing contact parameters. The total amount of lubricant volume is assumed as constant during the sliding process. Therefore, the initial entrapped lubricant equals the sum of the instantaneous lubricant volume and the volume transferred on the wear track, which is presented as Eq. (5):",
+      "python": "h = A*(1 - exp(-B*P))",
+      "context": "where $A$ and $B$ are model constants determined by the least square method using the experimental results.\n\nIn order to characterise the IHTC values under a lubricated condition, an equation was built up by Wilson et al. (2004), as shown in Eq. (5):",
       "error": null
     },
     {
       "tag": "5",
-      "latex": "V(0)=V(t)+\\Delta V(t)=V(t)+\\int_{0}^{t} d V",
-      "source_line": 189,
-      "output": null,
-      "inputs": [],
-      "python": null,
-      "context": "where $V(0)$ and $V(t)$ are the initial and instantaneous entrapped lubricant volume, respectively, and $\\Delta V(t)$ represents the lubricant volume smeared on the wear track, which is integrated by the transferred amount of the lubricant onto the wear track during a short sliding time, $d V$, which can be expressed by Eq. (6):",
-      "error": "an integral (\\int) is not supported"
+      "latex": "h=\\frac{1-A}{h_{f}} \\frac{2 k_{f} k_{t} k_{w}}{2 k_{t} k_{w}-k_{w} k_{f}-k_{f} k_{t}}",
+      "source_line": 74,
+      "output": "h",
+      "inputs": [
+        "A",
+        "h_f",
+        "k_f",
+        "k_t",
+        "k_w"
+      ],
+      "python": "h = 2*k_f*k_t*k_w*(1 - A)/(h_f*(-k_f*k_t - k_f*k_w + 2*k_t*k_w))",
+      "context": "where $A$ is the contact area, $h_{f}$ is the applied lubricant thickness, and $k_{f}$, $k_{t}$ and $k_{w}$ are the thermal conductivities of the lubricant, tool and workpiece, respectively.\n\nIn the present research, a novel experimental facility was developed and applied to measure temperature evolutions of specimens and tools at different contact pressures under dry and lubricated conditions. The facility, designed with interchangeable components, streamlines the process by which the IHTC between different combinations of blank and tool materials could be determined. The IHTC value was subsequently found by utilising an inverse technique to fit the experimental data to simulated temperature evolutions obtained using the FE software PAM-STAMP. The capabilities of the IHTC test facility are demonstrated here by using it to investigate the effect of contact pressure and lubricant on the IHTC between a hot AA7075 specimen and three different tools. In addition, an IHTC model was developed as a function of contact pressure, tool material and lubricant to predict their effect on the IHTC, and validated using the results of hot stamping tests of a hemispherical dome shape and B pillar component.\n\n\\section*{2. Methodology}\n\n\\subsection*{2.1. Design of the IHTC test facility}\n\nThe IHTC test facility, a schematic for which is shown in Fig. 1, was developed to simulate hot stamping processes. Three sets of punches and dies were available, made from three different tool steels, i.e. H13, cast iron and P20, with contact surfaces of $50 \\times 25 \\mathrm{~mm}^{2}$. The average surface roughnesses of H13, cast iron and P20 tools were 980, 810 and 960 nm respectively, and were measured using White Light Interferometry equipment (Wyko NT9100). A specimen (No. 1 in Fig. 1) was screwed onto two blankholders (No. 4 in Fig. 1), and heated using direct resistance heating, then compressed against a fixed die (No. 3 in Fig. 1) by a moving punch (No. 2 in Fig. 1).\n\nDuring these temperatu",
+      "error": null
     },
     {
       "tag": "6",
-      "latex": "d V=a h(t) \\cdot w \\cdot v^{k_{1}} d t",
-      "source_line": 197,
-      "output": null,
-      "inputs": [],
-      "python": null,
-      "context": "where $h(t)$ is the instantaneous film thickness, $w$ is the width of the wear track, $v$ is the speed and $d t$ is the increment of sliding time. $a$ is a model parameter accounting for the influence of deformed contact area $(A)$ on the transferred volume of lubricant. The width of the wear track $(w)$ is affected by the normal contact pressure and the lubricant viscosity [30, 31], indicating $w=f(P, \\eta)$, which can be written as $w=m P^{k_{3}} / \\eta^{k_{2}}$, where $m$ is a constant, $P$ is the mean contact pressure and $\\eta$ is the lubricant viscosity. Thus by incorporating these parameters ( $A$ is extracted from the model parameter $a$ and $m$ is integrated into $b$ ), Eq. (7) can be obtained from Eq. (6):",
-      "error": "a differential (d V) is not supported"
+      "latex": "h=h_{a}+h_{c}+h_{l}",
+      "source_line": 228,
+      "output": "h",
+      "inputs": [
+        "h_a",
+        "h_c",
+        "h_l"
+      ],
+      "python": "h = h_a + h_c + h_l",
+      "context": "where $h_{a}$ represents the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value, $h_{c}$ represents the contact under pressure between two solid surfaces, and $h_{l}$ represents the application of lubricant between two solid surfaces. Eq. (6) is developed based on Çetinkale and Fishenden's, (1951) equation, which is widely used as a general model to estimate the general heat transfer coefficient. It was found that the null-pressure IHTC $h_{a}$ did not play an important role in the present research since the initial amount of heat transfer between the contact surraces was negligible according to the experimental observations. Once a contact pressure was applied, the heat transfer between the contact surfaces was increased significantly under both dry and lubricated conditions, thus the overall IHTC was mainly characterised by the solid-contact IHTC $h_{c}$ and the lubricant-contact IHTC $h_{l}$. Therefore, it was reasonable to assume a constant value for the null-pressure IHTC $h_{a}$ of approximately 0.8 kW/ $\\mathrm{m}^{2} \\mathrm{~K}$, which was determined by running IHTC tests under dry conditions with zero contact pressure. The solid-contact IHTC $h_{c}$, induced by the applied contact pressure, was modelled by Eq. (7):",
+      "error": null
     },
     {
       "tag": "7",
-      "latex": "\\Delta V=\\int_{0}^{t} A \\cdot b \\frac{P^{k_{3}} v^{k_{1}}}{\\eta^{k_{2}}} \\cdot h(t) d t",
-      "source_line": 205,
-      "output": null,
-      "inputs": [],
-      "python": null,
-      "context": "By taking the derivative on both sides, Eq. (7) can be written as Eq. (8):",
-      "error": "an integral (\\int) is not supported"
+      "latex": "h_{c}=\\alpha \\frac{K_{s t} N_{P}}{R}",
+      "source_line": 234,
+      "output": "h_c",
+      "inputs": [
+        "K_st",
+        "N_P",
+        "R",
+        "alpha"
+      ],
+      "python": "h_c = K_st*N_P*alpha/R",
+      "context": "where $\\alpha$ is a model parameter, $K_{s t}$ is the harmonic mean thermal conductivity of the contact solids, $R$ is the root mean square of surface roughness of the contact solids and $N_{P}$ is a pressure dependent parameter. The solid-contact IHTC $h_{c}$ depends on the thermal conductivity of the two contact solids and the contact surfaces. Eq. (7) therefore was developed combining the physical mechanism of the heat transfer between the contact surfaces and the theory of Cooper and Yovanovich, (1969). The amount of heat transfer was considered to increase with the increasing thermal conductivity of both the specimen and tools. The solid-contact IHTC $h_{c}$ is thus correlated positively with the harmonic mean thermal conductivity $K_{s t}$. In order to simplify the model, the harmonic mean thermal conductivity $K_{s t}$ shown in Eq. (8) was determined from the average thermal conductivities of the specimen $k_{s}$ and tools $k_{t}$, in the temperature range used in the experiments:",
+      "error": null
     },
     {
       "tag": "8",
-      "latex": "\\dot{h}(t)=\\frac{\\dot{V}(t)}{A}=-h(t)\\left(c P^{k_{p}} v^{k_{v}} / \\eta^{k_{\\eta}}\\right)",
-      "source_line": 213,
-      "output": "h_dot",
+      "latex": "K_{s t}=\\frac{2}{k_{s}^{-1}+k_{t}^{-1}}",
+      "source_line": 240,
+      "output": "K_st",
       "inputs": [
-        "P",
-        "c",
-        "eta",
-        "h",
-        "k_eta",
-        "k_p",
-        "k_v",
-        "v"
+        "k_s",
+        "k_t"
       ],
-      "python": "h_dot = -P**k_p*c*h*v**k_v/eta**k_eta",
-      "context": "where $\\dot{h}(t)$ represents the diminution rate of the film thickness, $P, v$ and $\\eta$ represent the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively. $c$ is a model constant, $k_{p}, k_{v}$ and $k_{\\eta}$ are the pressure-dependent, speed-dependent and viscositydependent parameters, respectively.\n\nConsidering the effect of temperature on the lubricant viscosity, the Arrhenius equation is applied to describe the relationship between the viscosity and temperature [32], as shown in Eq. (10), where $T$ represents the instantaneous temperature of the aluminium, $\\eta_{0}$ is the model constant, $Q_{\\eta}$ is the activation energy and $R$ is the universal gas constant. The deviation between the dynamic viscosity and kinematic viscosity is negligible as the change of the lubricant density could be ignored at elevated temperatures. The lubricant viscosity at the test conditions can\nbe obtained by Eq. (9).",
+      "python": "K_st = 2/(1/k_t + 1/k_s)",
+      "context": "Meanwhile, the amount of heat transfer reduced with the decreasing real contact area between the specimen and tools, which was associated with a higher initial surface roughness of the contact surfaces. Hence a negative relationship between the solid-contact IHTC $h_{c}$ and the root mean square (r.m.s.) of the initial surface roughness of the specimen and tools $R$ was considered. The r.m.s. surface roughness was determined by the average surface roughness of the specimen $R_{s}$ and tools $R_{t}$, as shown in Eq. (9):",
       "error": null
     },
     {
       "tag": "9",
-      "latex": "\\eta=\\eta_{0} \\exp \\left(\\frac{Q_{\\eta}}{R T}\\right)",
-      "source_line": 224,
-      "output": "eta",
+      "latex": "R=\\sqrt{R_{s}^{2}+R_{t}^{2}}",
+      "source_line": 247,
+      "output": "R",
       "inputs": [
-        "Q_eta",
-        "R",
-        "T",
-        "eta_0"
+        "R_s",
+        "R_t"
       ],
-      "python": "eta = eta_0*exp(Q_eta/(R*T))",
-      "context": "",
+      "python": "R = sqrt(R_s**2 + R_t**2)",
+      "context": "The heat transfer was more rapid when the contact pressure increased, as the real contact area between the contact surfaces was increased. Hence this results in a positive correlation between the solidcontact IHTC $h_{c}$ and the pressure dependent parameter $N_{P}$, which can be represented by the following exponential-law equation, Eq. (10):",
       "error": null
     },
     {
       "tag": "10",
-      "latex": "f(x)=\\sum_{i=1}^{m} w_{i}\\left(\\mu_{i}^{p}-\\mu_{i}^{e}\\right)^{2}",
-      "source_line": 234,
-      "output": null,
-      "inputs": [],
-      "python": null,
-      "context": "where $f(x)$ is the sum of residuals for the COF, $x\\left(x=\\left[x_{1}, x_{2}, \\ldots \\ldots, x_{s}\\right]\\right)$ represents the model parameters and $s$ is the number of the model parameters to be calibrated. $\\mu_{i}^{p}$ and $\\mu_{i}^{e}$ are the predicted and experimental results for the COF at the same sliding distances. $w$ is a weighting function and $m$ is the total number of data points considered.\n\nThe optimised parameters that were determined are displayed in Table 2. The comparisons between the predicted results by the model and the experimental results at varying contact conditions are shown in Fig. 10. Good agreements with errors less than 6.8\\% have been achieved under varying contact conditions. Evolutions of lubricant film thickness and thickness diminution rate predicted by the interactive friction model are demonstrated to reveal the corresponding model responses in the temperature decrease, load increase and speed increase tests, respectively. As shown in Fig. 11a, temperature decrease results in a lubricant breakdown distance of 18 mm. The large difference in lubricant breakdown behaviours between this temperature decrease test and the constant temperature tests is successfully predicted by the interactive friction model through the deviations in the evolution of film thickness and thickness diminution rate. When the contact load suddenly increases from 5 N to 8 N at the sliding distance of 8.5 mm, the diminution rate of the lubricant thickness increases from $-38 \\mu m / s$ to $-67 \\mu m / \\mathrm{s}$. As a consequence, the lubricant film thickness decreases at a faster rate and approaches the breakdown within a shorter distance, as shown in Fig. 11b. When there is a step change of the speed from 50 mm/s to 80 mm/s at the distance of 18 mm, the diminution rate of the lubricant thickness increases suddenly from $-19 \\mu m / s$ to $-75 \\mu m / s$, representing the corresponding responses of the developed model to the speed increase, as shown",
-      "error": "a summation (\\sum) is not supported"
+      "latex": "N_{P}=1-\\exp \\left(-\\lambda \\frac{P}{\\sigma_{U}}\\right)",
+      "source_line": 254,
+      "output": "N_P",
+      "inputs": [
+        "P",
+        "lamda",
+        "sigma_U"
+      ],
+      "python": "N_P = 1 - exp(-P*lamda/sigma_U)",
+      "context": "where $\\lambda$ is a model parameter, $P$ is the contact pressure between the specimen and tools, and $\\sigma_{U}$ is the ultimate strength of AA7075 at 490 °C. In order to increase the IHTC values, a contact pressure could be applied, deforming the asperities on the specimen surface and thus enlarging the real contact area between the specimen and tools. The",
+      "error": null
+    },
+    {
+      "tag": "11",
+      "latex": "h_{l}=\\beta \\frac{K_{s t l} N_{L}}{R}",
+      "source_line": 278,
+      "output": "h_l",
+      "inputs": [
+        "K_stl",
+        "N_L",
+        "R",
+        "beta"
+      ],
+      "python": "h_l = K_stl*N_L*beta/R",
+      "context": "where $\\beta$ is a model parameter, $K_{\\text {stl }}$ is the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen, $R$ is the root mean square of the surface roughness of the two contact solids and $N_{L}$ is a layer thickness dependent parameter. When a lubricant layer was introduced between the two contact solids, the heat flowed through these three contacting materials; hence the harmonic mean thermal conductivity $K_{\\text {stl }}$ is correlated positively with $h_{l}$. The harmonic mean thermal conductivity was calculated as shown in Eq. (12).",
+      "error": null
+    },
+    {
+      "tag": "12",
+      "latex": "K_{s t l}=\\frac{3}{k_{s}^{-1}+k_{t}^{-1}+k_{l}^{-1}}",
+      "source_line": 284,
+      "output": "K_stl",
+      "inputs": [
+        "k_l",
+        "k_s",
+        "k_t"
+      ],
+      "python": "K_stl = 3/(1/k_t + 1/k_s + 1/k_l)",
+      "context": "where $k_{s}, k_{t}$ and $k_{l}$ are the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively.\n\nThe applied lubricant layer thickness is an influential factor on the lubricant-contact IHTC $h_{l}$, which can be represented by the following exponential-law equation, Eq. (13):",
+      "error": null
+    },
+    {
+      "tag": "13",
+      "latex": "N_{L}=1-\\exp (-\\gamma \\delta)",
+      "source_line": 292,
+      "output": "N_L",
+      "inputs": [
+        "delta",
+        "gamma"
+      ],
+      "python": "N_L = 1 - exp(-delta*gamma)",
+      "context": "where $\\gamma$ is a model parameter and $\\delta$ is the applied lubricant layer thickness.\n\nThe IHTC model was calibrated using the experimental data from the tests carried out under dry and lubricated conditions using two different tool materials. Table 3 lists the identified material constants and certain model parameters.\n\nIn order to verify the predicted results generated by the IHTC model, the material constants for P20 were used to predict the evolution of the IHTC with contact pressure under both dry and lubricated (0.015 mm layer thickness) conditions, assuming that P20 was used as the tool material, as shown in Fig. 8. These IHTC evolutions, rather than constant values, were then implemented in the FE simulation to simulate temperature evolutions using P20 tools with a contact pressure of 3 MPa under dry conditions, and 13 MPa under lubricated conditions with a layer thickness value of 0.015 mm. Meanwhile, two new tests were conducted under the same conditions as those of the simulations using the IHTC test facility. As shown in Fig. 9, it is evident that the simulated temperature evolutions were in close agreement with the experimental curves, indicating that when using P20 tools, the IHTC values at 3 MPa under dry conditions and at 13 MPa under lubricated conditions with a layer thickness value of 0.015 mm, are 6.7 and $14.5 \\mathrm{~kW} / \\mathrm{m}^{2} \\mathrm{~K}$ respectively.\n\nTherefore, the IHTC model developed in the present research enables the prediction of IHTC evolutions as a function of contact pressure, tool material and lubrication. When using certain materials",
+      "error": null
     }
   ],
   "symbols": {
-    "P": {
-      "latex": "P",
-      "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "8"
-      ]
-    },
-    "Q_d": {
-      "latex": "Q_{d}",
-      "description": "activation energy for lubricated and dry conditions, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "activation energy for lubricated and dry conditions, respectively",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "3"
-      ]
-    },
-    "Q_eta": {
-      "latex": "Q_{eta}",
-      "description": "the activation energy",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the activation energy",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "9"
-      ]
-    },
-    "Q_l": {
-      "latex": "Q_{l}",
-      "description": "activation energy for lubricated and dry conditions, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "activation energy for lubricated and dry conditions, respectively",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "2"
-      ]
-    },
-    "R": {
-      "latex": "R",
-      "description": "the universal gas constant",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the universal gas constant",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "2",
-        "3",
-        "9"
-      ]
-    },
-    "T": {
-      "latex": "T",
-      "description": "the instantaneous temperature of the aluminium",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the instantaneous temperature of the aluminium",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "2",
-        "3",
-        "9"
-      ]
-    },
-    "beta": {
-      "latex": "\\beta",
-      "description": null,
-      "kind": "derived",
-      "definitions": [],
-      "defined_by": [
-        "4"
-      ],
-      "used_in": [
-        "1"
-      ]
-    },
-    "c": {
-      "latex": "c",
-      "description": "a model constant",
+    "A": {
+      "latex": "A",
+      "description": "model constants determined by the least square method using the experimental results",
       "kind": "parameter",
       "definitions": [
         {
-          "description": "a model constant",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "8"
-      ]
-    },
-    "eta": {
-      "latex": "\\eta",
-      "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
-      "kind": "derived",
-      "definitions": [
+          "description": "model constants determined by the least square method using the experimental results",
+          "equation": "4"
+        },
         {
-          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [
-        "9"
-      ],
-      "used_in": [
-        "8"
-      ]
-    },
-    "eta_0": {
-      "latex": "\\eta_{0}",
-      "description": "the model constant",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "the model constant",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "9"
-      ]
-    },
-    "h": {
-      "latex": "h",
-      "description": "the instantaneous film thickness",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the instantaneous film thickness",
-          "equation": "6"
+          "description": "the contact area",
+          "equation": "5"
         }
       ],
       "defined_by": [],
       "used_in": [
         "4",
-        "8"
+        "5"
       ]
     },
-    "h_dot": {
-      "latex": "\\dot{h}",
-      "description": "the diminution rate of the film thickness",
+    "B": {
+      "latex": "B",
+      "description": "model constants determined by the least square method using the experimental results",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants determined by the least square method using the experimental results",
+          "equation": "4"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4"
+      ]
+    },
+    "C": {
+      "latex": "C",
+      "description": "model coefficients",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model coefficients",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "H": {
+      "latex": "H",
+      "description": null,
+      "kind": "input",
+      "definitions": [],
+      "defined_by": [],
+      "used_in": [
+        "2"
+      ]
+    },
+    "K": {
+      "latex": "K",
+      "description": "model coefficients",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model coefficients",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "K_st": {
+      "latex": "K_{st}",
+      "description": "the harmonic mean thermal conductivity of the contact solids",
       "kind": "derived",
       "definitions": [
         {
-          "description": "the diminution rate of the film thickness",
-          "equation": "8"
+          "description": "the harmonic mean thermal conductivity of the contact solids",
+          "equation": "7"
         }
       ],
       "defined_by": [
         "8"
       ],
-      "used_in": []
+      "used_in": [
+        "7"
+      ]
     },
-    "k_eta": {
-      "latex": "k_{eta}",
-      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+    "K_stl": {
+      "latex": "K_{stl}",
+      "description": "the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen",
+          "equation": "11"
+        }
+      ],
+      "defined_by": [
+        "12"
+      ],
+      "used_in": [
+        "11"
+      ]
+    },
+    "N_L": {
+      "latex": "N_{L}",
+      "description": "a layer thickness dependent parameter",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a layer thickness dependent parameter",
+          "equation": "11"
+        }
+      ],
+      "defined_by": [
+        "13"
+      ],
+      "used_in": [
+        "11"
+      ]
+    },
+    "N_P": {
+      "latex": "N_{P}",
+      "description": "a pressure dependent parameter",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a pressure dependent parameter",
+          "equation": "7"
+        }
+      ],
+      "defined_by": [
+        "10"
+      ],
+      "used_in": [
+        "7"
+      ]
+    },
+    "P": {
+      "latex": "P",
+      "description": "the contact pressure between the specimen and tools",
       "kind": "input",
       "definitions": [
         {
-          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+          "description": "the contact pressure between the specimen and tools",
+          "equation": "10"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4",
+        "10"
+      ]
+    },
+    "R": {
+      "latex": "R",
+      "description": "the root mean square of surface roughness of the contact solids",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the root mean square of surface roughness of the contact solids",
+          "equation": "7"
+        },
+        {
+          "description": "the root mean square of the surface roughness of the two contact solids",
+          "equation": "11"
+        }
+      ],
+      "defined_by": [
+        "9"
+      ],
+      "used_in": [
+        "7",
+        "11"
+      ]
+    },
+    "R_s": {
+      "latex": "R_{s}",
+      "description": "the average surface roughness of the specimen",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the average surface roughness of the specimen",
           "equation": "8"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "8"
+        "9"
       ]
     },
-    "k_p": {
-      "latex": "k_{p}",
-      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
+    "R_t": {
+      "latex": "R_{t}",
+      "description": null,
       "kind": "input",
-      "definitions": [
-        {
-          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
-          "equation": "8"
-        }
-      ],
+      "definitions": [],
       "defined_by": [],
       "used_in": [
-        "8"
+        "9"
       ]
     },
-    "k_v": {
-      "latex": "k_{v}",
-      "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the pressure-dependent, speed-dependent and viscositydependent parameters, respectively",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "8"
-      ]
-    },
-    "lamda_1": {
-      "latex": "\\lambda_{1}",
-      "description": "model parameters",
+    "alpha": {
+      "latex": "\\alpha",
+      "description": "a model parameter",
       "kind": "parameter",
       "definitions": [
         {
-          "description": "model parameters",
-          "equation": "3"
+          "description": "a model parameter",
+          "equation": "7"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "4"
+        "7"
       ]
     },
-    "lamda_2": {
-      "latex": "\\lambda_{2}",
-      "description": "model parameters",
+    "beta": {
+      "latex": "\\beta",
+      "description": "a model parameter",
       "kind": "parameter",
       "definitions": [
         {
-          "description": "model parameters",
-          "equation": "3"
+          "description": "a model parameter",
+          "equation": "11"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "4"
+        "11"
       ]
     },
-    "mu": {
-      "latex": "\\mu",
+    "delta": {
+      "latex": "\\delta",
+      "description": "the applied lubricant layer thickness",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the applied lubricant layer thickness",
+          "equation": "13"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "13"
+      ]
+    },
+    "gamma": {
+      "latex": "\\gamma",
+      "description": "a model parameter",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "a model parameter",
+          "equation": "13"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "13"
+      ]
+    },
+    "h": {
+      "latex": "h",
       "description": null,
       "kind": "derived",
       "definitions": [],
       "defined_by": [
-        "1"
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
       ],
       "used_in": []
     },
-    "mu_d": {
-      "latex": "\\mu_{d}",
-      "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
-      "kind": "derived",
-      "definitions": [
-        {
-          "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
-          "equation": "1"
-        }
-      ],
-      "defined_by": [
-        "3"
-      ],
-      "used_in": [
-        "1"
-      ]
-    },
-    "mu_d0": {
-      "latex": "\\mu_{d0}",
-      "description": "model constants",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "model constants",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "3"
-      ]
-    },
-    "mu_l": {
-      "latex": "\\mu_{l}",
-      "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
-      "kind": "derived",
-      "definitions": [
-        {
-          "description": "the friction values at boundary lubrication condition at the initial low friction stage and dry condition at the final plateau stage, respectively",
-          "equation": "1"
-        }
-      ],
-      "defined_by": [
-        "2"
-      ],
-      "used_in": [
-        "1"
-      ]
-    },
-    "mu_l0": {
-      "latex": "\\mu_{l0}",
-      "description": "model constants",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "model constants",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "2"
-      ]
-    },
-    "v": {
-      "latex": "v",
-      "description": "the speed",
+    "h_a": {
+      "latex": "h_{a}",
+      "description": "the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value",
       "kind": "input",
       "definitions": [
         {
-          "description": "the speed",
+          "description": "the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value",
           "equation": "6"
-        },
-        {
-          "description": "the mean contact pressure, sliding speed and lubricant viscosity at a specific temperature, respectively",
-          "equation": "8"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "8"
+        "6"
+      ]
+    },
+    "h_c": {
+      "latex": "h_{c}",
+      "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
+          "equation": "1"
+        },
+        {
+          "description": "the contact under pressure between two solid surfaces",
+          "equation": "6"
+        }
+      ],
+      "defined_by": [
+        "7"
+      ],
+      "used_in": [
+        "1",
+        "6"
+      ]
+    },
+    "h_f": {
+      "latex": "h_{f}",
+      "description": "the applied lubricant thickness",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the applied lubricant thickness",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5"
+      ]
+    },
+    "h_g": {
+      "latex": "h_{g}",
+      "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
+          "equation": "1"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "1"
+      ]
+    },
+    "h_l": {
+      "latex": "h_{l}",
+      "description": "the application of lubricant between two solid surfaces",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the application of lubricant between two solid surfaces",
+          "equation": "6"
+        }
+      ],
+      "defined_by": [
+        "11"
+      ],
+      "used_in": [
+        "6"
+      ]
+    },
+    "k": {
+      "latex": "k",
+      "description": "the mean thermal conductivity of two contact bodies",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the mean thermal conductivity of two contact bodies",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2"
+      ]
+    },
+    "k_f": {
+      "latex": "k_{f}",
+      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5"
+      ]
+    },
+    "k_l": {
+      "latex": "k_{l}",
+      "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+          "equation": "12"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "12"
+      ]
+    },
+    "k_s": {
+      "latex": "k_{s}",
+      "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+          "equation": "12"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "8",
+        "12"
+      ]
+    },
+    "k_t": {
+      "latex": "k_{t}",
+      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+          "equation": "5"
+        },
+        {
+          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+          "equation": "12"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5",
+        "8",
+        "12"
+      ]
+    },
+    "k_w": {
+      "latex": "k_{w}",
+      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5"
+      ]
+    },
+    "lamda": {
+      "latex": "\\lambda",
+      "description": "a model parameter",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "a model parameter",
+          "equation": "10"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "10"
+      ]
+    },
+    "lamda_bar": {
+      "latex": "\\bar{\\lambda}",
+      "description": "the mean thermal conductivity of the two contact bodies",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the mean thermal conductivity of the two contact bodies",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "p": {
+      "latex": "p",
+      "description": null,
+      "kind": "input",
+      "definitions": [],
+      "defined_by": [],
+      "used_in": [
+        "2",
+        "3"
+      ]
+    },
+    "sigma": {
+      "latex": "\\sigma",
+      "description": "the standard deviation of the profile heights",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the standard deviation of the profile heights",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2"
+      ]
+    },
+    "sigma_U": {
+      "latex": "\\sigma_{U}",
+      "description": "the ultimate strength of the test specimens",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the ultimate strength of the test specimens",
+          "equation": "3"
+        },
+        {
+          "description": "the ultimate strength of AA7075 at 490 °C",
+          "equation": "10"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3",
+        "10"
+      ]
+    },
+    "theta": {
+      "latex": "\\theta",
+      "description": "the mean of the absolute slope of the surface profile",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the mean of the absolute slope of the surface profile",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "2"
       ]
     }
   }

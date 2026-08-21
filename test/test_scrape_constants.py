@@ -16,7 +16,7 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
-add_stages("Scrape Constants", "Latex2Python")
+add_stages("Scrape Constants", "Extract Equations", "Translate2Python")
 
 from scrape_constants import (  # noqa: E402
     extract_constants,
@@ -136,7 +136,7 @@ def test_generate_constants_module_executes_and_matches_equations_names():
     get_constants = ns["get_constants"]
     consts = get_constants(tool="P20", delta=1.5e-5)
 
-    # Names must match latex2python / equations.py argument spellings.
+    # Names must match translate2python / equations.py argument spellings.
     assert consts["lamda"] == pytest.approx(6.05)
     assert consts["sigma_U"] == pytest.approx(21.0)
     assert consts["k_s"] == pytest.approx(0.14)
@@ -435,8 +435,8 @@ def test_friction_paper_parameters():
 
 
 def test_compose_with_translated_equations():
-    """Scraped constants plug into latex2python-evaluated IHTC pieces."""
-    from latex2python import translate
+    """Scraped constants plug into translate2python-evaluated IHTC pieces."""
+    from translate2python import translate
 
     source = generate_constants_module(TABLE3_SNIPPET)
     ns: dict = {}

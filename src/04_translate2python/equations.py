@@ -1,4 +1,4 @@
-"""Executable equations extracted from target_paper.md."""
+"""Executable equations extracted from sample_1_mathpix.mmd."""
 
 from numpy import (
     exp, log, sqrt, sin, cos, tan, sinh, cosh, tanh, pi,

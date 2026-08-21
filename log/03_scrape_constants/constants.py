@@ -1,4 +1,4 @@
-"""Constants scraped from sample_3.md.
+"""Constants scraped from sample_1_mathpix.mmd.
 
 Names match symbols in the companion equations module (e.g. ``lamda``,
 ``sigma_U``). Tool-specific values are grouped under ``_TOOL``, material
@@ -14,24 +14,6 @@ import sympy as sp
 
 # Shared blank / lubricant / model parameters (independent of tool material).
 _SHARED = {
-    "A": 1.34,
-    "Q_alpha": -1730.0,  # J/mol
-    "Q_beta": -1260.0,  # J/mol
-    "R": 8.55,  # J/molK
-    "R_s": 347.0,  # nm
-    "R_t": 268.0,  # nm
-    "alpha_0": 5.51e-05,
-    "beta_0": 6.29e-05,
-    "delta": 2.0,  # mm
-    "k_a": 0.0264,  # kW/mK
-    "k_s": 0.207,  # kW/mK
-    "k_t": 0.039,  # kW/mK
-    "m": 0.38,
-    "mu": 3.14e-05,
-    "n": 0.46,
-    "rho": 1.29,  # kg/m^{3}
-    "sigma": 21.0,  # MPa
-    "v": 5.0,  # ml/s
 }
 
 # Tool thermal conductivity and roughness by material.
@@ -47,7 +29,7 @@ DEFAULT_DELTA = 1.5e-05  # m — lubricant film thickness (user-supplied)
 
 # Equation inputs the paper does not tabulate (pressure, time, …).
 # Pass these when calling the generated eq_* functions.
-OPERATING_INPUTS = ("P", "T", "h", "k_eta", "k_p", "k_v")
+OPERATING_INPUTS = ("P", "delta", "h_a", "p")
 
 # One SymPy symbol per scraped constant; the names are the ones the
 # generated equations use, so ``expr.subs(subs_map())`` just works.

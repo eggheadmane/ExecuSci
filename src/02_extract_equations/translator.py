@@ -1,27 +1,17 @@
 """LaTeX math -> Python / SymPy translator for ExecuSci.
 
-This module turns the mathematical equations embedded in scientific papers
-(as produced by tools such as Mathpix, i.e. ``\\begin{equation*} ... \\end{equation*}``
-blocks) into executable Python.
+Stage 02 uses this to split each display equation into an output, inputs, and a
+one-line Python preview.  Stage 04 re-exports the same API from
+``translate2python`` and turns the parsed equations into ``equations.py``.
 
-It is deliberately self contained and does **not** rely on SymPy's own
-``parse_latex`` (whose ANTLR/Lark backends choke on the real-world LaTeX found
-in papers -- multi-character subscripts like ``k_{s t}``, placeholder
-superscripts like ``R_{s}{ }^{2}``, bare ``\\tan \\theta``, ``\\left( ... \\right)``
-and accents like ``\\bar{\\lambda}``).
-
-Pipeline
---------
-1. ``extract_equations`` pulls the raw LaTeX math out of a ``.tex`` / ``.md`` file.
-2. ``preprocess`` normalises the Mathpix quirks.
-3. ``tokenize`` splits the math into tokens.
-4. ``Parser`` builds a SymPy expression via recursive descent.
-5. ``translate`` / ``Equation`` expose the result as a SymPy ``Eq``, a Python
-   source string, and a ready-to-call numeric function.
+It does **not** rely on SymPy's own ``parse_latex`` (whose ANTLR/Lark backends
+choke on the real-world LaTeX found in papers -- multi-character subscripts
+like ``k_{s t}``, placeholder superscripts like ``R_{s}{ }^{2}``, bare
+``\\tan \\theta``, ``\\left( ... \\right)`` and accents like ``\\bar{\\lambda}``).
 
 Typical use::
 
-    from latex2python import translate
+    from translator import translate
     eq = translate(r"h=1.45 k \\frac{\\tan \\theta}{\\sigma}"
                    r"\\left(\\frac{p}{H}\\right)^{0.985}")
     print(eq.python)          # h = 1.45*k*(p/H)**0.985*tan(theta)/sigma
@@ -32,34 +22,21 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional
 
 import sympy as sp
 
 __all__ = [
     "Equation",
-    "RawEquation",
     "translate",
-    "translate_document",
-    "extract_equations",
     "preprocess",
     "tokenize",
     "Parser",
-    "generate_module",
     "name_to_latex",
     "latex_to_name",
     "MATH_NAMESPACE",
     "LatexParseError",
 ]
-
-# Names that the generated Python expressions/functions rely on being in scope.
-# NumPy is used so the generated code works on scalars *and* arrays.
-_NAMESPACE_IMPORT = (
-    "from numpy import (\n"
-    "    exp, log, sqrt, sin, cos, tan, sinh, cosh, tanh, pi,\n"
-    "    arcsin as asin, arccos as acos, arctan as atan, abs as Abs,\n"
-    ")\n"
-)
 
 
 def MATH_NAMESPACE() -> Dict[str, Callable]:
@@ -139,103 +116,12 @@ _SPACING = [
 
 
 # --------------------------------------------------------------------------- #
-# Extraction
+# Preprocessing
 # --------------------------------------------------------------------------- #
 
-_EQ_ENV_RE = re.compile(
-    r"\\begin\{(equation\*?|align\*?|gather\*?|displaymath|math)\}"
-    r"(?P<body>.*?)"
-    r"\\end\{\1\}",
-    re.DOTALL,
-)
-_DOLLAR_BLOCK_RE = re.compile(r"\$\$(?P<body>.+?)\$\$", re.DOTALL)
 _TAG_RE = re.compile(r"\\tag\{(?P<tag>[^}]*)\}")
 _LABEL_RE = re.compile(r"\\label\{[^}]*\}")
 
-
-@dataclass
-class RawEquation:
-    """A LaTeX equation extracted from a document, before translation.
-
-    ``source_line`` is the 1-based line of the document the equation was found
-    on; the extraction report written by the "Extract Equations" stage cites it
-    so a reader can trace every equation back to the paper.
-    """
-
-    latex: str
-    tag: Optional[str] = None
-    source_line: Optional[int] = None
-
-
-def _line_of(text: str, index: int) -> int:
-    return text.count("\n", 0, index) + 1       # Counts how many \n before the index, +1 for 1-based line number
-
-
-def extract_equations(text: str) -> List[RawEquation]:
-    """Return every LaTeX display equation found in ``text``.
-
-    Handles ``\\begin{equation*}`` style environments (optionally wrapped in
-    ``$$ ... $$``) as well as bare ``$$ ... $$`` blocks.  The ``\\tag{...}``
-    number, if present, is captured separately and stripped from the math.
-    """
-    found: List[RawEquation] = []
-    consumed: List[Tuple[int, int]] = []
-
-    for m in _EQ_ENV_RE.finditer(text):
-        body = m.group("body")      # .group is how you access the matched text from the regex
-        tag_m = _TAG_RE.search(body)
-        tag = tag_m.group("tag").strip() if tag_m else None
-        found.append(
-            RawEquation(latex=_clean_body(body), tag=tag, source_line=_line_of(text, m.start()))
-        )
-        consumed.append((m.start(), m.end()))   # Keep track of the start and end indices of the matched environment to avoid double counting in the next step
-
-    # Bare $$ ... $$ blocks that did not contain an environment we already read.
-    for m in _DOLLAR_BLOCK_RE.finditer(text):
-        if any(start <= m.start() < end for start, end in consumed):
-            continue
-        body = m.group("body")
-        if "\\begin{" in body:
-            continue
-        tag_m = _TAG_RE.search(body)
-        tag = tag_m.group("tag").strip() if tag_m else None
-        cleaned = _clean_body(body)
-        if cleaned:
-            found.append(
-                RawEquation(latex=cleaned, tag=tag, source_line=_line_of(text, m.start()))
-            )
-
-
-    # Order by the paper's own equation number when every equation carries a
-    # numeric \tag (note this is a numeric sort, so Eq. (10) follows Eq. (9)).
-    # Otherwise fall back to the order the equations appear in the document.
-    numbers = [_tag_number(e.tag) for e in found]
-    if found and all(n is not None for n in numbers):
-        found.sort(key=lambda e: (_tag_number(e.tag), e.source_line or 0))
-    else:
-        found.sort(key=lambda e: (e.source_line or 0))
-    return found
-
-
-def _tag_number(tag: Optional[str]) -> Optional[float]:
-    """Numeric value of a ``\\tag{...}``, or ``None`` if it is not a number."""
-    if tag is None:
-        return None
-    try:
-        return float(tag)
-    except ValueError:
-        return None
-
-# Removes \tag / \label from a body and strips whitespace.
-def _clean_body(body: str) -> str:
-    body = _TAG_RE.sub("", body)
-    body = _LABEL_RE.sub("", body)
-    return body.strip()
-
-
-# --------------------------------------------------------------------------- #
-# Preprocessing
-# --------------------------------------------------------------------------- #
 
 def preprocess(latex: str) -> str:
     """Normalise real-world LaTeX so the tokenizer can handle it."""
@@ -276,12 +162,9 @@ class Token:
     kind: str  # 'num', 'sym', 'cmd', 'op'
     value: str
 
-"""
-num = number
-sym = symbol (variable)
-cmd = command (e.g. \frac, \sqrt)
-op = operator (e.g. +, -, *, /, ^, _, (, ), {, }, [, ], =)
-"""
+# Token kinds: num = number, sym = symbol (variable),
+# cmd = command (e.g. \frac, \sqrt),
+# op = operator (e.g. +, -, *, /, ^, _, (, ), {, }, [, ], =).
 
 _NUMBER_RE = re.compile(r"\d+\.\d+|\.\d+|\d+")
 _COMMAND_RE = re.compile(r"\\[A-Za-z]+|\\.")
@@ -923,55 +806,3 @@ def latex_to_name(latex: str) -> Optional[str]:
     if eq.output is not None and not eq.inputs:
         return eq.output.name
     return None
-
-
-def translate_document(text: str) -> List[Tuple[RawEquation, Optional[Equation], Optional[str]]]:
-    """Translate every equation in a document.
-
-    Returns a list of ``(raw, equation, error)`` triples so callers can report
-    on fragments that could not be parsed instead of aborting the whole run.
-    """
-    results = []
-    for raw in extract_equations(text):
-        try:
-            eq = translate(raw.latex, tag=raw.tag)
-            results.append((raw, eq, None))
-        except LatexParseError as exc:
-            results.append((raw, None, str(exc)))
-    return results
-
-
-def generate_module(
-    text: str,
-    module_doc: str = "",
-    descriptions: Optional[Dict[str, str]] = None,
-) -> str:
-    """Translate all equations in ``text`` and return runnable Python source.
-
-    The returned string is a complete module: NumPy imports followed by one
-    function per successfully parsed equation.  Equations that fail to parse are
-    recorded as comments so nothing is silently dropped.  ``descriptions`` maps
-    symbol names to the paper's wording and is used to document the arguments.
-    """
-    header = ['"""' + (module_doc or "Auto-generated by ExecuSci latex2python.") + '"""',
-              "", _NAMESPACE_IMPORT.rstrip(), "", ""]
-    body: List[str] = []
-    used_names: Dict[str, int] = {}
-    for raw, eq, error in translate_document(text):
-        if error is not None or eq is None:
-            body.append(f"# Could not translate (Eq. {raw.tag}): {raw.latex}")
-            if error:
-                body.append(f"#   reason: {error}")
-            body.append("")
-            continue
-        name = eq._default_name()
-        # Disambiguate duplicate names (several equations define ``h`` etc.).
-        if name in used_names:
-            used_names[name] += 1
-            name = f"{name}_{used_names[name]}"
-        else:
-            used_names[name] = 1
-        body.append(eq.function_source(name=name, descriptions=descriptions))
-        body.append("")
-        body.append("")
-    return "\n".join(header + body).rstrip() + "\n"
