@@ -1,17 +1,20 @@
 """Stage 02 -- pull every equation out of a paper into a self-contained document.
 
-Reads the Mathpix markdown produced by stage 01 and writes two artefacts:
+Reads the Mathpix markdown produced by stage 01 and writes:
 
-``output/equations.md``
-    A human-readable file holding each display equation (with the paper's own
-    ``\\tag`` preserved, so downstream stages keep the paper's numbering), the
-    sentence the paper uses to introduce it, and a dictionary of every symbol
-    that appears in the equations.
+``output/equations_raw.md``
+    Display-equation blocks only.  Stage 04 reads this file to generate
+    ``equations.py``.  It is not copied to ``log/``.
 
 ``output/symbols.json``
-    The same information in machine-readable form.  Stage 03 uses it to report
-    which symbols still need a numeric value; stage 04 uses the descriptions to
-    document the arguments of the generated Python functions.
+    Machine-readable extraction.  Stage 03 uses it to report which symbols
+    still need a numeric value; stage 04 uses the descriptions to document
+    the arguments of the generated Python functions.
+
+``log/02_extract_equations/equations.md``
+    Human-readable report: each display equation (with the paper's ``\\tag``),
+    the sentence that introduces it, and the symbol dictionary.  Nothing in
+    the pipeline imports this file.
 
 Symbol descriptions come from the "where ``x`` is ..." clauses that follow the
 equations in the paper, so the dictionary uses the authors' own wording.
@@ -33,17 +36,16 @@ from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 _SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_HERE = os.path.dirname(os.path.abspath(__file__))
 if _SRC not in sys.path:
     sys.path.insert(0, _SRC)
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
 
-from execusci_paths import add_stages, mirror_to_log, paper_path, stage_dir  # noqa: E402
+from execusci_paths import LOG, mirror_to_log, paper_path, stage_dir  # noqa: E402
 
-add_stages("Latex2Python")
-
-from latex2python import (  # noqa: E402
+from translator import (  # noqa: E402
     LatexParseError,
-    RawEquation,
-    extract_equations as extract_latex_equations,
     latex_to_name,
     name_to_latex,
     translate,
@@ -51,28 +53,34 @@ from latex2python import (  # noqa: E402
 
 __all__ = [
     "ExtractedEquation",
+    "RawLatexEquation",
     "SymbolEntry",
-    "Extraction",
+    "ExtractedResult",
     "extract",
+    "extract_latex_equations",
     "find_definitions",
     "render_markdown",
+    "render_raw_markdown",
     "run",
 ]
 
-DEFAULT_OUTPUT_DIR = os.path.join(stage_dir("Extract Equations"), "output")
+_STAGE = stage_dir("Extract Equations")
+DEFAULT_OUTPUT_DIR = os.path.join(_STAGE, "output")
 EQUATIONS_FILENAME = "equations.md"
+EQUATIONS_RAW_FILENAME = "equations_raw.md"
 SYMBOLS_FILENAME = "symbols.json"
+DEFAULT_REPORT_PATH = os.path.join(LOG, os.path.basename(_STAGE), EQUATIONS_FILENAME)
+
+''' For the regexes below, see https://regex101.com/r/0g1k3F/1 for a live playground. '''
 
 #: Inline math span, e.g. ``$k_{s}$``.
 _INLINE_MATH = r"\$[^$]+\$"
-
 #: "``$x$``, ``$y$`` and ``$z$`` are ..." -- the paper's definition clauses.
 _DEFINITION_RE = re.compile(
     r"(?P<syms>" + _INLINE_MATH + r"(?:\s*(?:,\s*and|,|and)\s*" + _INLINE_MATH + r")*)"
     r"\s*(?:is|are|represents?|denotes?|refers? to)\s+",
     re.IGNORECASE,
 )
-
 #: Fallback for equations without a "where" clause: "the <description> $x$".
 _APPOSITION_RE = re.compile(
     r"\bthe\s+(?P<desc>[a-z][a-z0-9 .()/-]{4,70}?)\s*(?P<sym>" + _INLINE_MATH + r")"
@@ -83,8 +91,8 @@ _CONTEXT_STOP_RE = re.compile(
     r"\n\s*(?:#{1,6}\s|\$\$|\\begin\{|!\[|\||Table\s+\d|Fig\.\s*\d)"
 )
 
+# Recognize a full stop that ends a sentence, ignoring abbreviations and single-letter initials.
 _SENTENCE_END_RE = re.compile(r"\.(\s+|$)")
-
 # Abbreviations whose full stop does not end a sentence.
 _ABBREVIATIONS = {
     "e.g", "i.e", "et al", "cf", "eq", "eqs", "fig", "figs", "ref", "refs",
@@ -94,6 +102,109 @@ _ABBREVIATIONS = {
 _CONTEXT_WINDOW = 2000
 
 _PARAMETER_RE = re.compile(r"model (?:parameter|constant|coefficient)", re.IGNORECASE)
+
+_EQ_ENV_RE = re.compile(
+    r"\\begin\{(equation\*?|align\*?|gather\*?|displaymath|math)\}"
+    r"(?P<body>.*?)"
+    r"\\end\{\1\}",
+    re.DOTALL,
+)
+_DOLLAR_BLOCK_RE = re.compile(r"\$\$(?P<body>.+?)\$\$", re.DOTALL)
+_TAG_RE = re.compile(r"\\tag\{(?P<tag>[^}]*)\}")
+_LABEL_RE = re.compile(r"\\label\{[^}]*\}")
+
+
+# --------------------------------------------------------------------------- #
+# Display-equation finder
+# --------------------------------------------------------------------------- #
+
+@dataclass
+class RawLatexEquation:
+    """A LaTeX equation extracted from a document, before translation.
+
+    ``source_line`` is the 1-based line of the document the equation was found
+    on; the extraction report written by this stage cites it so a reader can
+    trace every equation back to the paper.
+    """
+
+    latex: str
+    tag: Optional[str] = None
+    source_line: Optional[int] = None
+
+
+
+
+
+def extract_latex_equations(text: str) -> List[RawLatexEquation]:
+    """Return every LaTeX display equation found in ``text``.
+
+    Handles ``\\begin{equation*}`` style environments (optionally wrapped in
+    ``$$ ... $$``) as well as bare ``$$ ... $$`` blocks.  The ``\\tag{...}``
+    number, if present, is captured separately and stripped from the math.
+    """
+    found: List[RawLatexEquation] = []
+    consumed: List[Tuple[int, int]] = []
+
+    for m in _EQ_ENV_RE.finditer(text):
+        body = m.group("body")      # .group is how you access the matched text from the regex
+        tag_m = _TAG_RE.search(body)
+        tag = tag_m.group("tag").strip() if tag_m else None
+        found.append(
+            RawLatexEquation(latex=_clean_body(body), tag=tag, source_line=_line_of(text, m.start()))
+        )
+        consumed.append((m.start(), m.end()))   # Keep track of the start and end indices of the matched environment to avoid double counting in the next step
+
+    # Bare $$ ... $$ blocks that did not contain an environment we already read.
+    for m in _DOLLAR_BLOCK_RE.finditer(text):
+        if any(start <= m.start() < end for start, end in consumed):
+            continue
+        body = m.group("body")
+        if "\\begin{" in body:
+            continue
+        tag_m = _TAG_RE.search(body)
+        tag = tag_m.group("tag").strip() if tag_m else None
+        cleaned = _clean_body(body)
+        if cleaned:
+            found.append(
+                RawLatexEquation(latex=cleaned, tag=tag, source_line=_line_of(text, m.start()))
+            )
+
+    # Order by the paper's own equation number when every equation carries a
+    # numeric \tag (note this is a numeric sort, so Eq. (10) follows Eq. (9)).
+    # Otherwise fall back to the order the equations appear in the document.
+    numbers = [_tag_number(e.tag) for e in found]
+    if found and all(n is not None for n in numbers):
+        found.sort(key=lambda e: (_tag_number(e.tag), e.source_line or 0))
+    else:
+        found.sort(key=lambda e: (e.source_line or 0))
+    return found
+
+
+def _line_of(text: str, index: int) -> int:
+    return text.count("\n", 0, index) + 1       # Counts how many \n before the index, +1 for 1-based line number
+
+def _tag_number(tag: Optional[str]) -> Optional[float]:
+    """Numeric value of a ``\\tag{...}``, or ``None`` if it is not a number."""
+    if tag is None:
+        return None
+    try:
+        return float(tag)
+    except ValueError:
+        return None
+
+def _clean_body(body: str) -> str:
+    """Remove ``\\tag`` / ``\\label`` from a body and strip whitespace."""
+    body = _TAG_RE.sub("", body)
+    body = _LABEL_RE.sub("", body)
+    return body.strip()
+
+
+
+
+
+
+
+
 
 
 @dataclass
@@ -135,26 +246,27 @@ class ExtractedEquation:
 
 @dataclass
 class SymbolEntry:
-    """A variable or constant used by the extracted equations."""
+    """A variable or constant used by the extracted equations like h_g or k_s."""
 
     name: str
     latex: str
-    descriptions: List[Tuple[str, str]] = field(default_factory=list)  # (description, tag)
+    details: List[Tuple[str, str]] = field(default_factory=list)  # (description, tag)
     defined_by: List[str] = field(default_factory=list)  # equation tags
     used_in: List[str] = field(default_factory=list)  # equation tags
 
     @property
     def description(self) -> Optional[str]:
-        return self.descriptions[0][0] if self.descriptions else None
+        return self.details[0][0] if self.details else None
 
     @property
     def kind(self) -> str:
         """``derived`` (an equation defines it), ``parameter`` or ``input``."""
         if self.defined_by:
             return "derived"
-        if any(_PARAMETER_RE.search(text) for text, _ in self.descriptions):
+        # If every description mentions "model parameter" or similar, call it a parameter.
+        if any(_PARAMETER_RE.search(text) for text, _ in self.details):
             return "parameter"
-        return "input"
+        return "input"  # Else used in an equation but not defined by one, and not described as a parameter. It requires input from the user or stage 03 scraping.
 
     def to_json(self) -> dict:
         return {
@@ -162,7 +274,7 @@ class SymbolEntry:
             "description": self.description,
             "kind": self.kind,
             "definitions": [
-                {"description": text, "equation": tag} for text, tag in self.descriptions
+                {"description": text, "equation": tag} for text, tag in self.details
             ],
             "defined_by": list(self.defined_by),
             "used_in": list(self.used_in),
@@ -170,7 +282,7 @@ class SymbolEntry:
 
 
 @dataclass
-class Extraction:
+class ExtractedResult:
     """Result of reading one paper."""
 
     source: str
@@ -203,6 +315,8 @@ class Extraction:
 # Context / description mining
 # --------------------------------------------------------------------------- #
 
+# Finds the string index of the start of a 1-based line number format that markdown uses.
+# Inverse of _line_of
 def _offset_of_line(text: str, line: Optional[int]) -> int:
     """Character offset of the start of a 1-based line number."""
     if not line or line <= 1:
@@ -230,7 +344,7 @@ def _end_of_equation_block(text: str, start: int) -> int:
     return start
 
 
-def context_after(text: str, raw: RawEquation) -> str:
+def context_after(text: str, raw: RawLatexEquation) -> str:
     """The prose that follows an equation, up to the next block-level element."""
     start = _offset_of_line(text, raw.source_line)
     end = _end_of_equation_block(text, start)
@@ -259,11 +373,11 @@ def _cut_at_sentence_end(text: str) -> str:
     return text
 
 
+# Collapse all new lines to spaces.
 def _tidy_context(text: str) -> str:
     """One-line version of a paragraph, with the paper's inline math intact."""
     return _cut_at_sentence_end(re.sub(r"\s+", " ", text).strip())
-
-
+# Make the description one line, and remove trailing "and" or commas.  Also strip trailing punctuation and whitespace, and unwrap inline math (like $k$ to k) for readability.
 def _tidy_description(text: str) -> str:
     desc = _tidy_context(text)
     desc = re.sub(r"[,;]?\s*(?:and|,)\s*$", "", desc).strip()
@@ -367,8 +481,8 @@ def _record_definitions(
                 continue  # Only document symbols that appear in an equation.
             if allowed is not None and name not in allowed:
                 continue
-            if not any(text == description for text, _ in entry.descriptions):
-                entry.descriptions.append((description, tag or "-"))
+            if not any(text == description for text, _ in entry.details):
+                entry.details.append((description, tag or "-"))
 
 
 def _entry_for(symbols: Dict[str, SymbolEntry], name: str) -> SymbolEntry:
@@ -377,7 +491,7 @@ def _entry_for(symbols: Dict[str, SymbolEntry], name: str) -> SymbolEntry:
     return symbols[name]
 
 
-def extract(text: str, source: str = "") -> Extraction:
+def extract(text: str, source: str = "") -> ExtractedResult:
     """Extract equations, their context and their symbol dictionary from ``text``."""
     equations: List[ExtractedEquation] = []
     symbols: Dict[str, SymbolEntry] = {}
@@ -423,7 +537,7 @@ def extract(text: str, source: str = "") -> Extraction:
         find_appositions,
     ):
         for tag, context in pending:
-            undescribed = {n for n, e in symbols.items() if not e.descriptions}
+            undescribed = {n for n, e in symbols.items() if not e.details}
             if not undescribed:
                 break
             gap_fillers = [
@@ -433,11 +547,11 @@ def extract(text: str, source: str = "") -> Extraction:
             ]
             _record_definitions(symbols, gap_fillers, tag, only=undescribed)
 
-    return Extraction(source=source, equations=equations, symbols=symbols)
+    return ExtractedResult(source=source, equations=equations, symbols=symbols)
 
 
 # --------------------------------------------------------------------------- #
-# Rendering
+# Outputting equations_raw.md, equations.md and symbols.json
 # --------------------------------------------------------------------------- #
 
 def _inline_safe(text: str) -> str:
@@ -467,11 +581,18 @@ def _equation_block(record: ExtractedEquation) -> str:
     return "$$\n\\begin{equation*}\n" + body + "\n\\end{equation*}\n$$"
 
 
+def render_raw_markdown(extraction: ExtractedResult) -> str:
+    """Display-equation blocks only -- the input stage 04 re-parses."""
+    if not extraction.equations:
+        return ""
+    return "\n\n".join(_equation_block(record) for record in extraction.equations) + "\n"
+
+
 def _symbol_sort_key(entry: SymbolEntry) -> Tuple[str, str]:
     return (entry.name.lstrip("\\").lower(), entry.name)
 
 
-def render_markdown(extraction: Extraction) -> str:
+def render_markdown(extraction: ExtractedResult) -> str:
     """Render the extraction as the ``equations.md`` deliverable."""
     source = os.path.basename(extraction.source) or "the source document"
     ok = len(extraction.equations) - len(extraction.failed)
@@ -528,7 +649,7 @@ def render_markdown(extraction: Extraction) -> str:
 
     for entry in sorted(extraction.symbols.values(), key=_symbol_sort_key):
         description = entry.description or "—"
-        for text, tag in entry.descriptions[1:]:
+        for text, tag in entry.details[1:]:
             description += f" *(Eq. {tag}: {text})*"
         defined = ", ".join(entry.defined_by) or "—"
         used = ", ".join(entry.used_in) or "—"
@@ -548,9 +669,14 @@ def render_markdown(extraction: Extraction) -> str:
 def run(
     paper: Optional[str] = None,
     out_dir: str = DEFAULT_OUTPUT_DIR,
+    report_path: str = DEFAULT_REPORT_PATH,
     verbose: bool = True,
-) -> Extraction:
-    """Extract from ``paper`` and write ``equations.md`` / ``symbols.json``."""
+) -> ExtractedResult:
+    """Extract from ``paper`` and write ``equations_raw.md`` / ``symbols.json``.
+
+    The human-readable report is written to ``report_path`` (log only by
+    default) and is not mirrored from ``src/``.
+    """
     path = paper or paper_path()
     with open(path, "r", encoding="utf-8") as fh:
         text = fh.read()
@@ -558,16 +684,19 @@ def run(
     extraction = extract(text, source=path)
     os.makedirs(out_dir, exist_ok=True)
 
-    md_path = os.path.join(out_dir, EQUATIONS_FILENAME)
-    with open(md_path, "w", encoding="utf-8") as fh:
-        fh.write(render_markdown(extraction))
+    raw_path = os.path.join(out_dir, EQUATIONS_RAW_FILENAME)
+    with open(raw_path, "w", encoding="utf-8") as fh:
+        fh.write(render_raw_markdown(extraction))
 
     json_path = os.path.join(out_dir, SYMBOLS_FILENAME)
     with open(json_path, "w", encoding="utf-8") as fh:
         json.dump(extraction.to_json(), fh, indent=2, ensure_ascii=False)
         fh.write("\n")
-    mirror_to_log(md_path)
     mirror_to_log(json_path)
+
+    os.makedirs(os.path.dirname(os.path.abspath(report_path)), exist_ok=True)
+    with open(report_path, "w", encoding="utf-8") as fh:
+        fh.write(render_markdown(extraction))
 
     if verbose:
         ok = len(extraction.equations) - len(extraction.failed)
@@ -580,8 +709,9 @@ def run(
         undescribed = sorted(n for n, s in extraction.symbols.items() if not s.description)
         if undescribed:
             print(f"  ? no description found for: {', '.join(undescribed)}")
-        print(f"  wrote {md_path}")
+        print(f"  wrote {raw_path}")
         print(f"  wrote {json_path}")
+        print(f"  wrote {report_path}")
 
     return extraction
 
@@ -598,14 +728,19 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--output",
         default=DEFAULT_OUTPUT_DIR,
-        help=f"Directory for the generated files (default: {DEFAULT_OUTPUT_DIR})",
+        help=f"Directory for equations_raw.md and symbols.json (default: {DEFAULT_OUTPUT_DIR})",
+    )
+    parser.add_argument(
+        "--report",
+        default=DEFAULT_REPORT_PATH,
+        help=f"Human-readable equations.md path (default: {DEFAULT_REPORT_PATH})",
     )
     return parser.parse_args(list(argv) if argv is not None else None)
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = _parse_args(argv)
-    extraction = run(paper=args.paper, out_dir=args.output)
+    extraction = run(paper=args.paper, out_dir=args.output, report_path=args.report)
     return 0 if extraction.equations and not extraction.failed else 1
 
 

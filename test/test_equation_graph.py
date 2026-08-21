@@ -14,7 +14,7 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
-add_stages("Extract Equations", "Latex2Python", "Plotting")
+add_stages("Extract Equations", "Translate2Python", "Plotting")
 
 from equation_graph import CycleError, EquationGraph  # noqa: E402
 from extract_equations import extract  # noqa: E402

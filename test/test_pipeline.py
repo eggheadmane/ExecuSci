@@ -23,11 +23,11 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
 
-add_stages("Extract Equations", "Scrape Constants", "Latex2Python", "Plotting")
+add_stages("Extract Equations", "Scrape Constants", "Translate2Python", "Plotting")
 
 import extract_equations  # noqa: E402
 import scrape_constants  # noqa: E402
-import translate_equations  # noqa: E402
+import translate2python  # noqa: E402
 from equation_graph import EquationGraph  # noqa: E402
 
 PAPER = paper_path()
@@ -44,15 +44,20 @@ def _load(name: str, path: str) -> types.ModuleType:
 def pipeline(tmp_path_factory):
     """Run the whole pipeline into a temp directory and load what it wrote."""
     out = tmp_path_factory.mktemp("execusci")
-    extraction = extract_equations.run(paper=PAPER, out_dir=str(out), verbose=False)
+    extraction = extract_equations.run(
+        paper=PAPER,
+        out_dir=str(out),
+        report_path=str(out / "equations.md"),
+        verbose=False,
+    )
     scrape_constants.run(
         paper=PAPER,
         constants_path=str(out / "constants.py"),
         report_path=str(out / "constants.md"),
         verbose=False,
     )
-    status = translate_equations.run_document(
-        str(out / extract_equations.EQUATIONS_FILENAME),
+    status = translate2python.run_document(
+        str(out / extract_equations.EQUATIONS_RAW_FILENAME),
         module_path=str(out / "equations.py"),
         symbols_path=str(out / extract_equations.SYMBOLS_FILENAME),
         verbose=False,
@@ -80,7 +85,7 @@ def ihtc(pipeline, pressure: float, tool: str, delta: float) -> float:
 
 
 def test_every_stage_produced_its_artefacts(pipeline):
-    for name in ("equations.md", "symbols.json", "constants.py", "constants.md", "equations.py"):
+    for name in ("equations.md", "equations_raw.md", "symbols.json", "constants.py", "constants.md", "equations.py"):
         assert (pipeline.out / name).exists(), f"missing {name}"
     assert pipeline.extraction.failed == []
 
@@ -130,7 +135,7 @@ def test_constants_substitute_into_the_symbolic_equations(pipeline):
     """The SymPy symbols named in stage 03 line up with the equation symbols."""
     import sympy as sp
 
-    from latex2python import translate
+    from translate2python import translate
 
     equation = translate(r"K_{s t}=\frac{2}{k_{s}^{-1}+k_{t}^{-1}}")
     value = float(equation.rhs.subs(pipeline.constants.subs_map(tool="H13")))

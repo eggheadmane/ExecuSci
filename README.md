@@ -13,19 +13,19 @@
 Runnable source lives under `src/` in numbered stage folders. Put papers in
 `src/01_input/`. The default paper is **whichever markdown/LaTeX file** is in
 `src/01_input/target/` — any filename, no rename needed. Artefacts that later
-stages import (`equations.md`, `symbols.json`, `constants.py`, `equations.py`)
+stages import (`equations_raw.md`, `symbols.json`, `constants.py`, `equations.py`)
 stay in the matching `src/` stage folder. `log/` keeps a full copy of every
 generated file, including those duplicates, plus reports nothing imports
-(currently `constants.md`). Folder numbers follow the order the stages run in;
+(`constants.md`, `equations.md`). Folder numbers follow the order the stages run in;
 code never hard-codes those numbers, it looks folders up by name through
 `src/execusci_paths.py`, so stages can be reordered.
 
 | Stage | Folder | Input | Output |
 |-------|--------|-------|--------|
 | 01 | `src/01_input/target/` | the PDF | Mathpix markdown (any filename) |
-| 02 | `src/02_extract_equations` | the target paper | `output/equations.md`, `output/symbols.json` (also `log/`) |
+| 02 | `src/02_extract_equations` | the target paper | `output/equations_raw.md`, `output/symbols.json` (json also `log/`); `equations.md` in `log/` only |
 | 03 | `src/03_scrape_constants` | the target paper | `constants.py` (also `log/`); `constants.md` in `log/` only |
-| 04 | `src/04_latex2python` | `equations.md` + `symbols.json` | `equations.py` (also `log/`) |
+| 04 | `src/04_translate2python` | `equations_raw.md` + `symbols.json` | `equations.py` (also `log/`) |
 | 05 | `src/05_plotting` | `equations.py` + `constants.py` | figures under `output/` (also `log/`) |
 
 ### Install and run
@@ -42,16 +42,21 @@ Every stage is also runnable on its own:
 ```bash
 python src/02_extract_equations/extract_equations.py
 python src/03_scrape_constants/scrape_constants.py
-python src/04_latex2python/translate_equations.py
+python src/04_translate2python/translate2python.py
 python src/05_plotting/plot_compare.py --no-show
 ```
 
 ## Stage 02 — Extract equations
 
-`extract_equations.py` pulls every display equation out of the paper and writes a
-self-contained `equations.md`: the LaTeX (with the paper's `\tag{n}` preserved,
-so the numbering survives downstream), the Python form, the paper line it came
-from, and the sentence that introduces it.
+`extract_equations.py` pulls every display equation out of the paper and writes:
+
+- `output/equations_raw.md` — stacked `$$` / `\begin{equation*}` blocks for stage 04
+- `output/symbols.json` — machine-readable dictionary (also copied to `log/`)
+- `log/02_extract_equations/equations.md` — human report with Python previews,
+  where-clauses, and the symbol table (nothing in the pipeline imports this)
+
+The paper's `\tag{n}` numbering is preserved so stage 04 names the generated
+functions `eq_n`.
 
 It also builds a **symbol dictionary** covering every variable and constant the
 equations use, described in the authors' own words. Descriptions are mined from
@@ -101,9 +106,10 @@ expr.subs(subs_map(tool="H13"))               # substitute into a SymPy expressi
 
 ## Stage 04 — LaTeX → Python equation translator
 
-`latex2python.py` turns the equations into **executable Python**. It is
-purpose-built for real-world paper LaTeX and copes with the quirks that break
-`sympy.parse_latex`, including:
+The parser itself lives in stage 02 (`translator.py`). `translate2python.py`
+re-exports it (`from translate2python import translate` still works) and is the
+stage runner that writes `equations.py`. It is purpose-built for real-world
+paper LaTeX and copes with the quirks that break `sympy.parse_latex`, including:
 
 - multi-character subscripts such as `K_{s t l}` → `K_stl`;
 - Mathpix placeholder superscripts such as `R_{s}{ }^{2}` → `R_s**2`;
@@ -112,8 +118,8 @@ purpose-built for real-world paper LaTeX and copes with the quirks that break
 - `\left( ... \right)` delimiters and accents such as `\bar{\lambda}` → `lamda_bar`;
 - Greek letters, mapping the Python keyword `\lambda` → `lamda`.
 
-`translate_equations.py` writes `equations.py`, one documented function per
-equation, named after the paper's equation number:
+`translate2python.py` reads `equations_raw.md` and writes `equations.py`, one
+documented function per equation, named after the paper's equation number:
 
 ```python
 def eq_13(delta, gamma):
@@ -131,7 +137,7 @@ def eq_13(delta, gamma):
 ### Library
 
 ```python
-from latex2python import translate
+from translate2python import translate
 
 eq = translate(r"K_{s t}=\frac{2}{k_{s}^{-1}+k_{t}^{-1}}")
 print(eq.python)                     # K_st = 2/(1/k_t + 1/k_s)
@@ -151,8 +157,10 @@ print(eq.function_source())          # a stand-alone def K_st(k_s, k_t): ...
 | `.evaluate(**values)` | evaluate the RHS for given inputs                       |
 | `.function_source()`  | source code of a documented stand-alone function        |
 
-Module-level helpers: `extract_equations`, `translate_document`,
-`generate_module`, and the naming pair `latex_to_name` / `name_to_latex`.
+Module-level helpers: `translate_document`, `generate_module`, and the naming
+pair `latex_to_name` / `name_to_latex`. The parser (`translate`, `Parser`, …)
+lives in stage 02 (`translator.py`) and is re-exported here. Display-equation
+extraction lives in stage 02 (`extract_latex_equations`).
 
 ## Stage 05 — Plotting
 
@@ -169,7 +177,7 @@ running the rest of the pipeline:
 ```bash
 python -m pytest test/test_extract_equations.py
 python -m pytest test/test_scrape_constants.py
-python -m pytest test/test_latex2python.py
+python -m pytest test/test_translate2python.py
 python -m pytest                        # all tests, including the full pipeline
 ```
 

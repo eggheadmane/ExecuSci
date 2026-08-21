@@ -16,11 +16,10 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
-add_stages("Latex2Python")
+add_stages("Translate2Python")
 
-from latex2python import (  # noqa: E402
+from translate2python import (  # noqa: E402
     LatexParseError,
-    extract_equations,
     generate_module,
     latex_to_name,
     name_to_latex,
@@ -161,31 +160,6 @@ def test_bad_input_raises_parse_error():
 def _paper_text() -> str:
     with open(_PAPER, "r", encoding="utf-8") as fh:
         return fh.read()
-
-
-def test_extraction_from_markdown():
-    raws = extract_equations(_paper_text())
-    tags = [r.tag for r in raws]
-    assert tags == [str(i) for i in range(1, 14)]
-
-
-def test_equations_are_ordered_numerically_by_tag():
-    """Eq. (10) must follow Eq. (9), not sort as the string "10" < "9"."""
-    document = "\n\n".join(
-        f"$$\n\\begin{{equation*}}\n{latex} \\tag{{{tag}}}\n\\end{{equation*}}\n$$"
-        for tag, latex in reversed(list(PAPER_EQUATIONS.items()))
-    )
-    assert [r.tag for r in extract_equations(document)] == [
-        str(i) for i in range(1, 14)
-    ]
-
-
-def test_untagged_equations_keep_document_order():
-    document = (
-        "$$\n\\begin{equation*}\nb = 2 a\n\\end{equation*}\n$$\n\n"
-        "$$\n\\begin{equation*}\nc = 3 a\n\\end{equation*}\n$$\n"
-    )
-    assert [r.latex.split("=")[0].strip() for r in extract_equations(document)] == ["b", "c"]
 
 
 def test_translate_document_all_ok():

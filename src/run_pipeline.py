@@ -1,9 +1,9 @@
 """Run the whole ExecuSci pipeline on one paper.
 
     01 src/01_input/target      the paper as Mathpix markdown (input)
-      -> 02_extract_equations   equations.md + symbols.json
+      -> 02_extract_equations   equations_raw.md + symbols.json (+ equations.md under log/)
       -> 03_scrape_constants    constants.py (+ constants.md under log/)
-      -> 04_latex2python        equations.py
+      -> 04_translate2python    equations.py
       -> 05_plotting            figures comparing the model to the paper (optional)
 
 Usage::
@@ -33,12 +33,12 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path, stage_dir  # noqa: E402
 
-add_stages("Extract Equations", "Scrape Constants", "Latex2Python")
+add_stages("Extract Equations", "Scrape Constants", "Translate2Python")
 
 # The squiggly import lines can be ignored because you can import after the add_stages function is executed
 import extract_equations  # noqa: E402  
 import scrape_constants  # noqa: E402   
-import translate_equations  # noqa: E402
+import translate2python  # noqa: E402
 
 
 # Will print a banner like "=== Stage 2: Extract equations ===========================" to the command line to improve readability
@@ -66,14 +66,13 @@ def run(paper: Optional[str] = None, plot: bool = False, quiet: bool = True) -> 
     scrape_constants.run(paper=path)
     _banner(4, "Translate equations to Python")
 
-    # os.path.join() is used to create a path to the equations.md file in the output directory of the Extract Equations stage
-    # This is so that Latex2Python reads only the equations and not the entire file again
-    equations_md = os.path.join(
-        stage_dir("Extract Equations"), "output", extract_equations.EQUATIONS_FILENAME
+    # Stage 04 reads only the stacked display blocks, not the human report.
+    equations_raw = os.path.join(
+        stage_dir("Extract Equations"), "output", extract_equations.EQUATIONS_RAW_FILENAME
     )
     # status is 0 if translated successfully, 1 if there were unresolved equations
     # verbose is just the opposite of quiet, so if quiet is True, verbose is False. Verbose means to print every translated equation, not just the summary.
-    status = translate_equations.run_document(equations_md, verbose=not quiet)
+    status = translate2python.run_document(equations_raw, verbose=not quiet)
 
     # If plotting is enabled:
     if plot:

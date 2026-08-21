@@ -31,7 +31,7 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, mirror_to_log, paper_path, stage_dir, target_figure_paths  # noqa: E402
 
-add_stages("Latex2Python", "Scrape Constants", "Plotting")
+add_stages("Translate2Python", "Scrape Constants", "Plotting")
 
 import equations  # noqa: E402
 from constants import (  # noqa: E402

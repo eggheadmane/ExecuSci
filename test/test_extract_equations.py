@@ -15,17 +15,18 @@ if _SRC not in sys.path:
 
 from execusci_paths import add_stages, paper_path  # noqa: E402
 
-add_stages("Extract Equations", "Latex2Python")
+add_stages("Extract Equations")
 
 from extract_equations import (  # noqa: E402
     extract,
+    extract_latex_equations,
     find_appositions,
     find_definitions,
     render_markdown,
+    render_raw_markdown,
     run,
     where_clause,
 )
-from latex2python import extract_equations as extract_latex_equations  # noqa: E402
 
 PAPER = paper_path()
 
@@ -54,6 +55,34 @@ def paper_text() -> str:
 @pytest.fixture(scope="module")
 def extraction(paper_text):
     return extract(paper_text, source=PAPER)
+
+
+# --------------------------------------------------------------------------- #
+# Display-equation finder
+# --------------------------------------------------------------------------- #
+
+def test_extraction_from_markdown(paper_text):
+    raws = extract_latex_equations(paper_text)
+    tags = [r.tag for r in raws]
+    assert tags == [str(i) for i in range(1, 14)]
+
+
+def test_equations_are_ordered_numerically_by_tag():
+    """Eq. (10) must follow Eq. (9), not sort as the string "10" < "9"."""
+    tags = [str(i) for i in range(1, 14)]
+    document = "\n\n".join(
+        f"$$\n\\begin{{equation*}}\nx = {tag} \\tag{{{tag}}}\n\\end{{equation*}}\n$$"
+        for tag in reversed(tags)
+    )
+    assert [r.tag for r in extract_latex_equations(document)] == tags
+
+
+def test_untagged_equations_keep_document_order():
+    document = (
+        "$$\n\\begin{equation*}\nb = 2 a\n\\end{equation*}\n$$\n\n"
+        "$$\n\\begin{equation*}\nc = 3 a\n\\end{equation*}\n$$\n"
+    )
+    assert [r.latex.split("=")[0].strip() for r in extract_latex_equations(document)] == ["b", "c"]
 
 
 # --------------------------------------------------------------------------- #
@@ -172,8 +201,8 @@ def test_symbol_latex_matches_the_paper(extraction):
 # --------------------------------------------------------------------------- #
 
 def test_markdown_is_re_extractable(extraction):
-    """Stage 04 reads this file, so its equations must survive a round trip."""
-    markdown = render_markdown(extraction)
+    """Stage 04 reads equations_raw.md, so its blocks must survive a round trip."""
+    markdown = render_raw_markdown(extraction)
     round_trip = extract_latex_equations(markdown)
     assert [e.tag for e in round_trip] == [str(i) for i in range(1, 14)]
     assert round_trip[6].latex == "h_{c}=\\alpha \\frac{K_{s t} N_{P}}{R}"
@@ -187,10 +216,19 @@ def test_markdown_documents_every_symbol(extraction):
 
 
 def test_run_writes_both_artefacts(tmp_path):
-    extraction = run(paper=PAPER, out_dir=str(tmp_path), verbose=False)
+    extraction = run(
+        paper=PAPER,
+        out_dir=str(tmp_path),
+        report_path=str(tmp_path / "equations.md"),
+        verbose=False,
+    )
+    equations_raw = tmp_path / "equations_raw.md"
     equations_md = tmp_path / "equations.md"
     symbols_json = tmp_path / "symbols.json"
-    assert equations_md.exists() and symbols_json.exists()
+    assert equations_raw.exists() and equations_md.exists() and symbols_json.exists()
+    assert "## Symbol dictionary" in equations_md.read_text(encoding="utf-8")
+    assert "\\begin{equation*}" in equations_raw.read_text(encoding="utf-8")
+    assert "## Symbol dictionary" not in equations_raw.read_text(encoding="utf-8")
 
     payload = json.loads(symbols_json.read_text(encoding="utf-8"))
     assert payload["equation_count"] == len(extraction.equations)
