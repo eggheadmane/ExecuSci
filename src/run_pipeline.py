@@ -1,10 +1,10 @@
 """Run the whole ExecuSci pipeline on one paper.
 
-    01 src/01_input/target      the paper as Mathpix markdown (input)
+    01 src/01_input/target      Mathpix export folder (markdown + images/)
       -> 02_extract_equations   equations_raw.md + symbols.json (+ equations.md under log/)
       -> 03_scrape_constants    constants.py (+ constants.md under log/)
       -> 04_translate2python    equations.py
-      -> 05_plotting            figures comparing the model to the paper (optional)
+      -> 05_plotting            figures under log/plotting/ (optional)
 
 Usage::
 
@@ -107,7 +107,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Paper markdown to process (default: the file in src/01_input/target/)",
+        help="Paper markdown to process (default: the paper in src/01_input/target/)",
     )
     parser.add_argument(
         "--plot",

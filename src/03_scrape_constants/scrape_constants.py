@@ -56,7 +56,7 @@ __all__ = [
 
 _SCRAPE = stage_dir("Scrape Constants")
 DEFAULT_CONSTANTS_PATH = os.path.join(_SCRAPE, "constants.py")
-DEFAULT_REPORT_PATH = os.path.join(LOG, os.path.basename(_SCRAPE), "constants.md")
+DEFAULT_REPORT_PATH = os.path.join(LOG, "constants.md")
 
 # Tool / material labels that appear in Table 3 headers like ``k_t (H13)``.
 _TOOL_ALIASES = {
@@ -1275,7 +1275,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: the file in src/01_input/target/)",
+        help="Markdown/LaTeX source (default: the paper in src/01_input/target/)",
     )
     parser.add_argument(
         "--constants",

@@ -11,7 +11,7 @@ Reads the Mathpix markdown produced by stage 01 and writes:
     still need a numeric value; stage 04 uses the descriptions to document
     the arguments of the generated Python functions.
 
-``log/02_extract_equations/equations.md``
+``log/equations.md``
     Human-readable report: each display equation (with the paper's ``\\tag``),
     the sentence that introduces it, and the symbol dictionary.  Nothing in
     the pipeline imports this file.
@@ -69,7 +69,7 @@ DEFAULT_OUTPUT_DIR = os.path.join(_STAGE, "output")
 EQUATIONS_FILENAME = "equations.md"
 EQUATIONS_RAW_FILENAME = "equations_raw.md"
 SYMBOLS_FILENAME = "symbols.json"
-DEFAULT_REPORT_PATH = os.path.join(LOG, os.path.basename(_STAGE), EQUATIONS_FILENAME)
+DEFAULT_REPORT_PATH = os.path.join(LOG, EQUATIONS_FILENAME)
 
 ''' For the regexes below, see https://regex101.com/r/0g1k3F/1 for a live playground. '''
 
@@ -723,7 +723,7 @@ def _parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--paper",
         default=None,
-        help="Markdown/LaTeX source (default: the file in src/01_input/target/)",
+        help="Markdown/LaTeX source (default: the paper in src/01_input/target/)",
     )
     parser.add_argument(
         "--output",

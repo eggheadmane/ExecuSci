@@ -1,6 +1,6 @@
 # Determination of the interfacial heat transfer coefficient for a hot aluminium stamping process 
 
-Xiaochuan Liu ${ }^{\mathrm{a}}$, Kang Ji ${ }^{\mathrm{a}}$, Omer El Fakir ${ }^{\mathrm{a}}$, Haomiao Fang ${ }^{\mathrm{b}}$, Mohammad M. Gharbi ${ }^{\mathrm{c}}$, LiLiang Wang ${ }^{\mathrm{a}, *}$<br>${ }^{\mathrm{a}}$ Department of Mechanical Engineering, Imperial College London, London, SW7 2AZ, UK<br>${ }^{\mathrm{b}}$ Nissan Motor Manufacturing, Sunderland, SR5 3NS, UK<br>${ }^{\mathrm{c}}$ Schuler Pressen GmbH, Goeppingen, 73033, Germany
+Xiaochuan Liu ${ }^{\mathrm{a}}$, Kang Ji ${ }^{\mathrm{a}}$, Omer El Fakir ${ }^{\mathrm{a}}$, Haomiao Fang ${ }^{\mathrm{b}}$, Mohammad M. Gharbi ${ }^{\mathrm{c}}$, LiLiang Wang ${ }^{\mathrm{a}, *}$<br>${ }^{\text {a }}$ Department of Mechanical Engineering, Imperial College London, London, SW7 2AZ, UK<br>${ }^{\mathrm{b}}$ Nissan Motor Manufacturing, Sunderland, SR5 3NS, UK<br>${ }^{\mathrm{c}}$ Schuler Pressen GmbH, Goeppingen, 73033, Germany
 
 ## ARTICLE INFO
 
@@ -92,7 +92,7 @@ During these temperature/pressure-sensitive IHTC tests, the compressive loads we
 
 The IHTC test facility provides a high stability and repeatability in the test results. Specifically, the specimens were controlled precisely to be compressed at the centre of the tools in each test with a tolerance of 0.1 mm, thus ensuring that the heat transfer between the specimen and
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-03.jpg?height=863&width=870&top_left_y=207&top_left_x=131)
+![](./images/Fig_1_Overall_schematic_structure_of_the_IHTC_test_facility.jpg)
 Fig. 1. Overall schematic structure of the IHTC test facility.
 
 tools was in three dimensions and symmetric. Additionally, the specimens were heated by direct resistance heating from their respective tops and bottoms simultaneously, ensuring a high temperature homogeneity in the compression region. The measured temperature difference between the centre and edges of the compression regions in the specimens was within 5 °C. After heating, the IHTC test facility also does not necessitate the transfer of the specimens from a furnace to a press machine. Therefore, the punch, which only takes 0.05 s to compress the specimens at a speed of 400 mm/s, could be actuated immediately after heating, ensuring a negligible temperature loss from the specimens. The initial temperature of both the punch and die could also be considered as being equivalent when the compression process was started.
@@ -103,7 +103,7 @@ Prior to each test, a $120 \times 10 \times 2 \mathrm{~mm}^{3}$ AA7075 specimen 
 
 To represent a hot stamping process, the specimen was firstly heated by direct electrical resistance heating to its SHT temperature, 490 °C, at a heating rate of 10 °C/s, while the temperature of the tools was maintained at room temperature. Once the target temperature was reached, the punch was instantly actuated to move towards the specimen at a speed of 400 mm/s and compress it against the die at different pre-defined contact pressures. After the compression, the punch was
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-03.jpg?height=859&width=820&top_left_y=205&top_left_x=1100)
+![](./images/Fig_2_The_FE_model_of_the_IHTC_test_facility_in_PAM_STAMP.jpg)
 Fig. 2. The FE model of the IHTC test facility in PAM-STAMP.
 
 moved back to its initial position. The temperature evolutions of the specimen and the tools were recorded throughout the compression process. Prior to each test for the lubricated condition studies, greasebased graphite was applied with great care onto the tool surfaces only, which were thoroughly cleaned by using a chemical etchant after each test. The applied layer thickness of lubricant was precisely measured by using dedicated equipment.
@@ -122,48 +122,14 @@ The chemical composition of AA7075.
 | $\mathrm{Wt} \%$ | 0.09 | 0.13 | 1.4 | 0.05 | 2.6 | 0.19 | 5.7 | 0.03 | 0.04 | 0.02 | Bal. |
 
 
-Table 2
-Material properties of the specimen and tools.
-| Property | AA7075 |
-| :--- | :--- |
-| Young's modulus (MPa) | $-39.082 \mathrm{~T}+82532$ |
-| Density ( $\mathrm{kg} / \mathrm{m}^{3}$ ) | $-6.7537 \mathrm{e}-05 \mathrm{~T}^{2}-0.15 \mathrm{~T}+2.8608 \mathrm{e} 03$ |
-| Thermal conductivity (kW/mK) | $\begin{gathered} -5.145 \mathrm{e}-08 \mathrm{~T}^{2}+1.368 \mathrm{e}-04 \mathrm{~T} \\ +0.085224 \end{gathered}$ |
-| Specific heat capacity (J/kgK) | $8.721 \mathrm{e}-07 \mathrm{~T}^{3}-1.4625 \mathrm{e}-03 \mathrm{~T}^{2}+1.2 \mathrm{~T}+608.3$ |
-| Poisson's ratio (-) | $\begin{gathered} 3.893 \mathrm{e}-08 \mathrm{~T}^{2}+0.000013505 \mathrm{~T} \\ +0.325165 \end{gathered}$ |
-| Thermal expansion (-) | $0.0216 \mathrm{~T}+16.499$ |
-
-
-| Property | H13 | Cast iron | P20 |
-| :--- | :--- | :--- | :--- |
-| Young's modulus (GPa) | 210 | 101.4 | 205 |
-| Density ( $\mathrm{kg} / \mathrm{m}^{3}$ ) | 7.8e03 | 7.15 e 03 | 7.85 e 03 |
-| Thermal conductivity (kW/mK) | 0.0244 | 0.044 | 0.0315 |
-| Specific heat capacity (J/kgK) | 460 | 465 | 473 |
-| Poisson's ratio (-) | 0.3 | 0.29 | 0.285 |
-
-process type in PAM-STAMP, and was composted of four individual stages; gravity, holding, stamping and quenching. All six degrees of freedom were restricted for the die, whilst all degrees of freedom, except for that in the z-direction (direction of punch motion), were restricted for the punch, blankholders and screws. The specimen was able to deform in all degrees of freedom. In the gravity and holding stages, the specimen was located and held by the blankholders and screws. In the subsequent stamping and quenching stages, the punch moved towards the specimen at the same speed as that in the experiments and compressed it against the die for 4 s.
-
-Prior to the quenching stage, the actual measured temperature from the experiments at the two ends of the specimen was 310 °C, due to the heat transfer to the blankholders, whilst the temperature distribution within the compression region was uniform. Therefore, the initial temperature of the tools, the two ends of the specimen and the centre of the specimen were set as 25, 310 and 490 °C respectively. Differing from the experiments, a different constant IHTC value was assigned for each simulation to eliminate the effect of contact pressure on the temperature evolution. The temperature evolutions, at identical locations to those in the experiments, were then plotted and compared with the experimental temperature evolutions. The experimental and simulated curves with the best agreement indicated that the IHTC assigned in that simulation was the corresponding value at the selected experimental conditions.
-
-Fig. 3 shows a comparison of the temperature evolutions obtained from a simulation assigned an IHTC value of $9.2 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ and from an experiment with a contact pressure of 3 MPa under dry conditions, using cast iron tools. From the results, it was found that the temperature of the specimen dropped drastically in the first 2s, while the punch temperature increased gradually with time. The experimental temperature evolutions agree well with the simulated curves, which indicates that the IHTC value is $9.2 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ when the contact pressure is 3 MPa under dry conditions, using cast iron tools.
-
-## 3. Results and discussion
-
-### 3.1. Effect of contact pressure on IHTC
-
-As shown in Fig. 4, when H13 was used as the tool material, the IHTC increases considerably from $0.7 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ to approximately $8.2 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ when the contact pressure increases from 0 to 7 MPa under dry conditions, followed by a gentle increase as the contact pressure increases from 7 to 10 MPa. When the contact pressure is higher than 13 MPa, a plateau of the IHTC is observed, with value of approximately $8.6 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$. The variation of the IHTC values can be explained by the evolutions of real contact area at different contact pressures. The real contact area between the specimen and tools is usually much less than the apparent contact area, and increases with increasing contact pressure due to the variation of the specimen surface condition (Buchner et al., 2009). This is beneficial for the interfacial heat transfer between the specimen and the tools, leading to an increase in the IHTC with increasing contact pressure.
-
-In order to characterise the relationship between the real contact area and contact pressure, the average surface roughness of the H13 tools and the specimens were measured after the IHTC tests. The average surface roughness of the H13 tools remained stable at 980 nm throughout the experiments, whilst for the specimen this value varied with the contact pressure. The strength of H13 within the temperature range used in the experiments was much larger than that of AA7075 at elevated temperatures. As a result, the surfaces of the specimens were deformed by the tools during the hot stamping processes and thus the surface roughness of the specimens increased correspondingly. Therefore, the real contact area was growing due to the fact that the two contact surfaces were increasingly meshed together. As shown in
-
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-05.jpg?height=835&width=1167&top_left_y=198&top_left_x=448)
+![](./images/Fig_4_The_IHTC_evolutions_with_contact_pressure_using_H13_and_cast_iron_tools_under_dr.jpg)
 Fig. 4. The IHTC evolutions with contact pressure using H13 and cast iron tools under dry conditions.
 
-Fig. 5, the surface roughness of the specimen increases slightly from 340 to 380 nm as the contact pressure increases from 0 to 5 MPa. During this stage, deformations occur at the surface of the specimen and thereby the real contact area increases. After the experiments, the elastic deformations recover but the plastic deformations remain. As a result, the surface roughness of the specimen increases slightly, but results in a rapid growth of the IHTC value. After yielding, the surface roughness increases dramatically from 380 nm at 5 MPa to 860 nm at 10 MPa , and correspondingly the IHTC value continues to grow rapidly. When the pressure is larger than 10 MPa, the surface roughness of the specimen increases gently to 910 nm, approaching the value for that of the H13 tools. During this stage, the two contact surfaces are meshed to the maximum extent and thus the real contact area reaches its peak. Consequently, a plateau of the IHTC is observed.
+Fig. 5, the surface roughness of the specimen increases slightly from 340 to 380 nm as the contact pressure increases from 0 to 5 MPa. During this stage, deformations occur at the surface of the specimen and thereby the real contact area increases. After the experiments, the elastic deformations recover but the plastic deformations remain. As a result, the surface roughness of the specimen increases slightly, but results in a rapid growth of the IHTC value. After yielding, the surface roughness increases dramatically from 380 nm at 5 MPa to 860 nm at 10 MPa, and correspondingly the IHTC value continues to grow rapidly. When the pressure is larger than 10 MPa, the surface roughness of the specimen increases gently to 910 nm, approaching the value for that of the H13 tools. During this stage, the two contact surfaces are meshed to the maximum extent and thus the real contact area reaches its peak. Consequently, a plateau of the IHTC is observed.
 
 In general, the critical quenching rate for AA7XXX alloys is above 50 °C/s and this value is alloying element dependent, i.e. a higher critical quenching rate is required for an increasing content of alloying elements. Through superimposing the quenching curves obtained from the experimental temperature evolutions with the continuous cooling transformation (CCT) diagrams for the present aluminium alloy, the required contact pressure to achieve the critical cooling rate could therefore be identified. An excessive contact pressure could also be prevented from being applied between the two contact surfaces by accounting for the plateau value of the IHTC. This would be beneficial to the reduction of tool wear, the extension of tool service life and the promotion of cost efficiency in hot stamping processes.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-05.jpg?height=818&width=1165&top_left_y=1688&top_left_x=450)
+![](./images/Fig_5_The_surface_roughness_evolution_of_the_specimen_with_contact_pressure_after_IHTC.jpg)
 Fig. 5. The surface roughness evolution of the specimen with contact pressure after IHTC tests using H13 tools.
 
 ### 3.2. Effect of tool material on IHTC
@@ -176,16 +142,16 @@ Compared with previous research, the IHTC values of AA7075, using either H13 or 
 
 ### 3.3. Effect of lubricant on IHTC
 
-When a grease-based graphite lubricant was applied onto the surfaces of cast iron tools, the overall evolution of the IHTC followed an exponentially increasing trend. As shown in Fig. 6, when the applied lubricant layer thickness is 0.015 mm , the IHTC increases dramatically from $3 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at 0 MPa to $19 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at 7 MPa . When the contact pressure reaches 13 MPa , the IHTC converges to a value of $22 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$. The application of lubricant increases the peak IHTC values by approximately 46\%, compared to that under dry conditions, using cast iron tools. The thermal conductivity of the grease-based graphite lubricant is 0.024 kW/mK, which is much higher than that of air, thus the heat flow is much more rapid when the lubricant fills up the vacancies of the asperities at the contact interface. In addition, the graphite lubricant is able to dissipate more heat to accelerate the heat transfer.
+When a grease-based graphite lubricant was applied onto the surfaces of cast iron tools, the overall evolution of the IHTC followed an exponentially increasing trend. As shown in Fig. 6, when the applied lubricant layer thickness is 0.015 mm, the IHTC increases dramatically from $3 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at 0 MPa to $19 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at 7 MPa . When the contact pressure reaches 13 MPa , the IHTC converges to a value of $22 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$. The application of lubricant increases the peak IHTC values by approximately 46\%, compared to that under dry conditions, using cast iron tools. The thermal conductivity of the grease-based graphite lubricant is 0.024 kW/mK, which is much higher than that of air, thus the heat flow is much more rapid when the lubricant fills up the vacancies of the asperities at the contact interface. In addition, the graphite lubricant is able to dissipate more heat to accelerate the heat transfer.
 
 The evolutions of the IHTC are also determined as a function of the applied lubricant layer thickness at different contact pressures, as shown in Fig. 7. When the contact pressure is 5 MPa, the IHTC increases dramatically from 12.6 to 16.5 kW/mK when the applied lubricant layer thickness increases from 0 to 0.015 mm. The IHTC then remains stable when the thickness is larger than 0.015 mm. The same trend can be observed at a contact pressure of 10 MPa, i.e. as the applied lubricant layer thickness increases, a steep increase followed by a plateau of the IHTC values is observed. The IHTC value is larger when more lubricant fills up the vacancies at the contact interface. However, the excessive lubricant is squeezed out of the contact area by the tools when the lubricant thickness is greater than 0.015 mm at both contact pressures of 5 and 10 MPa, indicating that this value is the maximum effective applied lubricant layer thickness.
 
 Contrary to the previous research (Zhang et al., 2010) conducted using glass as a lubricant, the application of grease-based graphite lubricant has a positive influence on the IHTC. It is due to the fact that the thermal conductivity of the grease-based graphite lubricant (0.024 kW/mK) is much larger than that of the glass lubricant (0.00125 kW/mK). Consequently, the heat transfer between the contact solids is much more rapid and the heat loss is significantly less when
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-06.jpg?height=786&width=1089&top_left_y=1759&top_left_x=489)
+![](./images/Fig_6_The_IHTC_evolutions_with_contact_pressure_using_cast_iron_tools_under_dry_and_lu.jpg)
 Fig. 6. The IHTC evolutions with contact pressure using cast iron tools under dry and lubricated conditions.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-07.jpg?height=844&width=1171&top_left_y=194&top_left_x=446)
+![](./images/Fig_7_The_IHTC_evolutions_with_applied_lubricant_layer_thickness_using_cast_iron_tools.jpg)
 Fig. 7. The IHTC evolutions with applied lubricant layer thickness using cast iron tools, at contact pressures of 5 and 10 MPa.
 
 using the graphite lubricant. Therefore, the application of a lubricant with a higher thermal conductivity would result in higher IHTC values and thus a shorter required quenching time for hot stamping processes. The critical contact pressure and friction would thereby be reduced, extending the tool life. Excessive lubricant could also be prevented from being applied. Overall, these features would be beneficial to the promotion of cost efficiency in hot stamping processes.
@@ -200,7 +166,7 @@ h=h_{a}+h_{c}+h_{l} \tag{6}
 \end{equation*}
 $$
 
-where $h_{a}$ represents the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value, $h_{c}$ represents the contact under pressure between two solid surfaces, and $h_{l}$ represents the application of lubricant between two solid surfaces. Eq. (6) is developed based on Çetinkale and Fishenden's, (1951) equation, which is widely used as a general model to estimate the general heat transfer coefficient. It was found that the null-pressure IHTC $h_{a}$ did not play an important role in the present research since the initial amount of heat transfer between the contact surraces was negligible according to the experimental observations. Once a contact pressure was applied, the heat transfer between the contact surfaces was increased significantly under both dry and lubricated conditions, thus the overall IHTC was mainly characterised by the solid-contact IHTC $h_{c}$ and the lubricant-contact IHTC $h_{l}$. Therefore, it was reasonable to assume a constant value for the null-pressure IHTC $h_{a}$ of approximately 0.8 kW/ $\mathrm{m}^{2} \mathrm{~K}$, which was determined by running IHTC tests under dry conditions with zero contact pressure. The solid-contact IHTC $h_{c}$, induced by the applied contact pressure, was modelled by Eq. (7):
+where $h_{a}$ represents the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value, $h_{c}$ represents the contact under pressure between two solid surfaces, and $h_{l}$ represents the application of lubricant between two solid surfaces. Eq. (6) is developed based on Çetinkale and Fishenden's, (1951) equation, which is widely used as a general model to estimate the general heat transfer coefficient. It was found that the null-pressure IHTC $h_{a}$ did not play an important role in the present research since the initial amount of heat transfer between the contact surfaces was negligible according to the experimental observations. Once a contact pressure was applied, the heat transfer between the contact surfaces was increased significantly under both dry and lubricated conditions, thus the overall IHTC was mainly characterised by the solid-contact IHTC $h_{c}$ and the lubricant-contact IHTC $h_{l}$. Therefore, it was reasonable to assume a constant value for the null-pressure IHTC $h_{a}$ of approximately 0.8 kW/ $\mathrm{m}^{2} \mathrm{~K}$, which was determined by running IHTC tests under dry conditions with zero contact pressure. The solid-contact IHTC $h_{c}$, induced by the applied contact pressure, was modelled by Eq. (7):
 
 $$
 \begin{equation*}
@@ -281,10 +247,10 @@ In order to verify the predicted results generated by the IHTC model, the materi
 
 Therefore, the IHTC model developed in the present research enables the prediction of IHTC evolutions as a function of contact pressure, tool material and lubrication. When using certain materials
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-08.jpg?height=775&width=1079&top_left_y=1770&top_left_x=493)
+![](./images/Fig_8_The_predicted_IHTC_evolutions_with_contact_pressure_using_P20_tools_under_dry_an.jpg)
 Fig. 8. The predicted IHTC evolutions with contact pressure using P20 tools under dry and lubricated conditions.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-09.jpg?height=838&width=1171&top_left_y=192&top_left_x=448)
+![](./images/Fig_9_The_experimental_and_model_predicted_temperature_evolutions_at_3_MPa_under_dry_c.jpg)
 Fig. 9. The experimental and model predicted temperature evolutions at 3 MPa under dry conditions and 13 MPa under lubricated conditions, using P20 tools.
 
 for the specimens, tools and lubricant, the IHTC evolution comprises two stages; a rapidly increasing stage due to the introduction of the contact pressure, and a stable stage due to the achievement of the convergent contact pressure value at which the IHTC becomes constant.
@@ -293,10 +259,10 @@ If specimens and tools with higher thermal conductivity values are used, the cor
 
 Theoretically, this model is also able to predict the effect of surface roughness on the IHTC evolutions. Fig. 11 shows the IHTC evolutions as a function of the surface roughness of the tool and specimen, predicted by the IHTC model, at a constant contact pressure of 15 MPa and thermal conductivities of 0.0244 and 0.14 kW/mK for the tool and specimen respectively, under dry conditions. In general, the IHTC
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-09.jpg?height=827&width=1173&top_left_y=1718&top_left_x=446)
+![](./images/Fig_10_The_predicted_IHTC_evolutions_as_a_function_of_the_thermal_conductivities_of_too.jpg)
 Fig. 10. The predicted IHTC evolutions as a function of the thermal conductivities of tool and specimen.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-10.jpg?height=850&width=1176&top_left_y=196&top_left_x=444)
+![](./images/Fig_11_The_predicted_IHTC_evolutions_as_a_function_of_the_initial_surface_roughness_of.jpg)
 Fig. 11. The predicted IHTC evolutions as a function of the initial surface roughness of tool and specimen.
 
 evolutions will decrease with the increasing surface roughness of the tool and specimen, due to the fact that the real contact area has an inverse relationship with the surface roughness. As discussed earlier, the surface roughness of the specimen approaches the value of that for the tools during a hot stamping process, due to the higher strength of the tools. The initial surface roughness of the tools before stamping is therefore crucial, whereas the value for the specimen has a marginal effect on the IHTC. The meshing between the two contact surfaces decreases with the increasing initial surface roughness of tools. Consequently, the real contact area and the IHTC values decrease. These predictions agree with the previous theoretical analysis.
@@ -309,13 +275,13 @@ Hemispherical dome and B pillar forming tests were conducted to measure the temp
 
 In order to monitor the temperature for each test, a pair of thermocouples was embedded at a specific location of the blanks; at the middle of the blank for the hemispherical dome tests, and 110 mm away from the short edge and 10 mm away from the long edge of the blank for the B pillar tests, as shown in Figs. 14 and 15, and then connected to a thermometer. Prior to both the hemispherical and B pillar tests, the same grease-based graphite used in the IHTC model tests was applied as a lubricant with great care onto the tool surfaces, ensuring the lubricant layer thickness reached 0.015 mm to achieve the peak IHTC value. The blank was initially heated up to 490 °C and soaked for 3 min in a furnace. During the hemispherical dome test, the
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-10.jpg?height=657&width=1346&top_left_y=1878&top_left_x=360)
+![](./images/Fig_12_The_FE_model_of_the_hemispherical_dome_test_in_PAM_STAMP_cross_sectional_view_un.jpg)
 Fig. 12. The FE model of the hemispherical dome test in PAM-STAMP (cross-sectional view), under (a) the loading condition and (b) the forming condition.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-11.jpg?height=674&width=1421&top_left_y=196&top_left_x=319)
+![](./images/Fig_13_The_FE_model_of_the_B_pillar_test_in_PAM_STAMP_under_a_the_loading_condition_and.jpg)
 Fig. 13. The FE model of the B pillar test in PAM-STAMP under (a) the loading condition and (b) the forming condition.
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-11.jpg?height=784&width=1077&top_left_y=995&top_left_x=497)
+![](./images/Fig_14_The_experimental_and_simulated_temperature_evolutions_for_the_hemispherical_dome.jpg)
 Fig. 14. The experimental and simulated temperature evolutions for the hemispherical dome tests under lubricated conditions.
 
 hot blank was then transferred rapidly onto the bottom blankholder within 10 s. Once the blank temperature dropped to around 430 °C, the top blankholder was instantly actuated to move towards the blank and compress it against the bottom blankholder. The blankholding force was maintained by two gas springs at a constant value of 20 kn. The compressed blankholders continuously moved towards the cold static die at a speed of 75 mm/s to deform the blank to a dome height of 10 mm. After a 20 s quenching period, the top and bottom blankholders were returned to their initial positions. During the B pillar test, the hot blank was transferred quickly onto the blankholder after heating and soaking. When the temperature of the blank decreased to 430 °C, the punch was moved towards the static cold die immediately, compressing the blank against the blankholder at a constant blankholding force of 20 kn and subsequently deforming it into a B pillar shaped component at a stamping speed of 75 mm/s. The punch and the blankholder were then returned after a 20 s quenching stage.
@@ -332,12 +298,12 @@ As shown in Figs. 14 and 15, the simulated temperature evolutions were in close 
 
 The interfacial heat transfer coefficient between hot blanks and cold
 
-![](https://cdn.mathpix.com/cropped/e2f6f80d-6554-4cd4-9996-f6477c202d84-12.jpg?height=790&width=1089&top_left_y=198&top_left_x=487)
+![](./images/Fig_15_The_experimental_and_simulated_temperature_evolutions_for_the_B_pillar_tests_und.jpg)
 Fig. 15. The experimental and simulated temperature evolutions for the B pillar tests under lubricated conditions.
 
 tools determines the quenching rate during hot stamping processes and whether the full mechanical strength of formed components can be retained. The IHTC values and critical quenching rates are critical for tool design. A novel experimental facility was designed to deduce the IHTC for any combination of blank and tool materials and contact pressure, under both dry and lubricated conditions. At the first instance, the IHTC test facility was used to measure temperature evolutions at a specific location on AA7075 blanks, which were then fit to simulated temperature evolutions obtained from the FE software PAM-STAMP, to investigate the effect of contact pressure on the IHTC using two different tool materials. A greased-based graphite lubricant was then applied onto the tool surfaces to research the effect of lubricant on the IHTC.
 
-An exponential relationship between the IHTC and contact pressure was identified under both dry and lubricated conditions. Specifically, under dry conditions, the IHTC increases dramatically with increasing contact pressure and remains stable at $8.6 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at a contact pressure of 13 MPa using H13 tools. When cast iron tools were applied, the IHTC plateaus at $15.1 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ after a contact pressure of 13 MPa was reached under dry conditions, whilst the IHTC peak value rises by 46\%, to $22 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$, when the grease-based graphite lubricant was applied at a layer thickness value of 0.015 mm. In addition, the IHTC was found to increase exponentially with the increasing applied lubricant layer thickness. When the layer thickness was larger than 0.015 mm, the IHTC remained constant at different contact pressures.
+An exponential relationship between the IHTC and contact pressure was identified under both dry and lubricated conditions. Specifically, under dry conditions, the IHTC increases dramatically with increasing contact pressure and remains stable at $8.6 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ at a contact pressure of 13 MPa using H13 tools. When cast iron tools were applied, the IHTC plateaus at $15.1 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$ after a contact pressure of 13 MPa was reached under dry conditions, whilst the IHTC peak value rises by $46 \%$, to $22 \mathrm{~kW} / \mathrm{m}^{2} \mathrm{~K}$, when the grease-based graphite lubricant was applied at a layer thickness value of 0.015 mm. In addition, the IHTC was found to increase exponentially with the increasing applied lubricant layer thickness. When the layer thickness was larger than 0.015 mm, the IHTC remained constant at different contact pressures.
 
 The IHTC model developed in the present research provides an effective approach for predicting IHTC evolutions as a function of contact pressure, tool materials and lubricant. The model was verified through further IHTC tests using P20 tools and validated through hot stamping hemispherical dome and B pillar forming tests. In future research, further IHTC experiments with different surface roughnesses for the specimens and tools will be performed in order to optimise the relationship between the IHTC and surface roughness in the model, and enhance the accuracy of the predictions.
 
