@@ -55,7 +55,14 @@ _MODEL_RE = re.compile(r"model|predict", re.I)
 _EXPERIMENT_RE = re.compile(r"experiment|measured|test\s+result", re.I)
 _DRY_RE = re.compile(r"\bdry\b", re.I)
 _LUBE_RE = re.compile(r"lube|lubricat", re.I)
+#: EasyOCR often reads the tool steel ``P20`` as ``P2O`` (zero vs letter O).
+_OCR_TOOL_FIXES: List[Tuple[re.Pattern[str], str]] = [
+    (re.compile(r"\bP2O\b", re.I), "P20"),
+    (re.compile(r"\bP2\s*0\b"), "P20"),
+    (re.compile(r"\bH1S\b", re.I), "H13"),
+]
 
+_LEGEND_SCALE = 2.5
 _READER = None
 
 
@@ -207,9 +214,8 @@ def digitize_figure(
     if image is None:
         raise DigitizeError(f"Could not read figure: {path}")
 
-    frame = find_plot_frame(image)
     ocr = read_text(image)
-    x_ticks, y_ticks = _axis_ticks(ocr, frame)
+    frame, x_ticks, y_ticks = choose_plot_frame(find_plot_frames(image), ocr)
     calib = calibrate_axes(frame, x_ticks, y_ticks)
 
     x_label, y_label = _axis_labels(ocr, frame)
@@ -230,10 +236,11 @@ def digitize_figure(
     if not y_symbol:
         y_symbol = match_axis_symbol(caption_blob, symbol_map, role="y")
 
-    legend_boxes = _legend_boxes(ocr, frame)
-    legend_text = [box.text for box in legend_boxes]
-    series = extract_series(image, calib)
-    series = _annotate_series(series, legend_boxes, image, tools or ())
+    legend_boxes = _collect_legend_boxes(image, frame, ocr)
+    legend_rows = stitch_legend_rows(legend_boxes)
+    legend_text = [box.text for box in legend_rows]
+    series = extract_series(image, calib, hide_rect=_legend_hide_rect(legend_rows))
+    series = _annotate_series(series, legend_rows, image, tools or ())
 
     return DigitizedFigure(
         path=os.path.abspath(path),
@@ -315,7 +322,17 @@ def split_label_unit(text: str) -> Tuple[str, str]:
 
 
 def find_plot_frame(image: np.ndarray) -> Tuple[int, int, int, int]:
-    """Return ``(x0, y0, x1, y1)`` of the axes rectangle in pixel coordinates."""
+    """Return ``(x0, y0, x1, y1)`` of the largest axes rectangle."""
+    return find_plot_frames(image)[0]
+
+
+def find_plot_frames(image: np.ndarray) -> List[Tuple[int, int, int, int]]:
+    """Return every likely axes rectangle, largest first.
+
+    Multi-panel figures have several subplot frames, each well below 20% of
+    the full image.  Those used to be rejected, leaving a single fallback crop
+    that does not line up with any tick labels.
+    """
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape
     _, bw = cv2.threshold(gray, 80, 255, cv2.THRESH_BINARY_INV)
@@ -326,28 +343,65 @@ def find_plot_frame(image: np.ndarray) -> Tuple[int, int, int, int]:
         cv2.morphologyEx(bw, cv2.MORPH_OPEN, kernel_v),
     )
     contours, _ = cv2.findContours(lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    area_img = h * w
-    best = None
-    best_area = 0
+    area_img = float(h * w)
+    found: List[Tuple[int, int, int, int]] = []
     for contour in contours:
         x, y, ww, hh = cv2.boundingRect(contour)
         area = ww * hh
-        if area < 0.2 * area_img or ww < 0.3 * w or hh < 0.3 * h:
+        if area < 0.10 * area_img or ww < 0.18 * w or hh < 0.18 * h:
             continue
         if abs(ww / max(hh, 1) - 1) > 4:
             continue
-        if area > best_area:
-            best = (x, y, x + ww, y + hh)
-            best_area = area
-    if best is not None:
-        return best
-    return int(0.12 * w), int(0.08 * h), int(0.98 * w), int(0.88 * h)
+        found.append((x, y, x + ww, y + hh))
+    found = _dedupe_frames(found)
+    found.sort(key=_frame_area, reverse=True)
+    if found:
+        return found
+    return [(int(0.12 * w), int(0.08 * h), int(0.98 * w), int(0.88 * h))]
 
 
-def read_text(image: np.ndarray) -> List[OcrBox]:
+def choose_plot_frame(
+    frames: Sequence[Tuple[int, int, int, int]],
+    ocr: Sequence[OcrBox],
+) -> Tuple[Tuple[int, int, int, int], List[Tuple[float, float]], List[Tuple[float, float]]]:
+    """Pick the frame whose tick labels actually calibrate (need two per axis)."""
+    if not frames:
+        raise DigitizeError("No plot frame found")
+    ranked: List[
+        Tuple[int, Tuple[int, int, int, int], List[Tuple[float, float]], List[Tuple[float, float]]]
+    ] = []
+    for frame in frames:
+        x_ticks, y_ticks = _axis_ticks(ocr, frame)
+        ranked.append((len(x_ticks) + len(y_ticks), frame, x_ticks, y_ticks))
+    viable = [row for row in ranked if len(row[2]) >= 2 and len(row[3]) >= 2]
+    pool = viable or ranked
+    pool.sort(key=lambda row: (row[0], _frame_area(row[1])), reverse=True)
+    _, frame, x_ticks, y_ticks = pool[0]
+    return frame, x_ticks, y_ticks
+
+
+def read_text(
+    image: np.ndarray,
+    origin: Tuple[float, float] = (0.0, 0.0),
+    scale: float = 1.0,
+    width_ths: Optional[float] = None,
+) -> List[OcrBox]:
+    """OCR ``image`` and return boxes in full-figure coordinates.
+
+    ``origin`` / ``scale`` map a cropped (and optionally upscaled) image back
+    onto the original: ``full = origin + crop / scale``.
+    """
     reader = _easyocr_reader()
-    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    raw = reader.readtext(rgb, detail=1, paragraph=False)
+    if image.ndim == 2:
+        rgb = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+    else:
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    kwargs: Dict[str, object] = {"detail": 1, "paragraph": False}
+    if width_ths is not None:
+        kwargs["width_ths"] = width_ths
+    raw = reader.readtext(rgb, **kwargs)
+    ox, oy = float(origin[0]), float(origin[1])
+    inv = 1.0 / scale if scale else 1.0
     boxes: List[OcrBox] = []
     for item in raw:
         if len(item) < 3:
@@ -355,7 +409,9 @@ def read_text(image: np.ndarray) -> List[OcrBox]:
         pts_raw, text, conf = item[0], str(item[1]).strip(), float(item[2])
         if not text or conf < 0.25:
             continue
-        pts = np.asarray(pts_raw, dtype=float).reshape(-1, 2)
+        pts = np.asarray(pts_raw, dtype=float).reshape(-1, 2) * inv + np.array(
+            [ox, oy], dtype=float
+        )
         xs, ys = pts[:, 0], pts[:, 1]
         boxes.append(
             OcrBox(
@@ -408,7 +464,11 @@ def calibrate_axes(
     )
 
 
-def extract_series(image: np.ndarray, calib: AxisCalib) -> List[Series]:
+def extract_series(
+    image: np.ndarray,
+    calib: AxisCalib,
+    hide_rect: Optional[Tuple[float, float, float, float]] = None,
+) -> List[Series]:
     """Trace coloured (and gray) polylines inside the calibrated plot frame."""
     pad = 4
     x0 = int(calib.x0) + pad
@@ -417,7 +477,13 @@ def extract_series(image: np.ndarray, calib: AxisCalib) -> List[Series]:
     y1 = int(calib.y1) - pad
     if x1 <= x0 or y1 <= y0:
         raise DigitizeError("Plot frame is too small to extract series")
-    crop = image[y0:y1, x0:x1]
+    crop = image[y0:y1, x0:x1].copy()
+    if hide_rect is not None:
+        hx0 = int(round(hide_rect[0] - x0))
+        hy0 = int(round(hide_rect[1] - y0))
+        hx1 = int(round(hide_rect[2] - x0))
+        hy1 = int(round(hide_rect[3] - y0))
+        cv2.rectangle(crop, (hx0, hy0), (hx1, hy1), (255, 255, 255), thickness=-1)
     hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
     hue, sat, val = cv2.split(hsv)
     white = (val > 245) & (sat < 35)
@@ -457,7 +523,7 @@ def parse_thicknesses(text: str) -> List[float]:
 
 
 def parse_tool(text: str, tools: Sequence[str]) -> Optional[str]:
-    blob = text.lower()
+    blob = normalise_ocr_text(text or "").lower()
     for tool in tools:
         if tool and tool.lower() in blob:
             return tool
@@ -468,9 +534,159 @@ def parse_tool(text: str, tools: Sequence[str]) -> Optional[str]:
     return None
 
 
+def normalise_ocr_text(text: str) -> str:
+    """Fix common EasyOCR confusions in legend / axis text (``P2O`` → ``P20``)."""
+    cleaned = re.sub(r"\s+", " ", (text or "").strip())
+    for pattern, repl in _OCR_TOOL_FIXES:
+        cleaned = pattern.sub(repl, cleaned)
+    return cleaned
+
+
+def stitch_legend_rows(boxes: Sequence[OcrBox]) -> List[OcrBox]:
+    """Merge OCR boxes that sit on the same baseline into one legend row.
+
+    EasyOCR with ``paragraph=False`` returns word fragments such as
+    ``conditions`` / ``dry``.  Those must not be treated as complete labels.
+    The merged box keeps the leftmost ``x0`` so swatch sampling still looks
+    to the left of the row's text.
+    """
+    usable = [box for box in boxes if (box.text or "").strip()]
+    if not usable:
+        return []
+    heights = [max(box.y1 - box.y0, 1.0) for box in usable]
+    tol = float(np.clip(0.6 * float(np.median(heights)), 6.0, 14.0))
+    ordered = sorted(usable, key=lambda b: (b.cy, b.cx))
+    clusters: List[List[OcrBox]] = []
+    for box in ordered:
+        if clusters:
+            members = clusters[-1]
+            cluster_cy = float(np.mean([m.cy for m in members]))
+            if abs(box.cy - cluster_cy) <= tol:
+                members.append(box)
+                continue
+        clusters.append([box])
+
+    rows: List[OcrBox] = []
+    for members in clusters:
+        members = sorted(members, key=lambda b: b.cx)
+        seen: set = set()
+        texts: List[str] = []
+        for member in members:
+            token = member.text.strip()
+            key = token.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            texts.append(token)
+        texts = _drop_redundant_tokens(texts)
+        text = normalise_ocr_text(" ".join(texts))
+        if not text:
+            continue
+        x0 = min(m.x0 for m in members)
+        y0 = min(m.y0 for m in members)
+        x1 = max(m.x1 for m in members)
+        y1 = max(m.y1 for m in members)
+        pts = np.array([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], dtype=float)
+        rows.append(
+            OcrBox(
+                text=text,
+                conf=max(m.conf for m in members),
+                pts=pts,
+                cx=float((x0 + x1) / 2.0),
+                cy=float((y0 + y1) / 2.0),
+                x0=float(x0),
+                y0=float(y0),
+                x1=float(x1),
+                y1=float(y1),
+            )
+        )
+    rows.sort(key=lambda b: (b.cy, b.cx))
+    return rows
+
+
+def fill_missing_deltas(
+    series: Sequence[Series],
+    thicknesses: Sequence[float] = (),
+) -> List[Series]:
+    """If OCR did not tag dry/lube, infer ``delta`` from curve intercepts.
+
+    Of two model lines, the lower intercept is dry (``delta=0``) and the
+    higher one takes the first known lubricant thickness.
+    """
+    named = list(series)
+    line_idxs = [
+        i
+        for i, item in enumerate(named)
+        if item.is_model and item.kind == "line" and len(item.y) >= 5
+    ]
+    if len(line_idxs) < 2:
+        return named
+
+    missing = [i for i in line_idxs if named[i].delta is None]
+    known_dry = any(named[i].delta == 0 for i in line_idxs)
+    lube_val = next(
+        (float(named[i].delta) for i in line_idxs if named[i].delta not in (None, 0)),
+        None,
+    )
+    if lube_val is None and thicknesses:
+        lube_val = float(thicknesses[0])
+
+    if len(missing) == 1:
+        idx = missing[0]
+        if lube_val is not None and not known_dry:
+            named[idx] = replace(named[idx], delta=0.0)
+        elif known_dry and lube_val is not None:
+            named[idx] = replace(named[idx], delta=lube_val)
+        return named
+
+    if len(missing) >= 2 and lube_val is not None:
+        ranked = sorted(missing, key=lambda i: _series_intercept(named[i]))
+        lo, hi = ranked[0], ranked[-1]
+        if _series_intercept(named[hi]) - _series_intercept(named[lo]) >= 1.0:
+            named[lo] = replace(named[lo], delta=0.0)
+            named[hi] = replace(named[hi], delta=lube_val)
+    return named
+
+
 # --------------------------------------------------------------------------- #
 # Internals
 # --------------------------------------------------------------------------- #
+
+def _frame_area(frame: Tuple[int, int, int, int]) -> int:
+    return max(0, frame[2] - frame[0]) * max(0, frame[3] - frame[1])
+
+
+def _frame_intersection(
+    a: Tuple[int, int, int, int], b: Tuple[int, int, int, int]
+) -> int:
+    x0 = max(a[0], b[0])
+    y0 = max(a[1], b[1])
+    x1 = min(a[2], b[2])
+    y1 = min(a[3], b[3])
+    return max(0, x1 - x0) * max(0, y1 - y0)
+
+
+def _dedupe_frames(
+    frames: Sequence[Tuple[int, int, int, int]], iou: float = 0.5
+) -> List[Tuple[int, int, int, int]]:
+    """Keep the largest copy of overlapping / nested subplot boxes."""
+    kept: List[Tuple[int, int, int, int]] = []
+    for frame in sorted(frames, key=_frame_area, reverse=True):
+        drop = False
+        for other in kept:
+            inter = _frame_intersection(frame, other)
+            smaller = min(_frame_area(frame), _frame_area(other))
+            union = _frame_area(frame) + _frame_area(other) - inter
+            if union and inter / union >= iou:
+                drop = True
+                break
+            if smaller and inter / smaller >= 0.85:
+                drop = True
+                break
+        if not drop:
+            kept.append(frame)
+    return kept
+
 
 def _easyocr_reader():
     global _READER
@@ -567,6 +783,21 @@ def _axis_labels(ocr: Sequence[OcrBox], frame: Tuple[int, int, int, int]) -> Tup
     return x_label, y_label
 
 
+def _drop_redundant_tokens(texts: Sequence[str]) -> List[str]:
+    """Drop OCR fragments that are already contained in a longer token on the row."""
+    norms = [re.sub(r"[^a-z0-9.]+", "", (t or "").lower()) for t in texts]
+    kept: List[str] = []
+    for i, token in enumerate(texts):
+        needle = norms[i]
+        if len(needle) < 4:
+            kept.append(token)
+            continue
+        if any(needle != other and needle in other for j, other in enumerate(norms) if j != i):
+            continue
+        kept.append(token)
+    return kept
+
+
 def _legend_boxes(ocr: Sequence[OcrBox], frame: Tuple[int, int, int, int]) -> List[OcrBox]:
     x0, y0, x1, y1 = frame
     mid_x = (x0 + x1) / 2
@@ -577,6 +808,59 @@ def _legend_boxes(ocr: Sequence[OcrBox], frame: Tuple[int, int, int, int]) -> Li
     ]
     boxes.sort(key=lambda b: (b.cy, b.cx))
     return boxes
+
+
+def _read_legend_crop(
+    image: np.ndarray, frame: Tuple[int, int, int, int]
+) -> List[OcrBox]:
+    """OCR an upscaled right-hand crop so small legend glyphs stay readable."""
+    x0, y0, x1, y1 = (int(v) for v in frame)
+    mid_x = int((x0 + x1) / 2)
+    crop = image[y0:y1, mid_x:x1]
+    if crop.size == 0 or crop.shape[0] < 20 or crop.shape[1] < 20:
+        return []
+    h, w = crop.shape[:2]
+    up = cv2.resize(
+        crop,
+        (int(w * _LEGEND_SCALE), int(h * _LEGEND_SCALE)),
+        interpolation=cv2.INTER_CUBIC,
+    )
+    return read_text(up, origin=(float(mid_x), float(y0)), scale=_LEGEND_SCALE, width_ths=0.7)
+
+
+def _unique_legend_boxes(boxes: Sequence[OcrBox]) -> List[OcrBox]:
+    seen: set = set()
+    out: List[OcrBox] = []
+    for box in boxes:
+        key = (box.text.strip().lower(), int(round(box.cy / 4.0)), int(round(box.cx / 8.0)))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(box)
+    return out
+
+
+def _collect_legend_boxes(
+    image: np.ndarray,
+    frame: Tuple[int, int, int, int],
+    full_ocr: Sequence[OcrBox],
+) -> List[OcrBox]:
+    crop_boxes = _legend_boxes(_read_legend_crop(image, frame), frame)
+    full_boxes = _legend_boxes(full_ocr, frame)
+    return _unique_legend_boxes(list(crop_boxes) + list(full_boxes))
+
+
+def _legend_hide_rect(
+    rows: Sequence[OcrBox], pad_left: float = 36.0, pad: float = 8.0
+) -> Optional[Tuple[float, float, float, float]]:
+    if not rows:
+        return None
+    return (
+        min(box.x0 for box in rows) - pad_left,
+        min(box.y0 for box in rows) - pad,
+        max(box.x1 for box in rows) + pad,
+        max(box.y1 for box in rows) + pad,
+    )
 
 
 def _label_from_caption(caption: str, axis: str) -> Optional[str]:
@@ -727,6 +1011,14 @@ def _mask_to_series(
     )
 
 
+def _series_intercept(series: Series) -> float:
+    y = np.asarray(series.y, dtype=float)
+    if y.size == 0:
+        return float("nan")
+    n = max(3, y.size // 20)
+    return float(np.median(y[:n]))
+
+
 def _annotate_series(
     series: Sequence[Series],
     legend_boxes: Sequence[OcrBox],
@@ -768,7 +1060,7 @@ def _annotate_series(
         named.append(
             replace(item, name=name, tool=tool, delta=delta, is_model=is_model)
         )
-    return named
+    return fill_missing_deltas(named, thicknesses)
 
 
 def _swatch_colour(image: np.ndarray, box: OcrBox) -> Tuple[int, int, int]:

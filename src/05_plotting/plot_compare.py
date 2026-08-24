@@ -41,6 +41,12 @@ from constants import (  # noqa: E402
     available_tools,
     get_constants,
 )
+
+try:
+    from constants import DEFAULT_MATERIAL, available_materials  # noqa: E402
+except ImportError:  # older generated modules
+    DEFAULT_MATERIAL = None
+    available_materials = lambda: []  # noqa: E731
 from digitize_figure import (  # noqa: E402
     DigitizedFigure,
     DigitizeError,
@@ -58,6 +64,24 @@ except ImportError:  # pragma: no cover
 
 DEFAULT_SYMBOLS = os.path.join(stage_dir("Extract Equations"), "output", "symbols.json")
 DEFAULT_OUTPUT = PLOTTING_LOG
+
+_FIGURE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp"}
+_FIG_NUM_RE = re.compile(r"^Fig_(\d+[a-z]?)_", re.IGNORECASE)
+_FIG_CAPTION_RE = re.compile(
+    r"^Fig(?:ure)?\.?\s*(\d+[a-z]?)\.\s*(.+)$", re.IGNORECASE | re.MULTILINE
+)
+_SKIP_FIG = re.compile(
+    r"schematic|fe_model|fe model|pam_stamp|pam-stamp|facility|"
+    r"cross_sectional|cross-sectional|loading_condition",
+    re.I,
+)
+_SCORE_PATTERNS: Tuple[Tuple[re.Pattern[str], int], ...] = (
+    (re.compile(r"ihtc|interfacial[\s_]+heat", re.I), 4),
+    (re.compile(r"contact[\s_]+pressure", re.I), 4),
+    (re.compile(r"\bp20\b", re.I), 2),
+    (re.compile(r"predict", re.I), 1),
+    (re.compile(r"dry|lube|lubricat", re.I), 1),
+)
 
 
 def percent_error(y_pred: np.ndarray, y_true: np.ndarray) -> np.ndarray:
@@ -91,25 +115,128 @@ def load_captions(paper: Optional[str] = None) -> List[str]:
         return extract_captions(fh.read())
 
 
-def choose_figure(path: Optional[str] = None) -> str:
+def _list_local_figures(folder: str) -> List[str]:
+    if not os.path.isdir(folder):
+        return []
+    found: List[str] = []
+    for entry in os.listdir(folder):
+        path = os.path.join(folder, entry)
+        if os.path.isfile(path) and os.path.splitext(entry)[1].lower() in _FIGURE_EXTS:
+            found.append(os.path.abspath(path))
+    return found
+
+
+def _figures_for_paper(paper: Optional[str]) -> List[str]:
+    """Raster files in the paper folder and its ``images/`` directory."""
+    if not paper:
+        return []
+    abs_paper = os.path.abspath(paper)
+    bundle = abs_paper if os.path.isdir(abs_paper) else os.path.dirname(abs_paper)
+    found = _list_local_figures(bundle) + _list_local_figures(os.path.join(bundle, "images"))
+    return list(dict.fromkeys(found))
+
+
+def _captions_by_number(paper: Optional[str]) -> Dict[str, str]:
+    if not paper or not os.path.isfile(paper):
+        return {}
+    with open(paper, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    return {match.group(1): match.group(2).strip() for match in _FIG_CAPTION_RE.finditer(text)}
+
+
+def _caption_for_figure(path: str, captions: Dict[str, str]) -> str:
+    match = _FIG_NUM_RE.match(os.path.basename(path))
+    if not match:
+        return ""
+    number = match.group(1)
+    if number in captions:
+        return captions[number]
+    if number.isdigit():
+        return captions.get(str(int(number)), "")
+    return ""
+
+
+def score_figure(path: str, extra: str = "") -> int:
+    """Higher scores are better x-y comparison plots (IHTC vs pressure, P20, …)."""
+    blob = f"{os.path.basename(path).replace('_', ' ')} {extra}"
+    if _SKIP_FIG.search(blob):
+        return -100
+    return sum(weight for pattern, weight in _SCORE_PATTERNS if pattern.search(blob))
+
+
+def choose_figure(path: Optional[str] = None, paper: Optional[str] = None) -> str:
+    """Pick an explicit path, else the best comparison plot for ``paper``."""
     if path:
         if not os.path.isfile(path):
             raise FileNotFoundError(f"Figure not found: {path}")
         return path
-    figures = target_figure_paths()
+
+    figures = _figures_for_paper(paper)
+    if not figures:
+        try:
+            figures = target_figure_paths()
+        except LookupError:
+            figures = []
     if not figures:
         raise FileNotFoundError(
             "No plot image in the target paper bundle. Put figures in that folder's images/ directory."
         )
-    return figures[0]
+
+    captions = _captions_by_number(paper)
+    ranked = sorted(
+        figures,
+        key=lambda p: (-score_figure(p, _caption_for_figure(p, captions)), os.path.basename(p).lower()),
+    )
+    return ranked[0]
 
 
-def resolve_constants(tool: Optional[str], delta: float) -> Tuple[Optional[str], Dict[str, float]]:
+def resolve_constants(
+    tool: Optional[str],
+    delta: float,
+    captions: Optional[Sequence[str]] = None,
+) -> Tuple[Optional[str], Dict[str, float]]:
     tools = list(available_tools() or [])
+    chosen = tool
     if tools:
         chosen = tool if tool in tools else (DEFAULT_TOOL if DEFAULT_TOOL in tools else tools[0])
-        return chosen, get_constants(tool=chosen, delta=delta)
-    return tool, get_constants(delta=delta)
+    kwargs: Dict[str, Any] = {"delta": delta}
+    if chosen:
+        kwargs["tool"] = chosen
+    materials = list(available_materials() or [])
+    blob = " ".join(captions or [])
+    blanks = [name for name in materials if name.startswith("AA")]
+    mentioned = [name for name in blanks if name.lower() in blob.lower()]
+    material = mentioned[-1] if mentioned else None
+    if material:
+        kwargs["material"] = material
+    elif DEFAULT_MATERIAL:
+        kwargs["material"] = DEFAULT_MATERIAL
+    coating = next(
+        (
+            name
+            for name in materials
+            if name in {"CrN", "TiN", "AlCrN", "WC-Co"} and name.lower() in blob.lower()
+        ),
+        None,
+    )
+    if coating:
+        kwargs["coating"] = coating
+    return chosen, get_constants(**kwargs)
+
+
+def extras_from_captions(captions: Sequence[str]) -> Dict[str, float]:
+    """Operating inputs the figure states but stage 03 does not tabulate."""
+    blob = " ".join(captions or [])
+    extras: Dict[str, float] = {}
+    thick = re.search(r"(\d+(?:\.\d+)?)\s*mm", blob, re.I)
+    if thick:
+        extras["l"] = float(thick.group(1)) * 1e-3
+    temp = re.search(r"(\d+(?:\.\d+)?)\s*°\s*C", blob)
+    if temp:
+        extras["T"] = float(temp.group(1)) + 273.15
+    # Eq. 7 was OCR'd as sigma_U(T x)/sigma_U(T 6); T6 temper ⇒ x=6 ⇒ f=1.
+    extras["x"] = 6.0
+    return extras
 
 
 def interpolate_to(x_src: np.ndarray, y_src: np.ndarray, x_dst: np.ndarray) -> np.ndarray:
@@ -200,6 +327,47 @@ def plot_comparison(
     return saved
 
 
+def _draw_dashed(
+    image: np.ndarray,
+    pts: np.ndarray,
+    colour: Tuple[int, int, int],
+    thickness: int = 2,
+    dash: float = 8.0,
+    gap: float = 6.0,
+) -> None:
+    """Draw a dashed polyline; OpenCV ``polylines`` is solid-only."""
+    pts = np.asarray(pts, dtype=float)
+    if len(pts) < 2:
+        return
+    seg_on = True
+    leftover = dash
+    for start, end in zip(pts[:-1], pts[1:]):
+        vec = end - start
+        length = float(np.linalg.norm(vec))
+        if length < 1e-6:
+            continue
+        direction = vec / length
+        travelled = 0.0
+        while travelled < length:
+            step = min(leftover, length - travelled)
+            p0 = start + direction * travelled
+            p1 = start + direction * (travelled + step)
+            if seg_on:
+                cv2.line(
+                    image,
+                    (int(round(p0[0])), int(round(p0[1]))),
+                    (int(round(p1[0])), int(round(p1[1]))),
+                    colour,
+                    thickness,
+                    lineType=cv2.LINE_AA,
+                )
+            travelled += step
+            leftover -= step
+            if leftover <= 1e-9:
+                seg_on = not seg_on
+                leftover = dash if seg_on else gap
+
+
 def overlay_predictions(
     figure: DigitizedFigure,
     results: Sequence[dict],
@@ -212,7 +380,7 @@ def overlay_predictions(
     for i, row in enumerate(results):
         pts = figure.calib.polyline_pixels(row["x"], row["y_pred"])
         if len(pts) >= 2:
-            cv2.polylines(overlay, [pts], False, colours[i % len(colours)], 2)
+            _draw_dashed(overlay, pts, colours[i % len(colours)])
     path = os.path.join(out_dir, "overlay.png")
     cv2.imwrite(path, overlay)
     return path
@@ -248,11 +416,13 @@ def run(
     os.makedirs(out_dir, exist_ok=True)
     payload = load_symbols(symbols_path)
     graph = EquationGraph.from_json(payload)
-    image_path = choose_figure(figure_path)
+    captions = load_captions(paper)
+    extras = extras_from_captions(captions)
+    image_path = choose_figure(figure_path, paper=paper)
     digitized = digitize_figure(
         image_path,
         symbols=payload.get("symbols") or {},
-        captions=load_captions(paper),
+        captions=captions,
         tools=available_tools(),
     )
     artefact_paths = save_digitized(digitized, out_dir)
@@ -277,9 +447,12 @@ def run(
 
     results: List[dict] = []
     ssim_scores: List[float] = []
+    evaluate_error: Optional[str] = None
     for series in digitized.model_series():
         series_delta = _series_delta(series, delta)
-        series_tool, consts = resolve_constants(series.tool or tool, series_delta)
+        series_tool, consts = resolve_constants(
+            series.tool or tool, series_delta, captions=captions
+        )
         y_pred = graph.evaluate_curve(
             equations,
             consts,
@@ -287,9 +460,23 @@ def run(
             series.x,
             y_symbol=system.y_symbol,
             eq_tag=system.target.tag,
+            extras=extras,
         )
         finite = np.isfinite(y_pred) & np.isfinite(series.y)
         if not np.any(finite):
+            if evaluate_error is None and len(series.x):
+                try:
+                    graph.evaluate(
+                        equations,
+                        consts,
+                        x_name,
+                        float(series.x[0]),
+                        y_symbol=system.y_symbol,
+                        eq_tag=system.target.tag,
+                        extras=extras,
+                    )
+                except Exception as exc:
+                    evaluate_error = str(exc)
             continue
         x = series.x[finite]
         y_paper = series.y[finite]
@@ -317,7 +504,10 @@ def run(
         )
 
     if not results:
-        raise RuntimeError("Digitized the figure but could not evaluate any model series")
+        detail = f": {evaluate_error}" if evaluate_error else ""
+        raise RuntimeError(
+            "Digitized the figure but could not evaluate any model series" + detail
+        )
 
     plot_paths = plot_comparison(digitized, results, out_dir=out_dir, show=show)
     overlay_path = overlay_predictions(digitized, results, out_dir)

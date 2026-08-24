@@ -1,295 +1,254 @@
 {
-  "source": "sample_1_mathpix.mmd",
-  "equation_count": 13,
-  "symbol_count": 35,
+  "source": "sample_paper_5.md",
+  "equation_count": 14,
+  "symbol_count": 42,
   "equations": [
     {
       "tag": "1",
-      "latex": "h=h_{g}+h_{c}",
-      "source_line": 42,
-      "output": "h",
-      "inputs": [
-        "h_c",
-        "h_g"
-      ],
-      "python": "h = h_c + h_g",
-      "context": "where $h_{g}$ and $h_{c}$ are the heat transfer coefficients across the air gap and for the solid contact respectively.\n\nCooper and Yovanovich, (1969) identified a theoretical model for the IHTC between two contact solid bodies, as a power function of contact pressure, as shown in Eq. (2):",
-      "error": null
-    },
-    {
-      "tag": "2",
-      "latex": "h=1.45 k \\frac{\\tan \\theta}{\\sigma}\\left(\\frac{p}{H}\\right)^{0.985}",
+      "latex": "h=h_{a}+h_{s}+h_{l}+h_{c},",
       "source_line": 50,
-      "output": "h",
-      "inputs": [
-        "H",
-        "k",
-        "p",
-        "sigma",
-        "theta"
-      ],
-      "python": "h = 1.45*k*(p/H)**0.985*tan(theta)/sigma",
-      "context": "where $k$ is the mean thermal conductivity of two contact bodies, $\\theta$ is the mean of the absolute slope of the surface profile and $\\sigma$ is the standard deviation of the profile heights.\n\nAs shown in Eq. (3), a power relationship between the IHTC and contact pressure was also developed as an empirical model by Shlykov et al. (1977):",
-      "error": null
-    },
-    {
-      "tag": "3",
-      "latex": "h=8000 \\bar{\\lambda}\\left(\\frac{p}{C \\sigma_{U}} K\\right)^{0.86}",
-      "source_line": 58,
-      "output": "h",
-      "inputs": [
-        "C",
-        "K",
-        "lamda_bar",
-        "p",
-        "sigma_U"
-      ],
-      "python": "h = 8000*lamda_bar*(K*p/(C*sigma_U))**0.86",
-      "context": "where $\\bar{\\lambda}$ is the mean thermal conductivity of the two contact bodies, $\\sigma_{U}$ is the ultimate strength of the test specimens, and $K$ and $C$ are model coefficients.\n\nDiffering from the models above, an exponential equation for IHTC as a function of contact pressure was developed by Yukawa et al. (2014), as shown in Eq. (4):",
-      "error": null
-    },
-    {
-      "tag": "4",
-      "latex": "h=A(1-\\exp (-B P))",
-      "source_line": 66,
-      "output": "h",
-      "inputs": [
-        "A",
-        "B",
-        "P"
-      ],
-      "python": "h = A*(1 - exp(-B*P))",
-      "context": "where $A$ and $B$ are model constants determined by the least square method using the experimental results.\n\nIn order to characterise the IHTC values under a lubricated condition, an equation was built up by Wilson et al. (2004), as shown in Eq. (5):",
-      "error": null
-    },
-    {
-      "tag": "5",
-      "latex": "h=\\frac{1-A}{h_{f}} \\frac{2 k_{f} k_{t} k_{w}}{2 k_{t} k_{w}-k_{w} k_{f}-k_{f} k_{t}}",
-      "source_line": 74,
-      "output": "h",
-      "inputs": [
-        "A",
-        "h_f",
-        "k_f",
-        "k_t",
-        "k_w"
-      ],
-      "python": "h = 2*k_f*k_t*k_w*(1 - A)/(h_f*(-k_f*k_t - k_f*k_w + 2*k_t*k_w))",
-      "context": "where $A$ is the contact area, $h_{f}$ is the applied lubricant thickness, and $k_{f}$, $k_{t}$ and $k_{w}$ are the thermal conductivities of the lubricant, tool and workpiece, respectively.\n\nIn the present research, a novel experimental facility was developed and applied to measure temperature evolutions of specimens and tools at different contact pressures under dry and lubricated conditions. The facility, designed with interchangeable components, streamlines the process by which the IHTC between different combinations of blank and tool materials could be determined. The IHTC value was subsequently found by utilising an inverse technique to fit the experimental data to simulated temperature evolutions obtained using the FE software PAM-STAMP. The capabilities of the IHTC test facility are demonstrated here by using it to investigate the effect of contact pressure and lubricant on the IHTC between a hot AA7075 specimen and three different tools. In addition, an IHTC model was developed as a function of contact pressure, tool material and lubricant to predict their effect on the IHTC, and validated using the results of hot stamping tests of a hemispherical dome shape and B pillar component.\n\n\\section*{2. Methodology}\n\n\\subsection*{2.1. Design of the IHTC test facility}\n\nThe IHTC test facility, a schematic for which is shown in Fig. 1, was developed to simulate hot stamping processes. Three sets of punches and dies were available, made from three different tool steels, i.e. H13, cast iron and P20, with contact surfaces of $50 \\times 25 \\mathrm{~mm}^{2}$. The average surface roughnesses of H13, cast iron and P20 tools were 980, 810 and 960 nm respectively, and were measured using White Light Interferometry equipment (Wyko NT9100). A specimen (No. 1 in Fig. 1) was screwed onto two blankholders (No. 4 in Fig. 1), and heated using direct resistance heating, then compressed against a fixed die (No. 3 in Fig. 1) by a moving punch (No. 2 in Fig. 1).\n\nDuring these temperatu",
-      "error": null
-    },
-    {
-      "tag": "6",
-      "latex": "h=h_{a}+h_{c}+h_{l}",
-      "source_line": 228,
       "output": "h",
       "inputs": [
         "h_a",
         "h_c",
-        "h_l"
+        "h_l",
+        "h_s"
       ],
-      "python": "h = h_a + h_c + h_l",
-      "context": "where $h_{a}$ represents the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value, $h_{c}$ represents the contact under pressure between two solid surfaces, and $h_{l}$ represents the application of lubricant between two solid surfaces. Eq. (6) is developed based on Çetinkale and Fishenden's, (1951) equation, which is widely used as a general model to estimate the general heat transfer coefficient. It was found that the null-pressure IHTC $h_{a}$ did not play an important role in the present research since the initial amount of heat transfer between the contact surraces was negligible according to the experimental observations. Once a contact pressure was applied, the heat transfer between the contact surfaces was increased significantly under both dry and lubricated conditions, thus the overall IHTC was mainly characterised by the solid-contact IHTC $h_{c}$ and the lubricant-contact IHTC $h_{l}$. Therefore, it was reasonable to assume a constant value for the null-pressure IHTC $h_{a}$ of approximately 0.8 kW/ $\\mathrm{m}^{2} \\mathrm{~K}$, which was determined by running IHTC tests under dry conditions with zero contact pressure. The solid-contact IHTC $h_{c}$, induced by the applied contact pressure, was modelled by Eq. (7):",
+      "python": "h = h_a + h_c + h_l + h_s",
+      "context": "where $h_{a}$ is the air-contact IHTC, $h_{s}$ is the solid-contact IHTC, $h_{l}$ is the lubricant-contact IHTC, and $h_{c}$ is the coating-contact IHTC. Due to asperities on two contacting surfaces, a large number of vacancies exist at the interface when a blank contacts forming tools. Consequently, the heat transfer across the air gap becomes the dominant mechanism when the blank is exposed to air before compression by the tools. However, this period is short considering a high stamping speed being applied. Furthermore, the heat transfer across the air gap is relatively negligible when compared to the magnitude of heat transfer induced by the contact pressure, lubricant and/or tool coating when the blank is fully compressed by forming tools. Therefore, the air-contact IHTC $h_{a}$ is of less interest in the present research and thus assumed as a constant value, determined by the previous experimental results at a contact pressure of 0 MPa under dry and uncoated conditions.\n\nWhen a contact pressure is applied between the blank and forming tools, the heat transfer between the two metallic solids dominates. The factors influencing the interfacial conditions, e.g. initial blank temperature, tool material, surface roughness and contact pressure, also affect the solid-contact IHTC $h_{s}$, which is characterised as Eq. (2):",
+      "error": null
+    },
+    {
+      "tag": "2",
+      "latex": "h_{s}=\\alpha \\frac{K_{s t}}{R_{s t}} N_{P} L,",
+      "source_line": 60,
+      "output": "h_s",
+      "inputs": [
+        "K_st",
+        "L",
+        "N_P",
+        "R_st",
+        "alpha"
+      ],
+      "python": "h_s = K_st*L*N_P*alpha/R_st",
+      "context": "where $\\alpha$ is the temperature dependent thermal diffusivity of the blank, $L$ is a blank thickness dependent parameter, $K_{s t}$ is the equivalent thermal conductivity of the interface between the blank and forming tools, $R_{s t}$ is the equivalent interfacial surface roughness, and $N_{P}$ is a contact pressure dependent parameter. It has been proven that the positive linear effect of initial blank temperature on the IHTC consisted of two factors, i.e. the thermal properties and strength of the aluminium alloy [31]. The IHTC increases with increasing thermal properties of the blank due to its better heat transfer capability at a higher temperature. The positive effect of thermal properties of the blank on the IHTC was identified by the temperature dependent thermal diffusivity $\\alpha$ [37], as shown in Eq. (3):",
+      "error": null
+    },
+    {
+      "tag": "3",
+      "latex": "\\alpha=B(T) \\frac{k_{s}(T)}{\\rho(T) c_{p}(T)},",
+      "source_line": 68,
+      "output": "alpha",
+      "inputs": [
+        "B",
+        "c_p",
+        "k_s",
+        "rho"
+      ],
+      "python": "alpha = B*k_s/(c_p*rho)",
+      "context": "where $B(T)$ is a temperature dependent parameter, $k_{s}(T), \\rho(T)$ and $c_{p}(T)$ are the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively. Arrhenius equation is widely used to describe the temperature dependence of a reaction rate, which can be either alloy-dependent [38] or -independent [39]. Thus, $B(T)$ is modelled by Eq. (4) using the Arrhenius equation.",
+      "error": null
+    },
+    {
+      "tag": "4",
+      "latex": "B(T)=b_{0} \\exp \\left(\\frac{Q_{b}}{R T}\\right),",
+      "source_line": 76,
+      "output": "B",
+      "inputs": [
+        "Q_b",
+        "R",
+        "T",
+        "b_0"
+      ],
+      "python": "B = b_0*exp(Q_b/(R*T))",
+      "context": "where $R$ is the molar gas constant, $T$ is the absolute temperature, $b_{0}$ and $Q_{b}$ are model constants. Therefore, the temperature dependent thermal diffusivity $\\alpha$ is able to characterise the rate of heat transfer at different initial blank temperatures. The effect of material strength of the aluminium blank on the IHTC was integrated into $N_{P}$, as shown in Eq. (5):",
+      "error": null
+    },
+    {
+      "tag": "5",
+      "latex": "N_{P}=1-\\exp \\left(-\\lambda f \\frac{P}{\\sigma_{U}}\\right),",
+      "source_line": 84,
+      "output": "N_P",
+      "inputs": [
+        "P",
+        "f",
+        "lamda",
+        "sigma_U"
+      ],
+      "python": "N_P = 1 - exp(-P*f*lamda/sigma_U)",
+      "context": "where $\\lambda$ is a model constant, $f$ is a tempering correction factor, $P$ is the applied pressure, and $\\sigma_{U}$ is the temperature dependent ultimate strength of the blank. Due to the asperities on the contacting surfaces, the real contact area at the interface is less than the apparent value before compression. When an aluminium blank is heated to elevated temperatures, its strength is much lower than that of the steel tools at room temperature. Consequently, the asperities on the blank contact surface are deformed by the forming tools at a defined contact pressure during compression, leading to the increased real contact area and IHTC. When the applied pressure reaches its convergent value, the real contact area approaches its apparent value, leading to the peak IHTC. It was found that the real contact area divides by its apparent value is equivalent to the applied pressure divides by the ultimate strength of the aluminium blank [40]. Meanwhile, a logarithmical increasing trend of the real contact area with pressure was identified [41,42]. Therefore, $N_{P}$ and thus $h_{s}$ are supposed to logarithmically increase with increasing ratio of $P$ to $\\sigma_{U}$.\n\nAs mentioned before, the aluminium strength is the other functional factor on the effect of initial blank temperature on the IHTC, and it decreases with increasing temperature. As a result, more asperities on the blank contact surface are deformed at a higher initial blank temperature, leading to the increased real contact area and IHTC. Hence, the material strength of the blank negatively influences the IHTC, and its temperature dependence was modelled as Eq. (6) using the Arrhenius equation [43].",
+      "error": null
+    },
+    {
+      "tag": "6",
+      "latex": "\\sigma_{U}=\\sigma_{0} \\exp \\left(\\frac{Q_{\\sigma}}{R T}\\right),",
+      "source_line": 94,
+      "output": "sigma_U",
+      "inputs": [
+        "Q_sigma",
+        "R",
+        "T",
+        "sigma_0"
+      ],
+      "python": "sigma_U = sigma_0*exp(Q_sigma/(R*T))",
+      "context": "where $\\sigma_{0}$ and $Q_{\\sigma}$ are model constants, identified by the high-temperature uniaxial tensile tests. The ultimate strength of the material greatly depends on tempering. The tempering correction factor $f$ is therefore applied to enable $N_{P}$ to predict the deformation of different tempered alloys, as shown in Eq. (7), where $\\sigma_{U}(T x)$ and $\\sigma_{U}(T 6)$ are the ultimate strength of the aluminium alloy under the present tempering conditions and the T6 conditions respectively.",
       "error": null
     },
     {
       "tag": "7",
-      "latex": "h_{c}=\\alpha \\frac{K_{s t} N_{P}}{R}",
-      "source_line": 234,
-      "output": "h_c",
+      "latex": "f=\\frac{\\sigma_{U}(T x)}{\\sigma_{U}(T 6)},",
+      "source_line": 102,
+      "output": "f",
       "inputs": [
-        "K_st",
-        "N_P",
-        "R",
-        "alpha"
+        "x"
       ],
-      "python": "h_c = K_st*N_P*alpha/R",
-      "context": "where $\\alpha$ is a model parameter, $K_{s t}$ is the harmonic mean thermal conductivity of the contact solids, $R$ is the root mean square of surface roughness of the contact solids and $N_{P}$ is a pressure dependent parameter. The solid-contact IHTC $h_{c}$ depends on the thermal conductivity of the two contact solids and the contact surfaces. Eq. (7) therefore was developed combining the physical mechanism of the heat transfer between the contact surfaces and the theory of Cooper and Yovanovich, (1969). The amount of heat transfer was considered to increase with the increasing thermal conductivity of both the specimen and tools. The solid-contact IHTC $h_{c}$ is thus correlated positively with the harmonic mean thermal conductivity $K_{s t}$. In order to simplify the model, the harmonic mean thermal conductivity $K_{s t}$ shown in Eq. (8) was determined from the average thermal conductivities of the specimen $k_{s}$ and tools $k_{t}$, in the temperature range used in the experiments:",
+      "python": "f = x/6",
+      "context": "The amount of heat transfer increases with increasing thermal conductivities of the two contacting solids, leading to the increased IHTC. The equivalent thermal conductivity of the interface between the blank and forming tools $K_{s t}$ was therefore applied to describe the capability of the interface to conduct heat, as shown in Eq. (8):",
       "error": null
     },
     {
       "tag": "8",
-      "latex": "K_{s t}=\\frac{2}{k_{s}^{-1}+k_{t}^{-1}}",
-      "source_line": 240,
+      "latex": "K_{s t}=\\frac{2}{k_{s}^{-1}+k_{t}^{-1}},",
+      "source_line": 110,
       "output": "K_st",
       "inputs": [
         "k_s",
         "k_t"
       ],
       "python": "K_st = 2/(1/k_t + 1/k_s)",
-      "context": "Meanwhile, the amount of heat transfer reduced with the decreasing real contact area between the specimen and tools, which was associated with a higher initial surface roughness of the contact surfaces. Hence a negative relationship between the solid-contact IHTC $h_{c}$ and the root mean square (r.m.s.) of the initial surface roughness of the specimen and tools $R$ was considered. The r.m.s. surface roughness was determined by the average surface roughness of the specimen $R_{s}$ and tools $R_{t}$, as shown in Eq. (9):",
+      "context": "where $k_{s}$ and $k_{t}$ are the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures. In contrast, the IHTC decreases with increasing surface roughness because of the reduced real contact area between the blank and forming tools [44]. The negative influence of surface roughness was modelled as Eq. (9):",
       "error": null
     },
     {
       "tag": "9",
-      "latex": "R=\\sqrt{R_{s}^{2}+R_{t}^{2}}",
-      "source_line": 247,
-      "output": "R",
+      "latex": "R_{s t}=\\sin \\theta \\sqrt{R_{s}^{2}+R_{t}^{2}},",
+      "source_line": 118,
+      "output": "R_st",
       "inputs": [
         "R_s",
-        "R_t"
+        "R_t",
+        "theta"
       ],
-      "python": "R = sqrt(R_s**2 + R_t**2)",
-      "context": "The heat transfer was more rapid when the contact pressure increased, as the real contact area between the contact surfaces was increased. Hence this results in a positive correlation between the solidcontact IHTC $h_{c}$ and the pressure dependent parameter $N_{P}$, which can be represented by the following exponential-law equation, Eq. (10):",
+      "python": "R_st = sqrt(R_s**2 + R_t**2)*sin(theta)",
+      "context": "where $R_{s}$ and $R_{t}$ are the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces. The root mean squared value was used to describe the roughness condition at the interface. Additionally, $\\theta$ is the initial deformation angle of the blank contact profile, and thus $\\sin \\theta$ describes the mean modulus of the slope of the blank contact profile [34,45]. The deformation of the blank by the forming tools has two forms. When $R_{s}$ is smaller than $R_{t}$, the forming tools coarsen the surface profile of the blank to increasingly mesh the contacting surfaces, thus leading to a larger real contact area; when $R_{s}$ is larger than $R_{t}$, the forming tools smoothen the surface profile of the blank, resulting in a similar consequence, i.e. a larger real contact area. However, the initial deformation angle $\\theta$ is different under these two forms, which is assumed as 20° when $R_{s}$ is smaller than $R_{t}$, and 70° when $R_{s}$ is larger than $R_{t}$. Therefore, the interfacial surface roughness $R_{s t}$ represents the initial roughness and deformation conditions at the interface.\n\nIn the hot/warm stamping industry, blanks with different thicknesses are applied to satisfy the desired requirements. Although the interfacial conditions are independent of the blank thickness, a thicker blank will be capable of absorbing and storing a higher internal thermal energy, which could compensate for the heat loss at the interface. Therefore, an engineering IHTC able to define the effect of blank thickness can be used in the FE model to accurately simulate the temperature field, while the true IHTC is not changed. The blank thickness parameter $L$ is able to describe its positive effect on the IHTC and modelled as Eq. (10), where $l$ is the blank thickness, $m$ and $n$ are model constants.",
       "error": null
     },
     {
       "tag": "10",
-      "latex": "N_{P}=1-\\exp \\left(-\\lambda \\frac{P}{\\sigma_{U}}\\right)",
-      "source_line": 254,
-      "output": "N_P",
+      "latex": "L=m \\ln (l)+n,",
+      "source_line": 128,
+      "output": "L",
       "inputs": [
-        "P",
-        "lamda",
-        "sigma_U"
+        "l",
+        "m",
+        "n"
       ],
-      "python": "N_P = 1 - exp(-P*lamda/sigma_U)",
-      "context": "where $\\lambda$ is a model parameter, $P$ is the contact pressure between the specimen and tools, and $\\sigma_{U}$ is the ultimate strength of AA7075 at 490 °C. In order to increase the IHTC values, a contact pressure could be applied, deforming the asperities on the specimen surface and thus enlarging the real contact area between the specimen and tools. The",
+      "python": "L = m*log(l) + n",
+      "context": "Lubricants are widely used in the hot/warm stamping processes to increase the drawability of the blank material, as well as decreasing the wear of the forming tools. Due to its importance, the lubricant-contact IHTC $h_{l}$ was developed as Eq. (11):",
       "error": null
     },
     {
       "tag": "11",
-      "latex": "h_{l}=\\beta \\frac{K_{s t l} N_{L}}{R}",
-      "source_line": 278,
+      "latex": "h_{l}=\\omega \\frac{K_{s l t}}{R_{s t}} N_{\\delta},",
+      "source_line": 136,
       "output": "h_l",
       "inputs": [
-        "K_stl",
-        "N_L",
-        "R",
-        "beta"
+        "K_slt",
+        "N_delta",
+        "R_st",
+        "omega"
       ],
-      "python": "h_l = K_stl*N_L*beta/R",
-      "context": "where $\\beta$ is a model parameter, $K_{\\text {stl }}$ is the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen, $R$ is the root mean square of the surface roughness of the two contact solids and $N_{L}$ is a layer thickness dependent parameter. When a lubricant layer was introduced between the two contact solids, the heat flowed through these three contacting materials; hence the harmonic mean thermal conductivity $K_{\\text {stl }}$ is correlated positively with $h_{l}$. The harmonic mean thermal conductivity was calculated as shown in Eq. (12).",
+      "python": "h_l = K_slt*N_delta*omega/R_st",
+      "context": "where $\\omega$ is a model constant, $K_{\\text {slt }}$ is the equivalent mean thermal conductivity of the interface between the blank, forming tools and lubricant, and $N_{\\delta}$ is a lubricant thickness dependent parameter.",
       "error": null
     },
     {
       "tag": "12",
-      "latex": "K_{s t l}=\\frac{3}{k_{s}^{-1}+k_{t}^{-1}+k_{l}^{-1}}",
-      "source_line": 284,
-      "output": "K_stl",
+      "latex": "K_{s l t}=\\frac{3}{k_{s}^{-1}+k_{l}^{-1}+k_{t}^{-1}},",
+      "source_line": 144,
+      "output": "K_slt",
       "inputs": [
         "k_l",
         "k_s",
         "k_t"
       ],
-      "python": "K_stl = 3/(1/k_t + 1/k_s + 1/k_l)",
-      "context": "where $k_{s}, k_{t}$ and $k_{l}$ are the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively.\n\nThe applied lubricant layer thickness is an influential factor on the lubricant-contact IHTC $h_{l}$, which can be represented by the following exponential-law equation, Eq. (13):",
+      "python": "K_slt = 3/(1/k_t + 1/k_s + 1/k_l)",
+      "context": "where $k_{l}$ is the thermal conductivity of the lubricant. When a lubricant is used at the interface as a heat transfer medium, the vacancies between the blank and forming tools are filled by the lubricant, instead of air. Therefore, the equivalent thermal conductivity of the interface between the blank, forming tools and lubricant $K_{\\text {slt }}$ is more accurate to define the capability of the interface to conduct heat under the lubricated conditions. Meanwhile, the surface roughness conditions at the interface are not changed by the application of the lubricant, and thus the interfacial surface roughness $R_{s t}$ is maintained.\n\nFurthermore, the IHTC increases with increasing lubricant layer thickness, as a result of more vacancies at the interface being filled by the lubricant to enhance the heat transfer. However, when the lubricant thickness achieves a convergent value, the vacancies are fully filled, and the redundant lubricant is squeezed out of the contact surfaces. Consequently, the further increasing lubricant thickness no longer has an effect on the IHTC. Therefore, $N_{\\delta}$ and thus $h_{l}$ have a logarithmical increasing relationship with the lubricant layer thickness $\\delta_{l}$, as shown in Eq. (13).",
       "error": null
     },
     {
       "tag": "13",
-      "latex": "N_{L}=1-\\exp (-\\gamma \\delta)",
-      "source_line": 292,
-      "output": "N_L",
+      "latex": "N_{\\delta}=1-\\exp \\left(-\\gamma \\delta_{l}\\right),",
+      "source_line": 154,
+      "output": "N_delta",
       "inputs": [
-        "delta",
+        "delta_l",
         "gamma"
       ],
-      "python": "N_L = 1 - exp(-delta*gamma)",
-      "context": "where $\\gamma$ is a model parameter and $\\delta$ is the applied lubricant layer thickness.\n\nThe IHTC model was calibrated using the experimental data from the tests carried out under dry and lubricated conditions using two different tool materials. Table 3 lists the identified material constants and certain model parameters.\n\nIn order to verify the predicted results generated by the IHTC model, the material constants for P20 were used to predict the evolution of the IHTC with contact pressure under both dry and lubricated (0.015 mm layer thickness) conditions, assuming that P20 was used as the tool material, as shown in Fig. 8. These IHTC evolutions, rather than constant values, were then implemented in the FE simulation to simulate temperature evolutions using P20 tools with a contact pressure of 3 MPa under dry conditions, and 13 MPa under lubricated conditions with a layer thickness value of 0.015 mm. Meanwhile, two new tests were conducted under the same conditions as those of the simulations using the IHTC test facility. As shown in Fig. 9, it is evident that the simulated temperature evolutions were in close agreement with the experimental curves, indicating that when using P20 tools, the IHTC values at 3 MPa under dry conditions and at 13 MPa under lubricated conditions with a layer thickness value of 0.015 mm, are 6.7 and $14.5 \\mathrm{~kW} / \\mathrm{m}^{2} \\mathrm{~K}$ respectively.\n\nTherefore, the IHTC model developed in the present research enables the prediction of IHTC evolutions as a function of contact pressure, tool material and lubrication. When using certain materials",
+      "python": "N_delta = 1 - exp(-delta_l*gamma)",
+      "context": "where $\\gamma$ is a model parameter. Coatings have been widely used in the hot/warm stamping processes for improving the resistance to oxidation, corrosion and wear resistance. Differently from a lubricant being applied as an independent heat transfer medium, a tool coating is stably deposited onto the contact surfaces of the forming tools. Therefore, the heat transfer mechanism on the lubricant-contact IHTC $h_{l}$ is different from that on the coating-contact IHTC $h_{c}$, which was modelled as Eq. (14):",
+      "error": null
+    },
+    {
+      "tag": "14",
+      "latex": "h_{c}=\\beta \\frac{k_{s}}{A} \\tan \\theta \\cdot \\ln \\left(k_{c} / k_{l}\\right) \\delta_{c} \\cdot N_{P},",
+      "source_line": 162,
+      "output": "h_c",
+      "inputs": [
+        "A",
+        "N_P",
+        "beta",
+        "delta_c",
+        "k_c",
+        "k_l",
+        "k_s",
+        "theta"
+      ],
+      "python": "h_c = N_P*beta*delta_c*k_s*log(k_c/k_l)*tan(theta)/A",
+      "context": "where $\\beta$ is a model parameter, $k_{c}$ is the thermal conductivity of the tool coating, $\\delta_{c}$ is the layer thickness of the tool coating, and $A$ is the apparent contact area between the blank and forming tools. Because heat transfers from the hot blank to the cold coated tools across the contact area, the coating-contact IHTC $h_{c}$ is determined by three terms. The first term of $k_{s} \\tan \\theta / A$ represents the thermal energy at the high potential (hot blank), the second term of $\\ln \\left(k_{c} / k_{l}\\right) \\delta_{c}$ represents the thermal energy at the low potential (cold coated tools), and the third term $N_{P}$ determines the pressure dependent driving force from the high to low potential. Furthermore, the second term $\\ln \\left(k_{c} / k_{l}\\right) \\delta_{c}$ describes the thermal performance of the tool coating and the integrated effects of coated tools on the IHTC. A positive term value indicates that the applied tool coating has a higher thermal conductivity than that of the substrate, contributing to a larger IHTC value; while a negative term value indicates that the applied tool coating has a lower thermal conductivity than that of the substrate, contributing to a smaller IHTC value. The effect of tool coating on the IHTC, either positive or negative, increases with increasing absolute value of this term. Therefore, the second term $\\ln \\left(k_{c} / k_{l}\\right) \\delta_{c}$ indicates that the thermal conductivity and layer thickness of the applied tool coating determine its effect on the IHTC.\n\nTherefore, Eqs. (1)-(14) comprise the general model to predict IHTC evolutions for different aluminium alloys with contact pressure, initial blank temperature, initial blank thickness, tool material, surface roughness, lubricant and tool coating. Instead of determining new IHTC results, the present research applied the experimentally verified IHTC results in the authors' previous research [28-31] to calibrate the alloyindependent model c",
       "error": null
     }
   ],
   "symbols": {
     "A": {
       "latex": "A",
-      "description": "model constants determined by the least square method using the experimental results",
-      "kind": "parameter",
+      "description": "the apparent contact area between the blank and forming tools",
+      "kind": "input",
       "definitions": [
         {
-          "description": "model constants determined by the least square method using the experimental results",
-          "equation": "4"
-        },
-        {
-          "description": "the contact area",
-          "equation": "5"
+          "description": "the apparent contact area between the blank and forming tools",
+          "equation": "14"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "4",
-        "5"
+        "14"
       ]
     },
     "B": {
       "latex": "B",
-      "description": "model constants determined by the least square method using the experimental results",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "model constants determined by the least square method using the experimental results",
-          "equation": "4"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "4"
-      ]
-    },
-    "C": {
-      "latex": "C",
-      "description": "model coefficients",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "model coefficients",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "3"
-      ]
-    },
-    "H": {
-      "latex": "H",
-      "description": null,
-      "kind": "input",
-      "definitions": [],
-      "defined_by": [],
-      "used_in": [
-        "2"
-      ]
-    },
-    "K": {
-      "latex": "K",
-      "description": "model coefficients",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "model coefficients",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "3"
-      ]
-    },
-    "K_st": {
-      "latex": "K_{st}",
-      "description": "the harmonic mean thermal conductivity of the contact solids",
+      "description": "a temperature dependent parameter",
       "kind": "derived",
       "definitions": [
         {
-          "description": "the harmonic mean thermal conductivity of the contact solids",
-          "equation": "7"
+          "description": "a temperature dependent parameter",
+          "equation": "3"
         }
       ],
       "defined_by": [
-        "8"
+        "4"
       ],
       "used_in": [
-        "7"
+        "3"
       ]
     },
-    "K_stl": {
-      "latex": "K_{stl}",
-      "description": "the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen",
+    "K_slt": {
+      "latex": "K_{slt}",
+      "description": "the equivalent mean thermal conductivity of the interface between the blank, forming tools and lubricant",
       "kind": "derived",
       "definitions": [
         {
-          "description": "the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen",
+          "description": "the equivalent mean thermal conductivity of the interface between the blank, forming tools and lubricant",
           "equation": "11"
         }
       ],
@@ -300,13 +259,65 @@
         "11"
       ]
     },
-    "N_L": {
-      "latex": "N_{L}",
-      "description": "a layer thickness dependent parameter",
+    "K_st": {
+      "latex": "K_{st}",
+      "description": "the equivalent thermal conductivity of the interface between the blank and forming tools",
       "kind": "derived",
       "definitions": [
         {
-          "description": "a layer thickness dependent parameter",
+          "description": "the equivalent thermal conductivity of the interface between the blank and forming tools",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [
+        "8"
+      ],
+      "used_in": [
+        "2"
+      ]
+    },
+    "L": {
+      "latex": "L",
+      "description": "a blank thickness dependent parameter",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a blank thickness dependent parameter",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [
+        "10"
+      ],
+      "used_in": [
+        "2"
+      ]
+    },
+    "N_P": {
+      "latex": "N_{P}",
+      "description": "a contact pressure dependent parameter",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a contact pressure dependent parameter",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [
+        "5"
+      ],
+      "used_in": [
+        "2",
+        "14"
+      ]
+    },
+    "N_delta": {
+      "latex": "N_{delta}",
+      "description": "a lubricant thickness dependent parameter",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a lubricant thickness dependent parameter",
           "equation": "11"
         }
       ],
@@ -317,99 +328,161 @@
         "11"
       ]
     },
-    "N_P": {
-      "latex": "N_{P}",
-      "description": "a pressure dependent parameter",
-      "kind": "derived",
-      "definitions": [
-        {
-          "description": "a pressure dependent parameter",
-          "equation": "7"
-        }
-      ],
-      "defined_by": [
-        "10"
-      ],
-      "used_in": [
-        "7"
-      ]
-    },
     "P": {
       "latex": "P",
-      "description": "the contact pressure between the specimen and tools",
+      "description": "the applied pressure",
       "kind": "input",
       "definitions": [
         {
-          "description": "the contact pressure between the specimen and tools",
-          "equation": "10"
+          "description": "the applied pressure",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5"
+      ]
+    },
+    "Q_b": {
+      "latex": "Q_{b}",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "4"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4"
+      ]
+    },
+    "Q_sigma": {
+      "latex": "Q_{sigma}",
+      "description": "model constants, identified by the high-temperature uniaxial tensile tests",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants, identified by the high-temperature uniaxial tensile tests",
+          "equation": "6"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "6"
+      ]
+    },
+    "R": {
+      "latex": "R",
+      "description": "the molar gas constant",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the molar gas constant",
+          "equation": "4"
         }
       ],
       "defined_by": [],
       "used_in": [
         "4",
-        "10"
+        "6"
       ]
     },
-    "R": {
-      "latex": "R",
-      "description": "the root mean square of surface roughness of the contact solids",
+    "R_s": {
+      "latex": "R_{s}",
+      "description": "the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces",
+          "equation": "9"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "9"
+      ]
+    },
+    "R_st": {
+      "latex": "R_{st}",
+      "description": "the equivalent interfacial surface roughness",
       "kind": "derived",
       "definitions": [
         {
-          "description": "the root mean square of surface roughness of the contact solids",
-          "equation": "7"
-        },
-        {
-          "description": "the root mean square of the surface roughness of the two contact solids",
-          "equation": "11"
+          "description": "the equivalent interfacial surface roughness",
+          "equation": "2"
         }
       ],
       "defined_by": [
         "9"
       ],
       "used_in": [
-        "7",
+        "2",
         "11"
-      ]
-    },
-    "R_s": {
-      "latex": "R_{s}",
-      "description": "the average surface roughness of the specimen",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the average surface roughness of the specimen",
-          "equation": "8"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "9"
       ]
     },
     "R_t": {
       "latex": "R_{t}",
-      "description": null,
+      "description": "the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces",
       "kind": "input",
-      "definitions": [],
+      "definitions": [
+        {
+          "description": "the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces",
+          "equation": "9"
+        }
+      ],
       "defined_by": [],
       "used_in": [
         "9"
       ]
     },
-    "alpha": {
-      "latex": "\\alpha",
-      "description": "a model parameter",
-      "kind": "parameter",
+    "T": {
+      "latex": "T",
+      "description": "the absolute temperature",
+      "kind": "input",
       "definitions": [
         {
-          "description": "a model parameter",
-          "equation": "7"
+          "description": "the absolute temperature",
+          "equation": "4"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "7"
+        "4",
+        "6"
+      ]
+    },
+    "alpha": {
+      "latex": "\\alpha",
+      "description": "the temperature dependent thermal diffusivity of the blank",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the temperature dependent thermal diffusivity of the blank",
+          "equation": "2"
+        }
+      ],
+      "defined_by": [
+        "3"
+      ],
+      "used_in": [
+        "2"
+      ]
+    },
+    "b_0": {
+      "latex": "b_{0}",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "4"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "4"
       ]
     },
     "beta": {
@@ -419,27 +492,74 @@
       "definitions": [
         {
           "description": "a model parameter",
-          "equation": "11"
+          "equation": "14"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "11"
+        "14"
       ]
     },
-    "delta": {
-      "latex": "\\delta",
-      "description": "the applied lubricant layer thickness",
+    "c_p": {
+      "latex": "c_{p}",
+      "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
       "kind": "input",
       "definitions": [
         {
-          "description": "the applied lubricant layer thickness",
-          "equation": "13"
+          "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "delta_c": {
+      "latex": "\\delta_{c}",
+      "description": "the layer thickness of the tool coating",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the layer thickness of the tool coating",
+          "equation": "14"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "14"
+      ]
+    },
+    "delta_l": {
+      "latex": "\\delta_{l}",
+      "description": "the lubricant layer thickness",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the lubricant layer thickness",
+          "equation": "12"
         }
       ],
       "defined_by": [],
       "used_in": [
         "13"
+      ]
+    },
+    "f": {
+      "latex": "f",
+      "description": "a tempering correction factor",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "a tempering correction factor",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [
+        "7"
+      ],
+      "used_in": [
+        "5"
       ]
     },
     "gamma": {
@@ -463,74 +583,17 @@
       "kind": "derived",
       "definitions": [],
       "defined_by": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
+        "1"
       ],
       "used_in": []
     },
     "h_a": {
       "latex": "h_{a}",
-      "description": "the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value",
+      "description": "the air-contact IHTC",
       "kind": "input",
       "definitions": [
         {
-          "description": "the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value",
-          "equation": "6"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "6"
-      ]
-    },
-    "h_c": {
-      "latex": "h_{c}",
-      "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
-      "kind": "derived",
-      "definitions": [
-        {
-          "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
-          "equation": "1"
-        },
-        {
-          "description": "the contact under pressure between two solid surfaces",
-          "equation": "6"
-        }
-      ],
-      "defined_by": [
-        "7"
-      ],
-      "used_in": [
-        "1",
-        "6"
-      ]
-    },
-    "h_f": {
-      "latex": "h_{f}",
-      "description": "the applied lubricant thickness",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the applied lubricant thickness",
-          "equation": "5"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "5"
-      ]
-    },
-    "h_g": {
-      "latex": "h_{g}",
-      "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the heat transfer coefficients across the air gap and for the solid contact respectively",
+          "description": "the air-contact IHTC",
           "equation": "1"
         }
       ],
@@ -539,209 +602,276 @@
         "1"
       ]
     },
-    "h_l": {
-      "latex": "h_{l}",
-      "description": "the application of lubricant between two solid surfaces",
+    "h_c": {
+      "latex": "h_{c}",
+      "description": "the coating-contact IHTC",
       "kind": "derived",
       "definitions": [
         {
-          "description": "the application of lubricant between two solid surfaces",
-          "equation": "6"
+          "description": "the coating-contact IHTC",
+          "equation": "1"
+        }
+      ],
+      "defined_by": [
+        "14"
+      ],
+      "used_in": [
+        "1"
+      ]
+    },
+    "h_l": {
+      "latex": "h_{l}",
+      "description": "the lubricant-contact IHTC",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the lubricant-contact IHTC",
+          "equation": "1"
         }
       ],
       "defined_by": [
         "11"
       ],
       "used_in": [
-        "6"
+        "1"
       ]
     },
-    "k": {
-      "latex": "k",
-      "description": "the mean thermal conductivity of two contact bodies",
-      "kind": "input",
+    "h_s": {
+      "latex": "h_{s}",
+      "description": "the solid-contact IHTC",
+      "kind": "derived",
       "definitions": [
         {
-          "description": "the mean thermal conductivity of two contact bodies",
-          "equation": "2"
+          "description": "the solid-contact IHTC",
+          "equation": "1"
         }
       ],
-      "defined_by": [],
-      "used_in": [
+      "defined_by": [
         "2"
+      ],
+      "used_in": [
+        "1"
       ]
     },
-    "k_f": {
-      "latex": "k_{f}",
-      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
+    "k_c": {
+      "latex": "k_{c}",
+      "description": "the thermal conductivity of the tool coating",
       "kind": "input",
       "definitions": [
         {
-          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
-          "equation": "5"
+          "description": "the thermal conductivity of the tool coating",
+          "equation": "14"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "5"
+        "14"
       ]
     },
     "k_l": {
       "latex": "k_{l}",
-      "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+      "description": "the thermal conductivity of the lubricant",
       "kind": "input",
       "definitions": [
         {
-          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+          "description": "the thermal conductivity of the lubricant",
           "equation": "12"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "12"
+        "12",
+        "14"
       ]
     },
     "k_s": {
       "latex": "k_{s}",
-      "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
+      "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
       "kind": "input",
       "definitions": [
         {
-          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
-          "equation": "12"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "8",
-        "12"
-      ]
-    },
-    "k_t": {
-      "latex": "k_{t}",
-      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
-          "equation": "5"
-        },
-        {
-          "description": "the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively",
-          "equation": "12"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "5",
-        "8",
-        "12"
-      ]
-    },
-    "k_w": {
-      "latex": "k_{w}",
-      "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the thermal conductivities of the lubricant, tool and workpiece, respectively",
-          "equation": "5"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "5"
-      ]
-    },
-    "lamda": {
-      "latex": "\\lambda",
-      "description": "a model parameter",
-      "kind": "parameter",
-      "definitions": [
-        {
-          "description": "a model parameter",
-          "equation": "10"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "10"
-      ]
-    },
-    "lamda_bar": {
-      "latex": "\\bar{\\lambda}",
-      "description": "the mean thermal conductivity of the two contact bodies",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the mean thermal conductivity of the two contact bodies",
-          "equation": "3"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "3"
-      ]
-    },
-    "p": {
-      "latex": "p",
-      "description": null,
-      "kind": "input",
-      "definitions": [],
-      "defined_by": [],
-      "used_in": [
-        "2",
-        "3"
-      ]
-    },
-    "sigma": {
-      "latex": "\\sigma",
-      "description": "the standard deviation of the profile heights",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the standard deviation of the profile heights",
-          "equation": "2"
-        }
-      ],
-      "defined_by": [],
-      "used_in": [
-        "2"
-      ]
-    },
-    "sigma_U": {
-      "latex": "\\sigma_{U}",
-      "description": "the ultimate strength of the test specimens",
-      "kind": "input",
-      "definitions": [
-        {
-          "description": "the ultimate strength of the test specimens",
+          "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
           "equation": "3"
         },
         {
-          "description": "the ultimate strength of AA7075 at 490 °C",
-          "equation": "10"
+          "description": "the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures",
+          "equation": "8"
         }
       ],
       "defined_by": [],
       "used_in": [
         "3",
-        "10"
+        "8",
+        "12",
+        "14"
       ]
     },
-    "theta": {
-      "latex": "\\theta",
-      "description": "the mean of the absolute slope of the surface profile",
+    "k_t": {
+      "latex": "k_{t}",
+      "description": "the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures",
       "kind": "input",
       "definitions": [
         {
-          "description": "the mean of the absolute slope of the surface profile",
-          "equation": "2"
+          "description": "the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures",
+          "equation": "8"
         }
       ],
       "defined_by": [],
       "used_in": [
-        "2"
+        "8",
+        "12"
+      ]
+    },
+    "l": {
+      "latex": "l",
+      "description": "the blank thickness",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the blank thickness",
+          "equation": "9"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "10"
+      ]
+    },
+    "lamda": {
+      "latex": "\\lambda",
+      "description": "a model constant",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "a model constant",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "5"
+      ]
+    },
+    "m": {
+      "latex": "m",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "9"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "10"
+      ]
+    },
+    "n": {
+      "latex": "n",
+      "description": "model constants",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants",
+          "equation": "9"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "10"
+      ]
+    },
+    "omega": {
+      "latex": "\\omega",
+      "description": "a model constant",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "a model constant",
+          "equation": "11"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "11"
+      ]
+    },
+    "rho": {
+      "latex": "\\rho",
+      "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively",
+          "equation": "3"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "3"
+      ]
+    },
+    "sigma_0": {
+      "latex": "\\sigma_{0}",
+      "description": "model constants, identified by the high-temperature uniaxial tensile tests",
+      "kind": "parameter",
+      "definitions": [
+        {
+          "description": "model constants, identified by the high-temperature uniaxial tensile tests",
+          "equation": "6"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "6"
+      ]
+    },
+    "sigma_U": {
+      "latex": "\\sigma_{U}",
+      "description": "the temperature dependent ultimate strength of the blank",
+      "kind": "derived",
+      "definitions": [
+        {
+          "description": "the temperature dependent ultimate strength of the blank",
+          "equation": "5"
+        }
+      ],
+      "defined_by": [
+        "6"
+      ],
+      "used_in": [
+        "5"
+      ]
+    },
+    "theta": {
+      "latex": "\\theta",
+      "description": "the initial deformation angle of the blank contact profile, and thus \\sin \\theta describes the mean modulus of the slope of the blank contact profile [34,45]",
+      "kind": "input",
+      "definitions": [
+        {
+          "description": "the initial deformation angle of the blank contact profile, and thus \\sin \\theta describes the mean modulus of the slope of the blank contact profile [34,45]",
+          "equation": "9"
+        },
+        {
+          "description": "different under these two forms, which is assumed as 20° when",
+          "equation": "9"
+        }
+      ],
+      "defined_by": [],
+      "used_in": [
+        "9",
+        "14"
+      ]
+    },
+    "x": {
+      "latex": "x",
+      "description": null,
+      "kind": "input",
+      "definitions": [],
+      "defined_by": [],
+      "used_in": [
+        "7"
       ]
     }
   }

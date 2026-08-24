@@ -64,13 +64,35 @@ _TOOL_ALIASES = {
     "p20": "P20",
     "cast iron": "CastIron",
     "castiron": "CastIron",
+    "g3500": "G3500",
+    "d6510": "D6510",
 }
 
 # Materials that are not tools but do get their own property column (Table 2).
 _MATERIAL_ALIASES = {
     "aa7075": "AA7075",
     "aa7075-t6": "AA7075",
+    "aa6082": "AA6082",
     "specimen": "AA7075",
+    "crn": "CrN",
+    "tin": "TiN",
+    "alcrn": "AlCrN",
+    "wc-co": "WC-Co",
+    "wcco": "WC-Co",
+    "graphite lubricant": "Graphite",
+    "graphite": "Graphite",
+}
+
+_TOOL_CANONICAL = {"H13", "P20", "CastIron", "G3500", "D6510"}
+_COATING_CANONICAL = {"CrN", "TiN", "AlCrN", "WC-Co"}
+_CITATION_RE = re.compile(r"\s*\[\d+[a-z]?\]\s*", re.I)
+
+# Property-table symbol -> the name the IHTC equations actually use, by role.
+_ROLE_EQ_NAMES: Dict[str, Dict[str, str]] = {
+    "blank": {"k": "k_s", "R_a": "R_s", "rho": "rho", "c_p": "c_p"},
+    "tool": {"k": "k_t", "R_a": "R_t"},
+    "coating": {"k": "k_c", "thickness": "delta_c"},
+    "lubricant": {"k": "k_l", "thickness": "delta_l"},
 }
 
 # Parenthetical labels that are descriptive, not tool variants.
@@ -94,11 +116,13 @@ _PROPERTY_SYMBOLS: Dict[str, str] = {
     "tensile strength": "sigma_U",
     "surface roughness": "R_a",
     "hardness": "H",
+    "thickness": "thickness",
+    "layer thickness": "thickness",
 }
 
 # Equation-symbol names treated as thermophysical / contact-body properties.
 _MATERIAL_NAMES = set(_PROPERTY_SYMBOLS.values()) | {
-    "k_s", "k_t", "k_l", "k_f", "k_w", "R_s", "R_t",
+    "k_s", "k_t", "k_l", "k_c", "k_f", "k_w", "R_s", "R_t", "delta_c", "delta_l",
 }
 
 # Operating conditions the caller typically supplies (not tabulated properties).
@@ -110,7 +134,9 @@ _OPERATING_DESC_RE = re.compile(
 )
 
 # First cell of a property table's header row.
-_PROPERTY_HEADERS = {"property", "properties", "parameter", "parameters", "material"}
+_PROPERTY_HEADERS = {
+    "property", "properties", "parameter", "parameters", "material", "materials",
+}
 
 # Short header words that structure a table rather than name a quantity.
 _STRUCTURAL_HEADERS = {
@@ -541,9 +567,27 @@ def _clean_expression(text: str) -> str:
 def _normalize_material(label: str) -> Optional[str]:
     key = re.sub(r"[\s$]+", " ", label.strip().lower()).strip()
     key = re.sub(r"\\mathrm\{([^}]*)\}", r"\1", key)
+    key = _CITATION_RE.sub(" ", key)
+    key = re.sub(r"\s+", " ", key).strip(" .")
     if not key:
         return None
-    return _TOOL_ALIASES.get(key) or _MATERIAL_ALIASES.get(key.replace(" ", ""))
+    compact = key.replace(" ", "").replace("_", "")
+    if key in _NON_TOOL_LABELS:
+        return None
+    if key in _TOOL_ALIASES:
+        return _TOOL_ALIASES[key]
+    if compact in _TOOL_ALIASES:
+        return _TOOL_ALIASES[compact]
+    if key in _MATERIAL_ALIASES:
+        return _MATERIAL_ALIASES[key]
+    if compact in _MATERIAL_ALIASES:
+        return _MATERIAL_ALIASES[compact]
+    alloy = re.fullmatch(r"aa(\d{4})(?:-t\d)?", compact)
+    if alloy:
+        return f"AA{alloy.group(1)}"
+    if "lubricant" in key:
+        return "Graphite"
+    return None
 
 
 def _split_property_label(cell: str) -> Tuple[Optional[str], Optional[str], str]:
@@ -564,7 +608,92 @@ def _split_property_label(cell: str) -> Tuple[Optional[str], Optional[str], str]
             (sym for prop, sym in _PROPERTY_SYMBOLS.items() if prop in key),
             None,
         )
+    # Nested ``\mathrm{W}`` parentheses confuse the trailing-unit regex.
+    blob = re.sub(r"\s+", "", cell)
+    if re.search(r"kW\s*/\s*mK", blob, re.I):
+        unit = "kW/mK"
+    elif re.search(r"(?<![kK])W\s*/\s*mK", blob, re.I):
+        unit = "W/mK"
     return name, unit, label
+
+
+def _header_token(cell: str) -> str:
+    return re.sub(r"[^a-z ]+", "", (cell or "").lower()).strip()
+
+
+def _is_material_header_row(row: Sequence[str]) -> bool:
+    if not row:
+        return False
+    if _header_token(row[0]) not in _PROPERTY_HEADERS:
+        return False
+    return any(_normalize_material(cell) for cell in row[1:])
+
+
+def _material_role(variant: Optional[str]) -> Optional[str]:
+    if not variant:
+        return None
+    if variant.startswith("AA"):
+        return "blank"
+    if variant in _TOOL_CANONICAL:
+        return "tool"
+    if variant in _COATING_CANONICAL:
+        return "coating"
+    if variant == "Graphite" or "lubricant" in variant.lower():
+        return "lubricant"
+    return None
+
+
+def _to_equation_units(name: str, value: float, unit: Optional[str]) -> float:
+    """Put property-table numbers into the units the IHTC equations use."""
+    u = re.sub(r"[\s\\^_{}]", "", (unit or "").lower())
+    u = u.replace("mathrm", "").replace("mu", "u").replace("µ", "u").replace("μ", "u")
+    if name in {"k", "k_s", "k_t", "k_l", "k_c"}:
+        if "kw" in u:
+            return value
+        if "w/mk" in u or u.endswith("wmk"):
+            return value / 1000.0
+        return value
+    if name in {"R_a", "R_s", "R_t"}:
+        if "nm" in u:
+            return value * 1e-9
+        if "um" in u:
+            return value * 1e-6
+        if "mm" in u:
+            return value * 1e-3
+        return value
+    if name in {"thickness", "delta_c", "delta_l"}:
+        if "nm" in u:
+            return value * 1e-9
+        if "um" in u:
+            return value * 1e-6
+        if "mm" in u:
+            return value * 1e-3
+        return value
+    return value
+
+
+def _equation_alias(constant: Constant) -> Optional[Constant]:
+    """Copy a property-table value onto the symbol the equations actually call."""
+    role = _material_role(constant.variant)
+    if role is None or constant.value is None:
+        return None
+    eq_name = _ROLE_EQ_NAMES.get(role, {}).get(constant.name)
+    if not eq_name or eq_name == constant.name:
+        return None
+    return Constant(
+        name=eq_name,
+        value=_to_equation_units(eq_name, constant.value, constant.unit),
+        unit=constant.unit,
+        variant=constant.variant,
+        source=constant.source,
+        table=constant.table,
+        caption=constant.caption,
+        source_line=constant.source_line,
+        raw_header=constant.raw_header,
+        raw_value=constant.raw_value,
+        category=constant.category,
+        label=constant.label,
+    )
 
 
 def _is_property_table(table: _MarkdownTable) -> bool:
@@ -583,6 +712,9 @@ def _constants_from_property_table(table: _MarkdownTable, text: str) -> List[Con
     for row in table.rows:
         if not row:
             continue
+        if _is_material_header_row(row):
+            materials = [_normalize_material(cell) for cell in row[1:]]
+            continue
         name, unit, label = _split_property_label(row[0])
         if name is None:
             continue
@@ -596,23 +728,25 @@ def _constants_from_property_table(table: _MarkdownTable, text: str) -> List[Con
             value = None if temperature_dependent else parse_number(raw_value)
             if value is None and not temperature_dependent:
                 continue
-            out.append(
-                Constant(
-                    name=name,
-                    value=value,
-                    unit=unit,
-                    variant=material,
-                    source="table",
-                    table=table.table_num,
-                    caption=table.caption,
-                    source_line=_line_of(text, table.start),
-                    raw_header=table.headers[column],
-                    raw_value=raw_value,
-                    category="material",
-                    label=label,
-                    expression=_clean_expression(raw_value) if temperature_dependent else None,
-                )
+            constant = Constant(
+                name=name,
+                value=value,
+                unit=unit,
+                variant=material,
+                source="table",
+                table=table.table_num,
+                caption=table.caption,
+                source_line=_line_of(text, table.start),
+                raw_header=table.headers[column] if column < len(table.headers) else row[column],
+                raw_value=raw_value,
+                category="material",
+                label=label,
+                expression=_clean_expression(raw_value) if temperature_dependent else None,
             )
+            out.append(constant)
+            alias = _equation_alias(constant)
+            if alias is not None:
+                out.append(alias)
     return out
 
 
@@ -797,6 +931,7 @@ def generate_constants_module(
         "",
         "from __future__ import annotations",
         "",
+        "import math",
         "from typing import Dict, List, Optional",
         "",
         "import sympy as sp",
@@ -858,8 +993,16 @@ def generate_constants_module(
         lines.append("")
 
     if default_tool is None:
-        # A paper that quotes no per-tool values has no default tool at all.
-        default_tool = "P20" if "P20" in tools else next(iter(sorted(tools)), None)
+        material_tools = [name for name in grouped.materials if name in _TOOL_CANONICAL]
+        if "P20" in tools or "P20" in grouped.materials:
+            default_tool = "P20"
+        elif tools:
+            default_tool = next(iter(sorted(tools)))
+        elif material_tools:
+            default_tool = next(iter(sorted(material_tools)))
+
+    blanks = [name for name in sorted(grouped.materials) if name.startswith("AA")]
+    default_material = blanks[0] if blanks else None
 
     info = symbol_info if symbol_info is not None else _load_equation_symbols()
     operating = _operating_input_names(constants, info)
@@ -877,6 +1020,11 @@ def generate_constants_module(
     lines.extend(
         [
             f'DEFAULT_TOOL = "{default_tool}"' if default_tool else "DEFAULT_TOOL = None",
+            (
+                f'DEFAULT_MATERIAL = "{default_material}"'
+                if default_material
+                else "DEFAULT_MATERIAL = None"
+            ),
             f"DEFAULT_DELTA = {_fmt_float(default_delta)}  # m — lubricant film thickness (user-supplied)",
             "",
             "# Equation inputs the paper does not tabulate (pressure, time, …).",
@@ -895,8 +1043,12 @@ def generate_constants_module(
             "",
             "",
             "def available_tools() -> List[str]:",
-            '    """Tool materials the paper gives IHTC model constants for."""',
-            "    return list(_TOOL.keys())",
+            '    """Tool materials the paper gives IHTC model constants or properties for."""',
+            "    names = list(_TOOL.keys())",
+            "    for material in _MATERIAL:",
+            '        if material in {"H13", "P20", "CastIron", "G3500", "D6510"} and material not in names:',
+            "            names.append(material)",
+            "    return names",
             "",
             "",
             "def available_materials() -> List[str]:",
@@ -904,16 +1056,34 @@ def generate_constants_module(
             "    return list(_MATERIAL.keys())",
             "",
             "",
-            "def get_constants(tool: Optional[str] = DEFAULT_TOOL, delta: float = DEFAULT_DELTA) -> Dict[str, float]:",
-            '    """Return a flat constant dict, per tool material where the paper gives one."""',
-            "    if not _TOOL:",
-            "        # This paper states no tool-specific values, so there is nothing to select.",
-            '        return {**_SHARED, "delta": float(delta)}',
-            "    if tool not in _TOOL:",
-            "        raise ValueError(",
-            '            f"Unknown tool {tool!r}. Choose from: {\', \'.join(available_tools())}"',
-            "        )",
-            '    consts = {**_SHARED, **_TOOL[tool], "delta": float(delta)}',
+            "def get_constants(",
+            "    tool: Optional[str] = DEFAULT_TOOL,",
+            "    delta: float = DEFAULT_DELTA,",
+            "    material: Optional[str] = DEFAULT_MATERIAL,",
+            "    coating: Optional[str] = None,",
+            ") -> Dict[str, float]:",
+            '    """Return a flat constant dict, per tool / blank where the paper gives one."""',
+            "    known = set(available_tools())",
+            '    consts: Dict[str, float] = {**_SHARED, "delta": float(delta), "delta_l": float(delta)}',
+            "    if tool:",
+            "        if tool in _TOOL:",
+            "            consts.update(_TOOL[tool])",
+            "        elif known and tool not in known and tool not in _MATERIAL:",
+            "            raise ValueError(",
+            '                f"Unknown tool {tool!r}. Choose from: {\', \'.join(known)}"',
+            "            )",
+            "        if tool in _MATERIAL:",
+            "            consts.update(_MATERIAL[tool])",
+            "    if material and material in _MATERIAL:",
+            "        consts.update(_MATERIAL[material])",
+            "    if coating and coating in _MATERIAL:",
+            "        consts.update(_MATERIAL[coating])",
+            "    if \"Graphite\" in _MATERIAL:",
+            '        consts.update(_MATERIAL["Graphite"])',
+            '    if "theta" not in consts and consts.get("R_s") is not None and consts.get("R_t") is not None:',
+            '        consts["theta"] = math.radians(20.0 if consts["R_s"] < consts["R_t"] else 70.0)',
+            '    if "h_a" not in consts:',
+            '        consts["h_a"] = 0.0',
             "    return consts",
             "",
             "",
@@ -936,9 +1106,14 @@ def generate_constants_module(
             "    return SYMBOLS[name]",
             "",
             "",
-            "def subs_map(tool: Optional[str] = DEFAULT_TOOL, delta: float = DEFAULT_DELTA) -> Dict[sp.Symbol, float]:",
+            "def subs_map(",
+            "    tool: Optional[str] = DEFAULT_TOOL,",
+            "    delta: float = DEFAULT_DELTA,",
+            "    material: Optional[str] = DEFAULT_MATERIAL,",
+            ") -> Dict[sp.Symbol, float]:",
             '    """``{Symbol: value}`` substitution map for SymPy expressions."""',
-            "    return {SYMBOLS[name]: float(value) for name, value in get_constants(tool, delta).items()}",
+            "    values = get_constants(tool=tool, delta=delta, material=material)",
+            "    return {SYMBOLS[name]: float(value) for name, value in values.items() if name in SYMBOLS}",
             "",
             "",
             "def as_dict() -> Dict[str, float]:",
