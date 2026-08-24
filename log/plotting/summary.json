@@ -1,0 +1,54 @@
+{
+  "tool": "P20",
+  "delta": 0.0,
+  "x_symbol": "P",
+  "y_symbol": "h",
+  "target_eq": "6",
+  "reduced_eqs": [
+    "8",
+    "12",
+    "13",
+    "10",
+    "9",
+    "7",
+    "11",
+    "6"
+  ],
+  "x_label": "Contact pressure",
+  "y_label": "IHTC",
+  "n_points": 945,
+  "mean_abs_pct_error": 60.41078272595236,
+  "max_abs_pct_error": 8203.658258770813,
+  "ssim": 0.9658338620549287,
+  "series": [
+    {
+      "label": "P20: predictions: dry conditions",
+      "tool": "P20",
+      "delta": 0.0,
+      "n_points": 945,
+      "mean_abs_pct_error": 60.41078272595236,
+      "max_abs_pct_error": 8203.658258770813,
+      "mean_polyline_distance": 0.1853734637264809,
+      "ssim": 0.9473563057543511
+    },
+    {
+      "label": "P20 tools: model predictions: lube conditions (0.015 mm)",
+      "tool": "P20",
+      "delta": 1.5e-05,
+      "n_points": 945,
+      "mean_abs_pct_error": 0.42583885043454783,
+      "max_abs_pct_error": 5.224994587078241,
+      "mean_polyline_distance": 0.04097662484446451,
+      "ssim": 0.9843114183555064
+    }
+  ],
+  "outputs": [
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\digitized.csv",
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\digitized.json",
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\compare.svg",
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\error.svg",
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\overlay.png",
+    "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\log\\plotting\\equation_graph.svg"
+  ],
+  "figure": "src/01_input/target/sample_paper_1/images/Fig_8_The_predicted_IHTC_evolutions_with_contact_pressure_using_P20_tools_under_dry_an.jpg"
+}

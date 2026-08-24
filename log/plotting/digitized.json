@@ -1,0 +1,79 @@
+{
+  "path": "C:\\Users\\Eito\\OneDrive - Imperial College London\\ME2 UROP\\ExecuSci\\src\\01_input\\target\\sample_paper_5\\images\\Fig_3_The_comparisons_between_the_experimental_and_predicted_IHTC_results_for_a_AA6082.jpg",
+  "x_label": "Contact pressure",
+  "y_label": "2 m AA7075 (210 nm) Uncoated Hot working steel (770 nn) 490'C Dry CIN-coated AICIN-coated Symbols Experimental results Lines Model prediction",
+  "x_unit": "MPa",
+  "y_unit": "s",
+  "x_symbol": "P",
+  "y_symbol": "h",
+  "x_range": [
+    -0.08697190365289487,
+    45.18395634849537
+  ],
+  "y_range": [
+    -13.911111111111083,
+    11.951111111111132
+  ],
+  "log_x": false,
+  "log_y": false,
+  "legend_text": [
+    "420*C",
+    "350€ 350 C",
+    "Symbols Experimental results",
+    "Lines Model predictions"
+  ],
+  "captions": [
+    "Material usage in vehicles from 2010 to 2040 [3].",
+    "The flow chart of Genetic Algorithm to optimise the model constants.",
+    "The comparisons between the experimental and predicted IHTC results for (a) AA6082 with 2 and 5 mm thicknesses under dry conditions at 535 °C when using uncoated P20 tools [28]; (b) AA6082 with 3 mm thickness under lubricated and dry conditions at 535 °C when using uncoated P20 tools [28]; (c) AA7075 with 2 mm thickness under dry conditions at 490 °C when using uncoated, CrN and AlCrN-coated tools [30]; and (d) AA7075 with 2 mm thickness under dry conditions at 420 °C and 350 °C when using WC-coated tools [31].",
+    "The predicted IHTC evolutions as a function of (a) initial blank temperature; (b) initial blank thickness; (c) thermal conductivity of tool; and (d) thermal conductivity of coating.",
+    "(a) The FE model in PAM-STAMP to determine the critical processing parameters; (b) The predicted IHTC evolutions for the AA6082 and AA7075 as a function of contact pressure under the FAST forming conditions.",
+    "The temperature evolutions of all elements, the temperature evolutions of the 'safe' elements, after filtering, and the distributions of 'safe/fail' elements on (a) the AA6082 blank at the critical pressure of 18 MPa; and (b) the AA7075 blank at the critical pressure of 28 MPa.",
+    "Dimensions (in mm) of the FSW sheet.",
+    "The hardness distributions on the M-shaped components at different pressures.",
+    "(a) The forming test facility; (b) A M-shaped component formed at room temperature; (c) A M-shaped component formed under the FAST forming conditions.",
+    "The FE model of a forming process under (a) unloading; and (b) loading conditions.",
+    "The 'safe/fail' distributions on the M-shaped component made from dissimilar aluminium alloys at different contact pressures of 10, 18 and 28 MPa."
+  ],
+  "series": [
+    {
+      "name": "gray line",
+      "kind": "line",
+      "is_model": true,
+      "tool": null,
+      "delta": null,
+      "n_points": 293,
+      "color_bgr": [
+        120,
+        120,
+        120
+      ]
+    },
+    {
+      "name": "magenta series",
+      "kind": "line",
+      "is_model": true,
+      "tool": null,
+      "delta": null,
+      "n_points": 648,
+      "color_bgr": [
+        210,
+        129,
+        189
+      ]
+    },
+    {
+      "name": "orange series",
+      "kind": "line",
+      "is_model": true,
+      "tool": null,
+      "delta": null,
+      "n_points": 293,
+      "color_bgr": [
+        120,
+        171,
+        196
+      ]
+    }
+  ]
+}

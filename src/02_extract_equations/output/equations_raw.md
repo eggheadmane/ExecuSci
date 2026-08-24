@@ -1,77 +1,83 @@
 $$
 \begin{equation*}
-h=h_{g}+h_{c} \tag{1}
+h=h_{a}+h_{s}+h_{l}+h_{c}, \tag{1}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h=1.45 k \frac{\tan \theta}{\sigma}\left(\frac{p}{H}\right)^{0.985} \tag{2}
+h_{s}=\alpha \frac{K_{s t}}{R_{s t}} N_{P} L, \tag{2}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h=8000 \bar{\lambda}\left(\frac{p}{C \sigma_{U}} K\right)^{0.86} \tag{3}
+\alpha=B(T) \frac{k_{s}(T)}{\rho(T) c_{p}(T)}, \tag{3}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h=A(1-\exp (-B P)) \tag{4}
+B(T)=b_{0} \exp \left(\frac{Q_{b}}{R T}\right), \tag{4}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h=\frac{1-A}{h_{f}} \frac{2 k_{f} k_{t} k_{w}}{2 k_{t} k_{w}-k_{w} k_{f}-k_{f} k_{t}} \tag{5}
+N_{P}=1-\exp \left(-\lambda f \frac{P}{\sigma_{U}}\right), \tag{5}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h=h_{a}+h_{c}+h_{l} \tag{6}
+\sigma_{U}=\sigma_{0} \exp \left(\frac{Q_{\sigma}}{R T}\right), \tag{6}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h_{c}=\alpha \frac{K_{s t} N_{P}}{R} \tag{7}
+f=\frac{\sigma_{U}(T x)}{\sigma_{U}(T 6)}, \tag{7}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-K_{s t}=\frac{2}{k_{s}^{-1}+k_{t}^{-1}} \tag{8}
+K_{s t}=\frac{2}{k_{s}^{-1}+k_{t}^{-1}}, \tag{8}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-R=\sqrt{R_{s}^{2}+R_{t}^{2}} \tag{9}
+R_{s t}=\sin \theta \sqrt{R_{s}^{2}+R_{t}^{2}}, \tag{9}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-N_{P}=1-\exp \left(-\lambda \frac{P}{\sigma_{U}}\right) \tag{10}
+L=m \ln (l)+n, \tag{10}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-h_{l}=\beta \frac{K_{s t l} N_{L}}{R} \tag{11}
+h_{l}=\omega \frac{K_{s l t}}{R_{s t}} N_{\delta}, \tag{11}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-K_{s t l}=\frac{3}{k_{s}^{-1}+k_{t}^{-1}+k_{l}^{-1}} \tag{12}
+K_{s l t}=\frac{3}{k_{s}^{-1}+k_{l}^{-1}+k_{t}^{-1}}, \tag{12}
 \end{equation*}
 $$
 
 $$
 \begin{equation*}
-N_{L}=1-\exp (-\gamma \delta) \tag{13}
+N_{\delta}=1-\exp \left(-\gamma \delta_{l}\right), \tag{13}
+\end{equation*}
+$$
+
+$$
+\begin{equation*}
+h_{c}=\beta \frac{k_{s}}{A} \tan \theta \cdot \ln \left(k_{c} / k_{l}\right) \delta_{c} \cdot N_{P}, \tag{14}
 \end{equation*}
 $$

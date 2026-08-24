@@ -1,4 +1,4 @@
-"""Executable equations extracted from sample_1_mathpix.mmd."""
+"""Executable equations extracted from sample_paper_5.md."""
 
 from numpy import (
     exp, log, sqrt, sin, cos, tan, sinh, cosh, tanh, pi,
@@ -6,195 +6,232 @@ from numpy import (
 )
 
 
-def eq_1(h_c, h_g):
-    """h = h_c + h_g
+def eq_1(h_a, h_c, h_l, h_s):
+    """h = h_a + h_c + h_l + h_s
 
-    LaTeX: h=h_{g}+h_{c}
+    LaTeX: h=h_{a}+h_{s}+h_{l}+h_{c},
 
     Args:
-        h_c: the heat transfer coefficients across the air gap and for the solid contact respectively
-        h_g: the heat transfer coefficients across the air gap and for the solid contact respectively
+        h_a: the air-contact IHTC
+        h_c: the coating-contact IHTC
+        h_l: the lubricant-contact IHTC
+        h_s: the solid-contact IHTC
     """
-    return h_c + h_g
+    return h_a + h_c + h_l + h_s
 
 
-def eq_2(H, k, p, sigma, theta):
-    """h = 1.45*k*(p/H)**0.985*tan(theta)/sigma
+def eq_2(K_st, L, N_P, R_st, alpha):
+    """h_s = K_st*L*N_P*alpha/R_st
 
-    LaTeX: h=1.45 k \\frac{\\tan \\theta}{\\sigma}\\left(\\frac{p}{H}\\right)^{0.985}
-
-    Args:
-        H
-        k: the mean thermal conductivity of two contact bodies
-        p
-        sigma: the standard deviation of the profile heights
-        theta: the mean of the absolute slope of the surface profile
-    """
-    return 1.45*k*(p/H)**0.985*tan(theta)/sigma
-
-
-def eq_3(C, K, lamda_bar, p, sigma_U):
-    """h = 8000*lamda_bar*(K*p/(C*sigma_U))**0.86
-
-    LaTeX: h=8000 \\bar{\\lambda}\\left(\\frac{p}{C \\sigma_{U}} K\\right)^{0.86}
+    LaTeX: h_{s}=\\alpha \\frac{K_{s t}}{R_{s t}} N_{P} L,
 
     Args:
-        C: model coefficients
-        K: model coefficients
-        lamda_bar: the mean thermal conductivity of the two contact bodies
-        p
-        sigma_U: the ultimate strength of the test specimens
-    """
-    return 8000*lamda_bar*(K*p/(C*sigma_U))**0.86
-
-
-def eq_4(A, B, P):
-    """h = A*(1 - exp(-B*P))
-
-    LaTeX: h=A(1-\\exp (-B P))
-
-    Args:
-        A: model constants determined by the least square method using the experimental results
-        B: model constants determined by the least square method using the experimental results
-        P: the contact pressure between the specimen and tools
-    """
-    return A*(1 - exp(-B*P))
-
-
-def eq_5(A, h_f, k_f, k_t, k_w):
-    """h = 2*k_f*k_t*k_w*(1 - A)/(h_f*(-k_f*k_t - k_f*k_w + 2*k_t*k_w))
-
-    LaTeX: h=\\frac{1-A}{h_{f}} \\frac{2 k_{f} k_{t} k_{w}}{2 k_{t} k_{w}-k_{w} k_{f}-k_{f} k_{t}}
-
-    Args:
-        A: model constants determined by the least square method using the experimental results
-        h_f: the applied lubricant thickness
-        k_f: the thermal conductivities of the lubricant, tool and workpiece, respectively
-        k_t: the thermal conductivities of the lubricant, tool and workpiece, respectively
-        k_w: the thermal conductivities of the lubricant, tool and workpiece, respectively
-    """
-    return 2*k_f*k_t*k_w*(1 - A)/(h_f*(-k_f*k_t - k_f*k_w + 2*k_t*k_w))
-
-
-def eq_6(h_a, h_c, h_l):
-    """h = h_a + h_c + h_l
-
-    LaTeX: h=h_{a}+h_{c}+h_{l}
-
-    Args:
-        h_a: the heat transfer across the air gap between the specimen and tools with zero pressure, and typically has a low value
-        h_c: the heat transfer coefficients across the air gap and for the solid contact respectively
-        h_l: the application of lubricant between two solid surfaces
-    """
-    return h_a + h_c + h_l
-
-
-def eq_7(K_st, N_P, R, alpha):
-    """h_c = K_st*N_P*alpha/R
-
-    LaTeX: h_{c}=\\alpha \\frac{K_{s t} N_{P}}{R}
-
-    Args:
-        K_st: the harmonic mean thermal conductivity of the contact solids
-        N_P: a pressure dependent parameter
-        R: the root mean square of surface roughness of the contact solids
-        alpha: a model parameter
+        K_st: the equivalent thermal conductivity of the interface between the blank and forming tools
+        L: a blank thickness dependent parameter
+        N_P: a contact pressure dependent parameter
+        R_st: the equivalent interfacial surface roughness
+        alpha: the temperature dependent thermal diffusivity of the blank
 
     Returns:
-        h_c: the heat transfer coefficients across the air gap and for the solid contact respectively
+        h_s: the solid-contact IHTC
     """
-    return K_st*N_P*alpha/R
+    return K_st*L*N_P*alpha/R_st
+
+
+def eq_3(B, c_p, k_s, rho):
+    """alpha = B*k_s/(c_p*rho)
+
+    LaTeX: \\alpha=B(T) \\frac{k_{s}(T)}{\\rho(T) c_{p}(T)},
+
+    The paper writes as functions of T: B(T), c_p(T), k_s(T), rho(T)
+
+    Args:
+        B: a temperature dependent parameter
+        c_p: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+        k_s: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+        rho: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+
+    Returns:
+        alpha: the temperature dependent thermal diffusivity of the blank
+    """
+    return B*k_s/(c_p*rho)
+
+
+def eq_4(Q_b, R, T, b_0):
+    """B = b_0*exp(Q_b/(R*T))
+
+    LaTeX: B(T)=b_{0} \\exp \\left(\\frac{Q_{b}}{R T}\\right),
+
+    The paper writes as functions of T: B(T)
+
+    Args:
+        Q_b: model constants
+        R: the molar gas constant
+        T: the absolute temperature
+        b_0: model constants
+
+    Returns:
+        B: a temperature dependent parameter
+    """
+    return b_0*exp(Q_b/(R*T))
+
+
+def eq_5(P, f, lamda, sigma_U):
+    """N_P = 1 - exp(-P*f*lamda/sigma_U)
+
+    LaTeX: N_{P}=1-\\exp \\left(-\\lambda f \\frac{P}{\\sigma_{U}}\\right),
+
+    Args:
+        P: the applied pressure
+        f: a tempering correction factor
+        lamda: a model constant
+        sigma_U: the temperature dependent ultimate strength of the blank
+
+    Returns:
+        N_P: a contact pressure dependent parameter
+    """
+    return 1 - exp(-P*f*lamda/sigma_U)
+
+
+def eq_6(Q_sigma, R, T, sigma_0):
+    """sigma_U = sigma_0*exp(Q_sigma/(R*T))
+
+    LaTeX: \\sigma_{U}=\\sigma_{0} \\exp \\left(\\frac{Q_{\\sigma}}{R T}\\right),
+
+    Args:
+        Q_sigma: model constants, identified by the high-temperature uniaxial tensile tests
+        R: the molar gas constant
+        T: the absolute temperature
+        sigma_0: model constants, identified by the high-temperature uniaxial tensile tests
+
+    Returns:
+        sigma_U: the temperature dependent ultimate strength of the blank
+    """
+    return sigma_0*exp(Q_sigma/(R*T))
+
+
+def eq_7(x):
+    """f = x/6
+
+    LaTeX: f=\\frac{\\sigma_{U}(T x)}{\\sigma_{U}(T 6)},
+
+    Returns:
+        f: a tempering correction factor
+    """
+    return x/6
 
 
 def eq_8(k_s, k_t):
     """K_st = 2/(1/k_t + 1/k_s)
 
-    LaTeX: K_{s t}=\\frac{2}{k_{s}^{-1}+k_{t}^{-1}}
+    LaTeX: K_{s t}=\\frac{2}{k_{s}^{-1}+k_{t}^{-1}},
 
     Args:
-        k_s: the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively
-        k_t: the thermal conductivities of the lubricant, tool and workpiece, respectively
+        k_s: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+        k_t: the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures
 
     Returns:
-        K_st: the harmonic mean thermal conductivity of the contact solids
+        K_st: the equivalent thermal conductivity of the interface between the blank and forming tools
     """
     return 2/(1/k_t + 1/k_s)
 
 
-def eq_9(R_s, R_t):
-    """R = sqrt(R_s**2 + R_t**2)
+def eq_9(R_s, R_t, theta):
+    """R_st = sqrt(R_s**2 + R_t**2)*sin(theta)
 
-    LaTeX: R=\\sqrt{R_{s}^{2}+R_{t}^{2}}
-
-    Args:
-        R_s: the average surface roughness of the specimen
-        R_t
-
-    Returns:
-        R: the root mean square of surface roughness of the contact solids
-    """
-    return sqrt(R_s**2 + R_t**2)
-
-
-def eq_10(P, lamda, sigma_U):
-    """N_P = 1 - exp(-P*lamda/sigma_U)
-
-    LaTeX: N_{P}=1-\\exp \\left(-\\lambda \\frac{P}{\\sigma_{U}}\\right)
+    LaTeX: R_{s t}=\\sin \\theta \\sqrt{R_{s}^{2}+R_{t}^{2}},
 
     Args:
-        P: the contact pressure between the specimen and tools
-        lamda: a model parameter
-        sigma_U: the ultimate strength of the test specimens
+        R_s: the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces
+        R_t: the average (mean) surface roughness of the aluminium blank (specimen) and forming tools respectively before compression, generally describing the height variations in the contact surfaces
+        theta: the initial deformation angle of the blank contact profile, and thus \\sin \\theta describes the mean modulus of the slope of the blank contact profile [34,45]
 
     Returns:
-        N_P: a pressure dependent parameter
+        R_st: the equivalent interfacial surface roughness
     """
-    return 1 - exp(-P*lamda/sigma_U)
+    return sqrt(R_s**2 + R_t**2)*sin(theta)
 
 
-def eq_11(K_stl, N_L, R, beta):
-    """h_l = K_stl*N_L*beta/R
+def eq_10(l, m, n):
+    """L = m*log(l) + n
 
-    LaTeX: h_{l}=\\beta \\frac{K_{s t l} N_{L}}{R}
+    LaTeX: L=m \\ln (l)+n,
 
     Args:
-        K_stl: the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen
-        N_L: a layer thickness dependent parameter
-        R: the root mean square of surface roughness of the contact solids
-        beta: a model parameter
+        l: the blank thickness
+        m: model constants
+        n: model constants
 
     Returns:
-        h_l: the application of lubricant between two solid surfaces
+        L: a blank thickness dependent parameter
     """
-    return K_stl*N_L*beta/R
+    return m*log(l) + n
+
+
+def eq_11(K_slt, N_delta, R_st, omega):
+    """h_l = K_slt*N_delta*omega/R_st
+
+    LaTeX: h_{l}=\\omega \\frac{K_{s l t}}{R_{s t}} N_{\\delta},
+
+    Args:
+        K_slt: the equivalent mean thermal conductivity of the interface between the blank, forming tools and lubricant
+        N_delta: a lubricant thickness dependent parameter
+        R_st: the equivalent interfacial surface roughness
+        omega: a model constant
+
+    Returns:
+        h_l: the lubricant-contact IHTC
+    """
+    return K_slt*N_delta*omega/R_st
 
 
 def eq_12(k_l, k_s, k_t):
-    """K_stl = 3/(1/k_t + 1/k_s + 1/k_l)
+    """K_slt = 3/(1/k_t + 1/k_s + 1/k_l)
 
-    LaTeX: K_{s t l}=\\frac{3}{k_{s}^{-1}+k_{t}^{-1}+k_{l}^{-1}}
+    LaTeX: K_{s l t}=\\frac{3}{k_{s}^{-1}+k_{l}^{-1}+k_{t}^{-1}},
 
     Args:
-        k_l: the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively
-        k_s: the average thermal conductivities of the specimen, tools and grease-based graphite lubricant respectively
-        k_t: the thermal conductivities of the lubricant, tool and workpiece, respectively
+        k_l: the thermal conductivity of the lubricant
+        k_s: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+        k_t: the thermal conductivities of the aluminium blank (specimen) and forming tools at their initial (forming) temperatures
 
     Returns:
-        K_stl: the harmonic mean thermal conductivity of the three contacting materials, i.e. the tools, lubricant and specimen
+        K_slt: the equivalent mean thermal conductivity of the interface between the blank, forming tools and lubricant
     """
     return 3/(1/k_t + 1/k_s + 1/k_l)
 
 
-def eq_13(delta, gamma):
-    """N_L = 1 - exp(-delta*gamma)
+def eq_13(delta_l, gamma):
+    """N_delta = 1 - exp(-delta_l*gamma)
 
-    LaTeX: N_{L}=1-\\exp (-\\gamma \\delta)
+    LaTeX: N_{\\delta}=1-\\exp \\left(-\\gamma \\delta_{l}\\right),
 
     Args:
-        delta: the applied lubricant layer thickness
+        delta_l: the lubricant layer thickness
         gamma: a model parameter
 
     Returns:
-        N_L: a layer thickness dependent parameter
+        N_delta: a lubricant thickness dependent parameter
     """
-    return 1 - exp(-delta*gamma)
+    return 1 - exp(-delta_l*gamma)
+
+
+def eq_14(A, N_P, beta, delta_c, k_c, k_l, k_s, theta):
+    """h_c = N_P*beta*delta_c*k_s*log(k_c/k_l)*tan(theta)/A
+
+    LaTeX: h_{c}=\\beta \\frac{k_{s}}{A} \\tan \\theta \\cdot \\ln \\left(k_{c} / k_{l}\\right) \\delta_{c} \\cdot N_{P},
+
+    Args:
+        A: the apparent contact area between the blank and forming tools
+        N_P: a contact pressure dependent parameter
+        beta: a model parameter
+        delta_c: the layer thickness of the tool coating
+        k_c: the thermal conductivity of the tool coating
+        k_l: the thermal conductivity of the lubricant
+        k_s: the thermal conductivity, density and heat capacity of the aluminium alloy at the target initial blank temperature respectively
+        theta: the initial deformation angle of the blank contact profile, and thus \\sin \\theta describes the mean modulus of the slope of the blank contact profile [34,45]
+
+    Returns:
+        h_c: the coating-contact IHTC
+    """
+    return N_P*beta*delta_c*k_s*log(k_c/k_l)*tan(theta)/A
