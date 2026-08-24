@@ -11,22 +11,25 @@
 ## Pipeline
 
 Runnable source lives under `src/` in numbered stage folders. Put papers in
-`src/01_input/`. The default paper is **whichever markdown/LaTeX file** is in
-`src/01_input/target/` — any filename, no rename needed. Artefacts that later
-stages import (`equations_raw.md`, `symbols.json`, `constants.py`, `equations.py`)
-stay in the matching `src/` stage folder. `log/` keeps a full copy of every
-generated file, including those duplicates, plus reports nothing imports
-(`constants.md`, `equations.md`). Folder numbers follow the order the stages run in;
-code never hard-codes those numbers, it looks folders up by name through
-`src/execusci_paths.py`, so stages can be reordered.
+`src/01_input/`. The default paper is the Mathpix export folder in
+`src/01_input/target/` — one holding folder with a markdown file and an
+`images/` directory. On first use the markdown is renamed to the folder name
+and each figure to `Fig_N_` plus a slug of its caption. A single loose
+markdown file in `target/` still works. Artefacts that later stages import
+(`equations_raw.md`, `symbols.json`, `constants.py`, `equations.py`) stay in
+the matching `src/` stage folder. `log/` keeps a flat copy of every generated
+file (no per-stage subfolders), plus reports nothing imports (`constants.md`,
+`equations.md`). Plotting figures go in `log/plotting/`. Folder numbers follow
+the order the stages run in; code never hard-codes those numbers, it looks
+folders up by name through `src/execusci_paths.py`, so stages can be reordered.
 
 | Stage | Folder | Input | Output |
 |-------|--------|-------|--------|
-| 01 | `src/01_input/target/` | the PDF | Mathpix markdown (any filename) |
+| 01 | `src/01_input/target/` | the PDF | Mathpix export folder (`.md` + `images/`) |
 | 02 | `src/02_extract_equations` | the target paper | `output/equations_raw.md`, `output/symbols.json` (json also `log/`); `equations.md` in `log/` only |
 | 03 | `src/03_scrape_constants` | the target paper | `constants.py` (also `log/`); `constants.md` in `log/` only |
 | 04 | `src/04_translate2python` | `equations_raw.md` + `symbols.json` | `equations.py` (also `log/`) |
-| 05 | `src/05_plotting` | `equations.py` + `constants.py` | figures under `output/` (also `log/`) |
+| 05 | `src/05_plotting` | `equations.py` + `constants.py` | figures under `log/plotting/` |
 
 ### Install and run
 
@@ -52,8 +55,8 @@ python src/05_plotting/plot_compare.py --no-show
 
 - `output/equations_raw.md` — stacked `$$` / `\begin{equation*}` blocks for stage 04
 - `output/symbols.json` — machine-readable dictionary (also copied to `log/`)
-- `log/02_extract_equations/equations.md` — human report with Python previews,
-  where-clauses, and the symbol table (nothing in the pipeline imports this)
+- `log/equations.md` — human report with Python previews, where-clauses, and
+  the symbol table (nothing in the pipeline imports this)
 
 The paper's `\tag{n}` numbering is preserved so stage 04 names the generated
 functions `eq_n`.
@@ -166,8 +169,8 @@ extraction lives in stage 02 (`extract_latex_equations`).
 
 `plot_compare.py` evaluates the generated Eq. (6) chain over contact pressure and
 overlays it on the paper's digitized P20 curve, saving a comparison and an error
-plot. With the scraped constants it currently tracks the paper to within
-0.1 % mean absolute error.
+plot under `log/plotting/`. With the scraped constants it currently tracks the
+paper to within 0.1 % mean absolute error.
 
 ## Tests
 

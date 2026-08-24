@@ -32,7 +32,17 @@ easyocr = pytest.importorskip("easyocr")
 cv2 = pytest.importorskip("cv2")
 
 PAPER = paper_path()
-SAMPLE_FIG = os.path.join(TARGET, "sample_pic1.jpg")
+
+
+def _sample_figure() -> str:
+    for path in target_figure_paths():
+        if os.path.basename(path).lower().startswith("fig_8_"):
+            return path
+    figures = target_figure_paths()
+    return figures[0] if figures else os.path.join(TARGET, "sample_pic1.jpg")
+
+
+SAMPLE_FIG = _sample_figure()
 
 
 @pytest.fixture(scope="module")
@@ -48,8 +58,11 @@ def captions() -> list:
 
 
 def test_target_folder_contains_the_sample_figure():
-    paths = [os.path.normcase(p) for p in target_figure_paths()]
-    assert os.path.normcase(SAMPLE_FIG) in paths
+    found = target_figure_paths()
+    assert found, "expected raster figures in the target paper bundle"
+    assert all(os.path.isfile(p) for p in found)
+    if os.path.isfile(SAMPLE_FIG):
+        assert os.path.normcase(SAMPLE_FIG) in [os.path.normcase(p) for p in found]
 
 
 def test_split_label_unit_and_aliases():
@@ -109,7 +122,7 @@ def test_synthetic_figure_axes_and_model_curve(tmp_path, symbol_dict, captions):
     assert series.x.max() == pytest.approx(20.0, abs=2.0)
 
 
-@pytest.mark.skipif(not os.path.isfile(SAMPLE_FIG), reason="sample_pic1.jpg is missing")
+@pytest.mark.skipif(not os.path.isfile(SAMPLE_FIG), reason="no raster figure in the target paper bundle")
 def test_sample_pic1_axis_ranges(symbol_dict, captions):
     digitized = digitize_figure(
         SAMPLE_FIG, symbols=symbol_dict, captions=captions, tools=["P20"]
