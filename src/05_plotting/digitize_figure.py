@@ -138,7 +138,7 @@ class Series:
     name: str
     x: np.ndarray
     y: np.ndarray
-    color_bgr: Tuple[int, int, int]
+    colour_bgr: Tuple[int, int, int]
     kind: str = "line"
     is_model: bool = True
     tool: Optional[str] = None
@@ -187,7 +187,7 @@ class DigitizedFigure:
                     "tool": s.tool,
                     "delta": s.delta,
                     "n_points": int(len(s.x)),
-                    "color_bgr": list(s.color_bgr),
+                    "colour_bgr": list(s.colour_bgr),
                 }
                 for s in self.series
             ],
@@ -333,9 +333,9 @@ def find_plot_frames(image: np.ndarray) -> List[Tuple[int, int, int, int]]:
     the full image.  Those used to be rejected, leaving a single fallback crop
     that does not line up with any tick labels.
     """
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    h, w = gray.shape
-    _, bw = cv2.threshold(gray, 80, 255, cv2.THRESH_BINARY_INV)
+    grey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    h, w = grey.shape
+    _, bw = cv2.threshold(grey, 80, 255, cv2.THRESH_BINARY_INV)
     kernel_h = cv2.getStructuringElement(cv2.MORPH_RECT, (max(20, w // 12), 1))
     kernel_v = cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(20, h // 12)))
     lines = cv2.bitwise_or(
@@ -469,7 +469,7 @@ def extract_series(
     calib: AxisCalib,
     hide_rect: Optional[Tuple[float, float, float, float]] = None,
 ) -> List[Series]:
-    """Trace coloured (and gray) polylines inside the calibrated plot frame."""
+    """Trace coloured (and grey) polylines inside the calibrated plot frame."""
     pad = 4
     x0 = int(calib.x0) + pad
     y0 = int(calib.y0) + pad
@@ -491,10 +491,10 @@ def extract_series(
     foreground = ~(white | black)
 
     series: List[Series] = []
-    gray_mask = foreground & (sat <= 45) & (val < 220)
-    if int(np.count_nonzero(gray_mask)) > 80:
+    grey_mask = foreground & (sat <= 45) & (val < 220)
+    if int(np.count_nonzero(grey_mask)) > 80:
         traced = _mask_to_series(
-            gray_mask, crop, "gray line", (120, 120, 120), x0, y0, calib
+            grey_mask, crop, "grey line", (120, 120, 120), x0, y0, calib
         )
         if traced is not None:
             series.append(traced)
@@ -938,7 +938,7 @@ def _colour_name(bgr: Tuple[int, int, int]) -> str:
     hsv = cv2.cvtColor(np.uint8([[[b, g, r]]]), cv2.COLOR_BGR2HSV)[0, 0]
     h, s, v = (int(x) for x in hsv)
     if s < 40:
-        return "gray line"
+        return "grey line"
     if h <= 10 or h >= 170:
         return "red series"
     if h < 25:
@@ -1005,7 +1005,7 @@ def _mask_to_series(
         name=name,
         x=np.asarray(data_x, dtype=float)[order],
         y=np.asarray(data_y, dtype=float)[order],
-        color_bgr=bgr,
+        colour_bgr=bgr,
         kind=kind,
         is_model=is_model,
     )
@@ -1039,7 +1039,7 @@ def _annotate_series(
         name = item.name
         delta = None
         tool = global_tool
-        best_text = _closest_legend_text(item.color_bgr, colour_to_text)
+        best_text = _closest_legend_text(item.colour_bgr, colour_to_text)
         if best_text:
             name = best_text
             local_tool = parse_tool(best_text, tools)

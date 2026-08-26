@@ -153,11 +153,11 @@ def test_choose_plot_frame_prefers_subplot_with_ticks():
 
 def test_fill_missing_deltas_uses_intercepts():
     x = np.linspace(0.0, 20.0, 40)
-    dry = Series("gray line", x, 0.8 + 10.0 * (1.0 - np.exp(-0.28 * x)), (120, 120, 120))
+    dry = Series("grey line", x, 0.8 + 10.0 * (1.0 - np.exp(-0.28 * x)), (120, 120, 120))
     lube = Series("yellow series", x, 4.6 + 10.0 * (1.0 - np.exp(-0.28 * x)), (0, 180, 240))
     filled = fill_missing_deltas([dry, lube], thicknesses=[1.5e-5])
     by_name = {item.name: item.delta for item in filled}
-    assert by_name["gray line"] == pytest.approx(0.0)
+    assert by_name["grey line"] == pytest.approx(0.0)
     assert by_name["yellow series"] == pytest.approx(1.5e-5)
 
 

@@ -91,7 +91,7 @@ _CONTEXT_STOP_RE = re.compile(
     r"\n\s*(?:#{1,6}\s|\$\$|\\begin\{|!\[|\||Table\s+\d|Fig\.\s*\d)"
 )
 
-# Recognize a full stop that ends a sentence, ignoring abbreviations and single-letter initials.
+# Recognise a full stop that ends a sentence, ignoring abbreviations and single-letter initials.
 _SENTENCE_END_RE = re.compile(r"\.(\s+|$)")
 # Abbreviations whose full stop does not end a sentence.
 _ABBREVIATIONS = {

@@ -322,15 +322,15 @@ class EquationGraph:
             eq.output: [name for name in eq.inputs if name in outputs]
             for eq in equations
         }
-        WHITE, GRAY, BLACK = 0, 1, 2
+        WHITE, GREY, BLACK = 0, 1, 2
         colour = {node: WHITE for node in adj}
         stack: List[str] = []
 
         def dfs(node: str) -> None:
-            colour[node] = GRAY
+            colour[node] = GREY
             stack.append(node)
             for nxt in adj[node]:
-                if colour[nxt] == GRAY:
+                if colour[nxt] == GREY:
                     start = stack.index(nxt)
                     cycle = stack[start:] + [nxt]
                     raise CycleError("Cycle in equation graph: " + " -> ".join(cycle))

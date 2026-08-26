@@ -248,7 +248,7 @@ def parse_number(text: str) -> Optional[float]:
     return None
 
 
-def _normalize_tool(label: str) -> Optional[str]:
+def _normalise_tool(label: str) -> Optional[str]:
     key = re.sub(r"\s+", " ", label.strip().lower())
     if key in _NON_TOOL_LABELS:
         return None
@@ -308,7 +308,7 @@ def _split_header(cell: str) -> Tuple[Optional[str], Optional[str], Optional[str
     # Tool labels and unit / dimensionless parentheses.
     for m in list(re.finditer(r"\(([^)]+)\)", work)):
         inner = m.group(1).strip()
-        tool = _normalize_tool(inner)
+        tool = _normalise_tool(inner)
         if tool is not None:
             variant = tool
             work = work[: m.start()] + work[m.end() :]
@@ -564,7 +564,7 @@ def _clean_expression(text: str) -> str:
     return re.sub(r"\s+", " ", expression).strip()
 
 
-def _normalize_material(label: str) -> Optional[str]:
+def _normalise_material(label: str) -> Optional[str]:
     key = re.sub(r"[\s$]+", " ", label.strip().lower()).strip()
     key = re.sub(r"\\mathrm\{([^}]*)\}", r"\1", key)
     key = _CITATION_RE.sub(" ", key)
@@ -626,7 +626,7 @@ def _is_material_header_row(row: Sequence[str]) -> bool:
         return False
     if _header_token(row[0]) not in _PROPERTY_HEADERS:
         return False
-    return any(_normalize_material(cell) for cell in row[1:])
+    return any(_normalise_material(cell) for cell in row[1:])
 
 
 def _material_role(variant: Optional[str]) -> Optional[str]:
@@ -703,17 +703,17 @@ def _is_property_table(table: _MarkdownTable) -> bool:
     first = re.sub(r"[^a-z ]+", "", table.headers[0].lower()).strip()
     if first not in _PROPERTY_HEADERS:
         return False
-    return any(_normalize_material(h) for h in table.headers[1:])
+    return any(_normalise_material(h) for h in table.headers[1:])
 
 
 def _constants_from_property_table(table: _MarkdownTable, text: str) -> List[Constant]:
-    materials = [_normalize_material(h) for h in table.headers[1:]]
+    materials = [_normalise_material(h) for h in table.headers[1:]]
     out: List[Constant] = []
     for row in table.rows:
         if not row:
             continue
         if _is_material_header_row(row):
-            materials = [_normalize_material(cell) for cell in row[1:]]
+            materials = [_normalise_material(cell) for cell in row[1:]]
             continue
         name, unit, label = _split_property_label(row[0])
         if name is None:
@@ -1371,9 +1371,10 @@ def generate_report(
     return "\n".join(lines)
 
 
-# --------------------------------------------------------------------------- #
+
+# === #
 # Entry point
-# --------------------------------------------------------------------------- #
+# === #
 
 def run(
     paper: Optional[str] = None,
