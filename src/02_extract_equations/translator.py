@@ -30,38 +30,24 @@ __all__ = [
     "Equation",
     "translate",
     "preprocess",
-    "tokenize",
+    "tokenise",
     "Parser",
     "name_to_latex",
     "latex_to_name",
-    "MATH_NAMESPACE",
     "LatexParseError",
 ]
-
-
-def MATH_NAMESPACE() -> Dict[str, Callable]:
-    """Return a dict of the math names used by generated expressions."""
-    import numpy as np
-
-    return {
-        "exp": np.exp, "log": np.log, "sqrt": np.sqrt,
-        "sin": np.sin, "cos": np.cos, "tan": np.tan,
-        "sinh": np.sinh, "cosh": np.cosh, "tanh": np.tanh,
-        "asin": np.arcsin, "acos": np.arccos, "atan": np.arctan,
-        "Abs": np.abs, "pi": np.pi,
-    }
 
 
 class LatexParseError(ValueError):
     """Raised when a LaTeX fragment cannot be parsed into a Python expression."""
 
 
-# --------------------------------------------------------------------------- #
-# Symbol / command tables
-# --------------------------------------------------------------------------- #
+# ==== #
+# SYMBOL / FUNCTION / DECORATOR MAPPING DICTS
+# ==== #
 
-# Greek letters -> plain-ASCII SymPy symbol names.  ``lambda`` is a Python
-# keyword, so it is mapped to ``lamda`` (the same spelling SymPy uses).
+# Greek letters -> plain-ASCII SymPy symbol names.  
+# ``lambda`` is mapped to ``lamda`` (because lambda is a reserved keyword in Python).
 _GREEK = {
     "alpha": "alpha", "beta": "beta", "gamma": "gamma", "delta": "delta",
     "epsilon": "epsilon", "varepsilon": "epsilon", "zeta": "zeta", "eta": "eta",
@@ -75,8 +61,8 @@ _GREEK = {
     "Phi": "Phi", "Psi": "Psi", "Omega": "Omega",
 }
 
-# LaTeX functions -> SymPy callables.
-_FUNCTIONS: Dict[str, Callable] = {
+# LaTeX standard functions -> SymPy callables.
+_STDFUNCTIONS: Dict[str, Callable] = {
     "exp": sp.exp,
     "log": sp.log,
     "ln": sp.log,
@@ -88,26 +74,29 @@ _FUNCTIONS: Dict[str, Callable] = {
     "abs": sp.Abs,
 }
 
-# Commands that decorate the following symbol.  Several LaTeX spellings share a
-# suffix on purpose (``\bar`` and ``\overline`` both read as "bar"), so the
-# generated name does not depend on which spelling the OCR produced:
-# ``\bar{\lambda}`` and ``\overline{\lambda}`` are both ``lamda_bar``.
-# An empty suffix marks a purely cosmetic wrapper (``\mathrm{t}`` -> ``t``).
-_ACCENTS = {
+# Decorators: Features that modify symbol appearance.
+# Several LaTeX spellings share a suffix on purpose (``\bar`` and ``\overline`` both read as "bar")
+# An empty suffix marks a purely cosmetic wrapper, so will not affect the generated name (``\mathrm{t}`` -> ``t``).
+_DECORATORS = {
     "bar": "bar", "overline": "bar", "hat": "hat", "widehat": "hat",
     "tilde": "tilde", "widetilde": "tilde", "vec": "vec", "dot": "dot",
     "ddot": "ddot", "overrightarrow": "vec", "mathbf": "", "boldsymbol": "",
     "mathrm": "", "text": "", "operatorname": "",
 }
 
-# Reverse tables used by :func:`name_to_latex` to render a name as math again.
+
+
+# Reverse tables used by `name_to_latex` to render a name as maths again.
 _GREEK_LATEX = {
     "lamda": r"\lambda", "Lamda": r"\Lambda",
     **{v: "\\" + k for k, v in reversed(list(_GREEK.items())) if v != "lamda"},
 }
-_ACCENT_LATEX = {"bar", "hat", "tilde", "vec", "dot", "ddot"}
+_DECORATOR_LATEX = {"bar", "hat", "tilde", "vec", "dot", "ddot"}
 
-# Spacing / cosmetic commands that carry no mathematical meaning.
+
+
+# Spacing / cosmetic commands that carry no mathematical meaning. 
+# Will strip them out in preprocessing so they don't confuse the tokenizer.
 _SPACING = [
     r"\,", r"\;", r"\:", r"\!", r"\quad", r"\qquad", r"\ ", r"\medspace",
     r"\thinspace", r"\thickspace", r"\negthinspace", r"\displaystyle",
@@ -115,114 +104,125 @@ _SPACING = [
 ]
 
 
-# --------------------------------------------------------------------------- #
-# Preprocessing
-# --------------------------------------------------------------------------- #
 
-_TAG_RE = re.compile(r"\\tag\{(?P<tag>[^}]*)\}")
-_LABEL_RE = re.compile(r"\\label\{[^}]*\}")
+# ==== #
+# PREPROCESSING: Cleaning the string
+# ==== #
+
+# To find from the LaTex string:
+_TAG_RE = re.compile(r"\\tag\{(?P<tag>[^}]*)\}")    # \tag{...} and extract the number
+_LABEL_RE = re.compile(r"\\label\{[^}]*\}")         # \label{...} and deletes it. Note: This is adefensive measure but unlikely used because Mathpix does not include labels in the LaTeX it produces.
 
 
-def preprocess(latex: str) -> str:
-    """Normalise real-world LaTeX so the tokenizer can handle it."""
-    s = latex.strip()
+
+def preprocess(latex_exp: str) -> str:
+    """Clean LaTeX expression from the paper so that the tokenizer can handle it."""
+    s = latex_exp.strip()
 
     # Strip surrounding math delimiters.
     s = s.replace("$$", " ").replace("$", " ")
     s = _TAG_RE.sub("", s)
     s = _LABEL_RE.sub("", s)
 
-    # Environment wrappers, if a raw environment string is passed in directly.
+    # Strip environment wrappers like \begin{equation} ... \end{equation}
     s = re.sub(r"\\(begin|end)\{[^}]*\}", " ", s)
 
-    # \left( ... \right) -> ( ... ); also \left. / \right. and \left\{ etc.
+    # Strip \left( ... \right) -> ( ... ); also \left. / \right. and \left\{ etc. These are visual wrappers that don't affect the math.
     s = re.sub(r"\\left\s*\\?", " ", s)
     s = re.sub(r"\\right\s*\\?", " ", s)
     s = re.sub(r"\\(bigl|bigr|Bigl|Bigr|biggl|biggr|Biggl|Biggr|big|Big|bigg|Bigg)\s*", " ", s)
 
-    # Explicit multiplication dots.
+    # Convert multiplication dots to ``*`` for Python.  Also \times -> *.
     s = s.replace(r"\cdot", " * ").replace(r"\times", " * ")
 
-    # Cosmetic spacing commands.
-    for cmd in _SPACING:
-        s = s.replace(cmd, " ")
+    # Convert cosmetic spacing commands with a single space.
+    for cspace in _SPACING:
+        s = s.replace(cspace, " ")
 
-    # Mathpix placeholder groups: R_{s}{ }^{2}  ->  R_{s}^{2}
+    # Strip empty placeholder groups due to error in PDF -> LaTeX conversion.
+    # e.g., R_{s}{ }^{2}  ->  R_{s}^{2}
     s = re.sub(r"\{\s*\}", " ", s)
 
     return s.strip()
 
 
-# --------------------------------------------------------------------------- #
-# Tokenizer
-# --------------------------------------------------------------------------- #
 
-@dataclass      # The reason why the Token class looks like this is because it is used to represent the tokens that are generated by the tokenizer. Each token has a kind (which can be 'num', 'sym', 'cmd', or 'op') and a value (which is the actual string representation of the token).
+# ==== #
+# TOKENISER
+# ==== #
+
+# Each token has a kind (which can be 'num', 'sym', 'cmd', or 'op') and a value (which is the actual string representation of the token).
+@dataclass      
 class Token:
-    kind: str  # 'num', 'sym', 'cmd', 'op'
+    kind: str  # ['num', 'sym', 'cmd', 'op']
     value: str
 
-# Token kinds: num = number, sym = symbol (variable),
-# cmd = command (e.g. \frac, \sqrt),
-# op = operator (e.g. +, -, *, /, ^, _, (, ), {, }, [, ], =).
-
-_NUMBER_RE = re.compile(r"\d+\.\d+|\.\d+|\d+")
-_COMMAND_RE = re.compile(r"\\[A-Za-z]+|\\.")
-_OPS = set("+-*/^_(){}=[]")
+    # Token kinds: num = number, sym = symbol (variable),
+    # cmd = command (e.g. \frac, \sqrt), op = operator (e.g. +, -, *, /, ^, _, (, ), {, }, [, ], =).
 
 
-def tokenize(latex: str) -> List[Token]:
-    """Split preprocessed LaTeX math into a flat token stream."""
-    s = latex
+
+# To find from the LaTex string: numbers, commands, and operators. 
+_NUMBER_RE = re.compile(r"\d+\.\d+|\.\d+|\d+")  
+_COMMAND_RE = re.compile(r"\\[A-Za-z]+|\\.")    
+_OPS = set("+-*/^_(){}=[]")                     
+
+
+
+def tokenise(latex_exp: str) -> List[Token]:
+    """Split preprocessed LaTeX math into a list of tokens."""
+    s = latex_exp
     i = 0
     n = len(s)
-    tokens: List[Token] = []
+    tokens: List[Token] = []    # Tokens are added to the list as they are identified in the string.
+
+
     while i < n:
-        c = s[i]
-        if c.isspace():
+        char = s[i]
+        if char.isspace(): # Skip if space.
             i += 1
             continue
 
         # Check if the current character is a digit or a decimal point, indicating the start of a number.
-        m = _NUMBER_RE.match(s, i)
-        if m:
-            tokens.append(Token("num", m.group()))
-            i = m.end()
+        matched = _NUMBER_RE.match(s, i)
+        if matched:
+            tokens.append(Token("num", matched.group()))
+            i = matched.end()
             continue
 
         # Check if the current character is a backslash, indicating the start of a LaTeX command.
-        if c == "\\":
-            m = _COMMAND_RE.match(s, i)
-            if not m:
+        if char == "\\":
+            matched = _COMMAND_RE.match(s, i)
+            if not matched:
                 raise LatexParseError(f"Dangling backslash at position {i}: {s[i:i+10]!r}")
-            tokens.append(Token("cmd", m.group()[1:]))  # store name without backslash
-            i = m.end()
+            tokens.append(Token("cmd", matched.group()[1:]))  # store name without backslash
+            i = matched.end()
             continue
 
         # Check if the current character is an operator (e.g., +, -, *, /, ^, _, (, ), {, }, [, ], =).
-        if c in _OPS:
-            tokens.append(Token("op", c))
+        if char in _OPS:
+            tokens.append(Token("op", char))
             i += 1
             continue
 
         # Check if the current character is an alphabetic character, indicating the start of a symbol (variable).
-        if c.isalpha():
-            tokens.append(Token("sym", c))
+        if char.isalpha():
+            tokens.append(Token("sym", char))
             i += 1
             continue
 
         # Unknown punctuation such as ',' or '.' between structures -> skip.
-        if c in ",.;":
+        if char in ",.;":
             i += 1
             continue
-        raise LatexParseError(f"Unexpected character {c!r} at position {i}")
+        raise LatexParseError(f"Unexpected character {char!r} at position {i}")
     return tokens
 
 
-# Operators with no algebraic Python form here.  Left to the tokenizer they would
-# quietly become invented symbols -- ``\int_{0}^{t}`` reads as ``int_0**t`` and
-# ``\sum_{i=1}^{m}`` as ``sum_i1**m`` -- so an equation that uses one is reported
-# as untranslatable instead of producing plausible-looking nonsense.
+
+# Below are operators with no algebraic Python form here (e.g., integrals, summations, limits, partial derivatives).
+# Current tokeniser is unable to translate them. For examples, ``\int_{0}^{t}`` reads as ``int_0**t``.
+# So an equation that uses one is reported as untranslatable.
 _UNSUPPORTED_OPERATORS = {
     "int": "an integral (\\int)",
     "iint": "a double integral (\\iint)",
@@ -234,9 +234,8 @@ _UNSUPPORTED_OPERATORS = {
     "partial": "a partial derivative (\\partial)",
 }
 
-
 def _reject_unsupported(tokens: List[Token]) -> None:
-    """Raise for constructs the parser cannot represent faithfully.
+    """Raise for expressions that the parser cannot represent faithfully.
 
     Differentials are detected on the token stream rather than the raw LaTeX, so
     ``d t`` is caught while ``\\delta`` (a single command token) is not.
@@ -252,12 +251,13 @@ def _reject_unsupported(tokens: List[Token]) -> None:
                 )
 
 
-# --------------------------------------------------------------------------- #
-# Parser (recursive descent)
-# --------------------------------------------------------------------------- #
+
+# === #
+# PARSER (RECURSIVE DESCENT): Convert to SymPy expression
+# === #
 
 class Parser:
-    r"""Recursive-descent parser turning a token stream into a SymPy expression.
+    r"""Recursive-descent parser turning a token list into a SymPy expression.
 
     Grammar (informal)::
 
@@ -457,13 +457,13 @@ class Parser:
                 return sp.sqrt(radicand)
             return radicand ** (1 / index)
 
-        if name in _FUNCTIONS:
-            func = _FUNCTIONS[name]
+        if name in _STDFUNCTIONS:
+            func = _STDFUNCTIONS[name]
             arg = self._parse_atom()
             return func(arg)
 
-        if name in _ACCENTS:
-            suffix = _ACCENTS[name]
+        if name in _DECORATORS:
+            suffix = _DECORATORS[name]
             base_name = self._read_name_group()
             full = f"{base_name}_{suffix}" if suffix else base_name
             return self._finish_symbol(full, already_named=True)
@@ -560,10 +560,10 @@ class Parser:
                 return _GREEK[tok.value]
             # Cosmetic wrappers inside an identifier carry no name of their own:
             # ``K_{\text {stl }}`` must read as ``K_stl``, not ``K_textstl``.
-            if tok.value in _ACCENTS and not _ACCENTS[tok.value]:
+            if tok.value in _DECORATORS and not _DECORATORS[tok.value]:
                 return self._read_name_group()
-            if tok.value in _ACCENTS:
-                return f"{self._read_name_group()}_{_ACCENTS[tok.value]}"
+            if tok.value in _DECORATORS:
+                return f"{self._read_name_group()}_{_DECORATORS[tok.value]}"
             return tok.value
         if tok.kind == "op":
             if tok.value == "{":
@@ -576,9 +576,10 @@ class Parser:
         raise LatexParseError(f"Cannot use {tok} inside an identifier")
 
 
-# --------------------------------------------------------------------------- #
-# High level API
-# --------------------------------------------------------------------------- #
+
+# === #
+# PUBLIC INTERFACE: What other stages call
+# === #
 
 def _docsafe(text: Optional[str]) -> Optional[str]:
     """Flatten a scraped description so it can sit inside a docstring."""
@@ -601,7 +602,7 @@ def name_to_latex(name: str) -> str:
     """
     base, *parts = name.split("_")
     accents = []
-    while parts and parts[-1] in _ACCENT_LATEX:
+    while parts and parts[-1] in _DECORATOR_LATEX:
         accents.append(parts.pop())
     core = _GREEK_LATEX.get(base, base)
     if parts:
@@ -616,8 +617,7 @@ def _to_python_source(expr) -> str:
 
     SymPy's default string printer already emits ``sqrt(x)``, ``exp(x)``,
     ``tan(x)`` and ``a**b`` -- i.e. valid Python -- as long as those names are in
-    scope (see :data:`MATH_NAMESPACE`).  This avoids the ``math.``/``numpy.``
-    prefixes that the code printers add.
+    scope.  This avoids the ``math.``/``numpy.`` prefixes that the code printers add.
     """
     return sp.sstr(expr, full_prec=False)
 
@@ -764,7 +764,7 @@ def translate(latex: str, tag: Optional[str] = None) -> Equation:
     cleaned = preprocess(latex)
     if not cleaned:
         raise LatexParseError("Empty expression after preprocessing")
-    tokens = tokenize(cleaned)
+    tokens = tokenise(cleaned)
     _reject_unsupported(tokens)
     parser = Parser(tokens)
     try:

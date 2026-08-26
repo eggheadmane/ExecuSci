@@ -37,7 +37,6 @@ add_stages("Extract Equations")
 from translator import (  # noqa: E402
     Equation,
     LatexParseError,
-    MATH_NAMESPACE,
     Parser,
     latex_to_name,
     name_to_latex,
@@ -56,7 +55,6 @@ __all__ = [
     "generate_module",
     "name_to_latex",
     "latex_to_name",
-    "MATH_NAMESPACE",
     "LatexParseError",
     "run_document",
     "run",

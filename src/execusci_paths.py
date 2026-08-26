@@ -283,7 +283,7 @@ def _rename_captioned_images(bundle: str, markdown: str) -> str:
     return updated
 
 
-def _normalize_paper_bundle(bundle: str) -> str:
+def _normalise_paper_bundle(bundle: str) -> str:
     """Rename the paper to the folder name, caption-name its images, return the md path."""
     papers = _list_papers(bundle)
     if not papers:
@@ -312,7 +312,7 @@ def _normalize_paper_bundle(bundle: str) -> str:
     return src
 
 
-def _maybe_normalize_paper(path: str) -> str:
+def _maybe_normalise_paper(path: str) -> str:
     """If ``path`` is inside a target holding folder, normalise that bundle."""
     abs_path = os.path.abspath(path)
     if os.path.isdir(abs_path):
@@ -320,7 +320,7 @@ def _maybe_normalize_paper(path: str) -> str:
             os.path.abspath(os.path.dirname(abs_path)) == os.path.abspath(TARGET)
             and _list_papers(abs_path)
         ):
-            return _normalize_paper_bundle(abs_path)
+            return _normalise_paper_bundle(abs_path)
         return abs_path
     parent = os.path.dirname(abs_path)
     if (
@@ -328,7 +328,7 @@ def _maybe_normalize_paper(path: str) -> str:
         and _is_under(parent, TARGET)
         and _list_papers(parent)
     ):
-        return _normalize_paper_bundle(parent)
+        return _normalise_paper_bundle(parent)
     return abs_path
 
 
@@ -353,7 +353,7 @@ def paper_path(name: Optional[str] = None) -> str:
     if name is None:
         bundle = _target_bundle_dir()
         if bundle is not None:
-            return _normalize_paper_bundle(bundle)
+            return _normalise_paper_bundle(bundle)
         papers = _list_papers(TARGET)
         if not papers:
             raise LookupError(
@@ -368,12 +368,12 @@ def paper_path(name: Optional[str] = None) -> str:
         return os.path.join(TARGET, papers[0])
 
     if os.path.exists(name):
-        return _maybe_normalize_paper(name)
+        return _maybe_normalise_paper(name)
 
     for folder in (INPUT, TARGET):
         candidate = os.path.join(folder, name)
         if os.path.exists(candidate):
-            return _maybe_normalize_paper(candidate)
+            return _maybe_normalise_paper(candidate)
 
     return os.path.join(INPUT, name)
 
